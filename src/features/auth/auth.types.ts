@@ -1,4 +1,5 @@
 export type UserType = {
+  id: string
   email: string
   password: string
   isVerified: boolean
@@ -15,10 +16,4 @@ export type RegistedUserType = {
 export type RegisterType = {
   email: string
   password: string
-}
-
-export type RegisterFormType = {
-  email: string
-  password: string
-  passwordConfirmation: string
 }

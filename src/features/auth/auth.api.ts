@@ -19,11 +19,11 @@ export const authApi = createApi({
   }),
   endpoints: build => {
     return {
-      login: build.mutation<UserType, any>({
-        query: ({ email, password }) => {
+      login: build.mutation<RegistedUserType, RegisterType>({
+        query: ({ email, password }: RegisterType) => {
           return {
             method: 'POST',
-            url: 'auth/login',
+            url: 'login',
             body: {
               email,
               password,
@@ -31,7 +31,7 @@ export const authApi = createApi({
           }
         },
       }),
-      register: build.mutation<RegistedUserType, RegisterType>({
+      signUp: build.mutation<RegistedUserType, RegisterType>({
         query: ({ email, password }: RegisterType) => {
           return {
             method: 'POST',
@@ -42,6 +42,12 @@ export const authApi = createApi({
             },
           }
         },
+      }),
+      verify: build.query<any, string | undefined>({
+        query: verificationLink => `verify/${verificationLink}`,
+      }),
+      me: build.query<any, any>({
+        query: () => `refresh`
       }),
       logout: build.mutation<any, void>({
         query: () => ({
@@ -55,6 +61,7 @@ export const authApi = createApi({
 
 export const {
   useLoginMutation,
-  useRegisterMutation,
+  useSignUpMutation,
+  useVerifyQuery,
   useLogoutMutation,
 } = authApi
