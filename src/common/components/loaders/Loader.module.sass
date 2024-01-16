@@ -1,3 +1,5 @@
+$color-loader: #0d47a1
+  
 .loaderWrapper
   width: 100%
   height: 100%
@@ -7,3 +9,18 @@
   justify-content: center
   align-items: center
   background-color: #000104b8
+
+// dots loader
+.dots 
+  color: $color-loader
+  font-weight: bold
+  display:inline-block
+  font-family: monospace
+  font-size: 30px
+  clip-path: inset(0 3ch 0 0)
+  animation: l 1s steps(4) infinite
+
+@keyframes l 
+  to 
+    clip-path: inset(0 -1ch 0 0)
+  

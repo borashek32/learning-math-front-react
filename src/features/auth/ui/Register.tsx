@@ -5,7 +5,7 @@ import styles from './Auth.module.sass'
 import { RegisterType } from "../auth.types"
 import { useSignUpMutation } from "../auth.api"
 import { useState } from "react"
-import { Loader } from "../../../common/components/loaders/Loader"
+import { Loader } from "../../../common/components/loaders/CircularLoader"
 import { DefaultButton } from "../../../common/components/button/DefaultButton"
 import { Error } from "../../../common/components/error/Error"
 import { GoTo } from "../../../common/components/goTo/GoTo"

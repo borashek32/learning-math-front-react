@@ -1,14 +1,108 @@
+$color-white: #fff
+$color-blue: #0d47a1 
+  
+.logo
+  margin: 20px 20px 40px 20px
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  
 .logoWrapper 
   width: 200px
   height: 200px
-  background-color: white
-  margin: 20px 20px 40px 20px
+  background-color: $color-white
+  border-radius: 40px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
 
-.logo
-  height: 40vmin
-  pointer-events: none
+.digitsWrapper
+  display: flex
+  flex-direction: row
+  gap: 20px
+  align-items: end
+  justify-content: center
+  padding: 10px
+  font-size: 54px
+  font-weight: 700
+  color: $color-blue
+  width: 160px
+  height: 100px
+  font-size: 54px
+  font-weight: 700
+  color: $color-blue
+  position: relative
 
-@media (prefers-reduced-motion: no-preference) 
-  .logo
-    animation: App-logo-spin infinite 20s linear
-  
+.digitsAnimation
+  opacity: 0
+  animation: digits 4.5s ease-in-out infinite
+
+@keyframes digits 
+  0% 
+    opacity: 0
+  5%
+    opacity: 1
+  50% 
+    opacity: 1
+  95%
+    opacity: 1
+  100% 
+    opacity: 0
+
+.answerAnimation
+  opacity: 0
+  animation: answer 3s ease-in-out infinite
+
+@keyframes answer 
+  0% 
+    opacity: 0
+  5%
+    opacity: 1
+  50% 
+    opacity: 1
+  95%
+    opacity: 1
+  100% 
+    opacity: 0
+
+.digit
+  display: flex
+  justify-content: center
+  align-items: center
+
+.equalsSign
+  position: absolute
+  left: 30px
+  top: 10px
+
+.answer
+  position: absolute
+  display: flex
+  justify-content: center
+  align-items: center
+  bottom: 30px
+  right: 50px
+
+.appHeader
+  color: $color-white
+  margin-top: 5px
+
+.learn
+  text-align: left
+  font-size: 78px
+  font-weight: 900
+  line-height: 50px
+  margin-left: -3px
+  // margin-top: -30px
+
+.mathCom
+  text-align: left
+  font-size: 50px
+  font-weight: 500
+  line-height: 30px
+
+.learnMathComWrapper
+  display: flex
+  flex-direction: column

@@ -6,7 +6,7 @@ import { useState } from "react"
 import * as yup from "yup"
 import styles from './Auth.module.sass'
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Loader } from "../../../common/components/loaders/Loader"
+import { Loader } from "../../../common/components/loaders/CircularLoader"
 import { DefaultButton } from "../../../common/components/button/DefaultButton"
 import { Error } from "../../../common/components/error/Error"
 import { GoTo } from "../../../common/components/goTo/GoTo"

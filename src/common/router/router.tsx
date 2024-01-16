@@ -1,12 +1,12 @@
-import { createBrowserRouter } from 'react-router-dom';
-import { Main } from '../../features/main/ui/Main';
-import { Register } from '../../features/auth/ui/Register';
-import { Login } from '../../features/auth/ui/Login';
-import { Verify } from '../../features/auth/ui/Verify';
-import { Home } from '../../features/home/ui/Home';
-import { Summ } from '../../features/math-operations/summ/Summ';
-import { MathOperations } from '../../features/math-operations/MathOperations';
-import { Users } from '../../features/test/Users';
+import { createBrowserRouter } from 'react-router-dom'
+import { Main } from '../../features/main/ui/Main'
+import { Register } from '../../features/auth/ui/Register'
+import { Login } from '../../features/auth/ui/Login'
+import { Verify } from '../../features/auth/ui/Verify'
+import { Home } from '../../features/home/ui/Home'
+import { Summ } from '../../features/math-operations/summ/Summ'
+import { MathOperations } from '../../features/math-operations/MathOperations'
+import { Users } from '../../features/test/Users'
 
 export const router = createBrowserRouter([
   {
