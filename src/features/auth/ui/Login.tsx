@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom"
 import { RegisterType } from "../auth.types"
 import { useState } from "react"
 import * as yup from "yup"
-import styles from './Auth.module.sass'
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Loader } from "../../../common/components/loaders/CircularLoader"
 import { DefaultButton } from "../../../common/components/button/DefaultButton"
@@ -12,6 +11,7 @@ import { Error } from "../../../common/components/error/Error"
 import { GoTo } from "../../../common/components/goTo/GoTo"
 import { Input } from "../../../common/components/input/Input"
 import { InputType } from "../../../common/components/enums/enums"
+import { FormContainer } from "../../../common/components/form/FormContainer"
 
 const formSchema = yup.object().shape({
   email: yup.string()
@@ -48,8 +48,8 @@ export const Login = () => {
       .unwrap()
       .then(response => {
         reset()
-        const accessToken = response.accessToken
-        localStorage.setItem('accessToken', accessToken)
+        // const accessToken = response.accessToken
+        // localStorage.setItem('accessToken', accessToken)
         navigate('/home')
       })
       .catch(e => {
@@ -62,66 +62,65 @@ export const Login = () => {
   return (
     <>
       {isLoading && <Loader />}
-      
-      <form
-        style={serverError ? { marginTop: '-13px' } : {}}
-        className={styles.formWrapper}
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        {serverError && <Error error={serverError} />}
+      {serverError && <Error error={serverError} />}   
+      <FormContainer serverError={serverError}>
+        <form 
+          style={serverError ? { marginTop: '-13px', width: '200px' } : {width: '200px'}}
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { ref, value, onChange } }) => (
+              <Input 
+                type={InputType.TEXT}
+                label="Email"
+                error={errors.email?.message}
+                placeholder="Enter email"
+                ref={ref}
+                value={value}
+                onFocus={() => {
+                  clearErrors('email')
+                  setServerError('')
+                }}
+                onChange={onChange}
+              />
+            )}
+          />
 
-        <Controller
-          control={control}
-          name="email"
-          render={({ field: { ref, value, onChange } }) => (
-            <Input 
-              type={InputType.TEXT}
-              label="Email"
-              error={errors.email?.message}
-              placeholder="Enter email"
-              ref={ref}
-              value={value}
-              onFocus={() => {
-                clearErrors('email')
-                setServerError('')
-              }}
-              onChange={onChange}
-            />
-          )}
-        />
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { ref, value, onChange } }) => (
+              <Input 
+                type={InputType.PASSWORD}
+                label="Password"
+                error={errors.password?.message}
+                placeholder={"Enter password"}
+                ref={ref}
+                value={value}
+                onFocus={() => {
+                  clearErrors('password')
+                  setServerError('')
+                }}
+                onChange={onChange}
+              />
+            )}
+          />
 
-        <Controller
-          control={control}
-          name="password"
-          render={({ field: { ref, value, onChange } }) => (
-            <Input 
-              type={InputType.PASSWORD}
-              label="Password"
-              error={errors.password?.message}
-              placeholder={"Enter password"}
-              ref={ref}
-              value={value}
-              onFocus={() => {
-                clearErrors('password')
-                setServerError('')
-              }}
-              onChange={onChange}
-            />
-          )}
-        />
-
-        <DefaultButton 
-          error={errors.password}
-          name="Login"
-          type="submit"
-        />
+          <DefaultButton 
+            error={errors.password}
+            name="Login"
+            type="submit"
+          />
+        </form>
 
         <GoTo
           text="If you don't have an account, go to registration page"
           address={"/register"}
           name="Registration"
         />
-      </form>
+      </FormContainer> 
     </>
   )
 }

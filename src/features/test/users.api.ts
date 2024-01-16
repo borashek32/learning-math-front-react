@@ -1,31 +1,41 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { baseURL } from '../../common/baseUrl';
-import { UserType } from '../auth/auth.types';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { baseURL } from '../../common/baseUrl'
+import { UserType } from '../auth/auth.types'
+import { algByDecodingToken } from '../../common/utils/algByDecodingToken'
 
-// Получаем токен из localStorage
-const token = localStorage.getItem('accessToken');
+const token = localStorage.getItem('accessToken')
 
 export const usersApi = createApi({
   reducerPath: 'usersApi',
   baseQuery: fetchBaseQuery({ 
     baseUrl: baseURL,
     credentials: 'same-origin',
-    headers: { Authorization: `Bearer ${token}` }, // Используем токен здесь
     prepareHeaders: headers => {
+      const token = localStorage.getItem('accessToken')
+  
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        const bearerToken = token.split(' ')
+        headers.set('Authorization', `Bearer ${bearerToken}`)
+        // algByDecodingToken(token)
       }
-
-      return headers;
+  
+      return headers
     },
   }),
   endpoints: build => {
+    console.log(token)
     return {
-      users: build.query<UserType, void>({
-        query: () => 'users',
+      users: build.query<UserType[], void>({
+        query: () => ({
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+          },
+          method: 'GET',
+          url: 'users',
+        }),
       }),
-    };
+    }
   },
-});
+})
 
-export const { useUsersQuery } = usersApi;
+export const { useUsersQuery } = usersApi

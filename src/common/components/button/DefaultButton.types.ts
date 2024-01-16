@@ -4,4 +4,5 @@ export type Props = {
   error: FieldError | undefined
   type: "button" | "submit" | "reset" | undefined
   name: string
+  onClick?: () => void
 }

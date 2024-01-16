@@ -1,7 +1,6 @@
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
-import styles from './Auth.module.sass'
 import { RegisterType } from "../auth.types"
 import { useSignUpMutation } from "../auth.api"
 import { useState } from "react"
@@ -11,6 +10,7 @@ import { Error } from "../../../common/components/error/Error"
 import { GoTo } from "../../../common/components/goTo/GoTo"
 import { Input } from "../../../common/components/input/Input"
 import { InputType } from "../../../common/components/enums/enums"
+import { FormContainer } from "../../../common/components/form/FormContainer"
 
 interface IFormProps {
   email: string
@@ -54,8 +54,7 @@ export const Register = () => {
     },
     resolver: yupResolver(formSchema),
   })
-
-  watch("password", "")
+  watch('password', '')
 
   const onSubmit: SubmitHandler<RegisterType> = (data: RegisterType) => { 
     setServerError('')
@@ -74,85 +73,83 @@ export const Register = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <form 
-        style={serverError ? { marginTop: '-13px' } : {}}
-        className={styles.formWrapper}
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        {serverError && <Error error={serverError} />}
+      {serverError && <Error error={serverError} />}
+      <FormContainer serverError={serverError}>
+        <form onSubmit={handleSubmit(onSubmit)}>
 
-        <Controller
-          control={control}
-          name="email"
-          render={({ field: { ref, value, onChange } }) => (
-            <Input 
-              type={InputType.TEXT}
-              label="Email"
-              error={errors.email?.message}
-              placeholder={"Enter email"}
-              ref={ref}
-              value={value}
-              onFocus={() => {
-                clearErrors('email')
-                setServerError('')
-              }}
-              onChange={onChange}
-            />
-          )}
-        />
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { ref, value, onChange } }) => (
+              <Input 
+                type={InputType.TEXT}
+                label="Email"
+                error={errors.email?.message}
+                placeholder={"Enter email"}
+                ref={ref}
+                value={value}
+                onFocus={() => {
+                  clearErrors('email')
+                  setServerError('')
+                }}
+                onChange={onChange}
+              />
+            )}
+          />
 
-        <Controller
-          control={control}
-          name="password"
-          render={({ field: { ref, value, onChange } }) => (
-            <Input 
-              type={InputType.PASSWORD}
-              label="Password"
-              error={errors.password?.message}
-              placeholder={"Enter password"}
-              ref={ref}
-              value={value}
-              onFocus={() => {
-                clearErrors('password')
-                setServerError('')
-              }}
-              onChange={onChange}
-            />
-          )}
-        />
-    
-        <Controller
-          control={control}
-          name="passwordConfirmation"
-          render={({ field: { value, ref, onBlur, onChange } }) => (
-            <Input 
-              type={InputType.PASSWORD}
-              label="Password confirmation"
-              error={errors.passwordConfirmation?.message}
-              placeholder={"Enter password confirmation"}
-              ref={ref}
-              value={value}
-              onFocus={() => {
-                clearErrors('passwordConfirmation')
-                setServerError('')
-              }}
-              onChange={onChange}
-            />
-          )}
-        />
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { ref, value, onChange } }) => (
+              <Input 
+                type={InputType.PASSWORD}
+                label="Password"
+                error={errors.password?.message}
+                placeholder={"Enter password"}
+                ref={ref}
+                value={value}
+                onFocus={() => {
+                  clearErrors('password')
+                  setServerError('')
+                }}
+                onChange={onChange}
+              />
+            )}
+          />
+      
+          <Controller
+            control={control}
+            name="passwordConfirmation"
+            render={({ field: { value, ref, onBlur, onChange } }) => (
+              <Input 
+                type={InputType.PASSWORD}
+                label="Password confirmation"
+                error={errors.passwordConfirmation?.message}
+                placeholder={"Enter password confirmation"}
+                ref={ref}
+                value={value}
+                onFocus={() => {
+                  clearErrors('passwordConfirmation')
+                  setServerError('')
+                }}
+                onChange={onChange}
+              />
+            )}
+          />
 
-        <DefaultButton
-          error={errors.passwordConfirmation}
-          name="Register"
-          type="submit"
-        />
+          <DefaultButton
+            error={errors.passwordConfirmation}
+            name="Register"
+            type="submit"
+          />
+        </form>
 
         <GoTo
           text="If you already have an account, go to login page"
           address={"/login"}
           name="Login"
         />
-      </form>
+      </FormContainer>
     </>
   )
 }
