@@ -1,15 +1,25 @@
 $button-bg-color: #61dafb
-$button-bg-hover: #09303b
+$button-bg-hover: #01143d
   
-.button
-  // margin-top: 10px
-  background-color: $button-bg-color
-  border: none
+.button,
+.buttonOutlined
   width: 70px
   height: 30px
   border-radius: 4px
   cursor: pointer
-  transition: color background-color ease .4s
+  transition: background-color ease .4s
+
+.button
+  background-color: $button-bg-color
+  border: none
+
+  &:hover 
+    background-color: $button-bg-hover
+    color: white
+
+.buttonOutlined
+  background-color: $button-bg-color
+  border: 1px solid $button-bg-hover
 
   &:hover 
     background-color: $button-bg-hover

@@ -97,14 +97,17 @@ export const authApi = createApi({
       verify: build.query<any, string | undefined>({
         query: verificationLink => `verify/${verificationLink}`,
       }),
-      me: build.query<any, any>({
-        query: () => `refresh`
-      }),
       logout: build.mutation<any, void>({
         query: () => ({
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+          },
           method: 'POST',
-          url: 'auth/logout',
+          url: 'logout',
         }),
+      }),
+      me: build.query<any, any>({
+        query: () => `refresh`
       }),
     }
   },

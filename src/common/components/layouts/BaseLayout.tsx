@@ -10,9 +10,9 @@ type Props = {
 export const BaseLayout = (props: Props) => {
 
   return (
-    <div className={styles.App}>
+    <div className={styles.app}>
       <Nav />
-      <div className={styles.AppHeader}>
+      <div className={styles.appContent}>
         <Logo />
         { props.children }
       </div>

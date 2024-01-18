@@ -48,8 +48,6 @@ export const Login = () => {
       .unwrap()
       .then(response => {
         reset()
-        // const accessToken = response.accessToken
-        // localStorage.setItem('accessToken', accessToken)
         navigate('/home')
       })
       .catch(e => {

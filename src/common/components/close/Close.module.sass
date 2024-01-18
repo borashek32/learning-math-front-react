@@ -1,0 +1,28 @@
+$bg-color: #01143d
+$bg-hover: #000
+  
+.close
+  width: 12px
+  height: 12px
+  cursor: pointer
+
+.close:active
+  transform: rotate(45deg)
+
+.closeLine,
+.closeLine:after
+  width: 12px
+  height: 2px
+  background-color: $bg-color
+
+.closeLine 
+  transform: rotate(45deg)
+  position: relative
+  top: 6px
+
+.closeLine:after
+  content: ''
+  transform: rotate(90deg)
+  position: absolute
+  top: .5px
+  right: .5px

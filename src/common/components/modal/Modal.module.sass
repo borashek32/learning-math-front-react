@@ -1,0 +1,46 @@
+$bg-color: #000104b8
+$modal-bg-color: #61dafb
+$error: #fb6161 
+  
+.modalWrapper
+  width: 100%
+  height: 100%
+  position: fixed
+  z-index: 100
+  display: flex
+  justify-content: center
+  align-items: center
+  background-color: $bg-color
+
+.closeWrapper
+  width: 100%
+  display: flex
+  justify-content: flex-end
+  margin-right: 20px
+  margin-top: -50px
+
+.modalWithError,
+.modal
+  width: 250px
+  height: 170px
+  border-radius: 16px
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  gap: 20px
+  transition: all ease .4s
+
+.modal
+  background-color: $modal-bg-color
+  
+.modalWithError
+  background-color: $error
+
+.text
+  font-weight: 600
+
+.buttonWrapper
+  display: flex
+  gap: 10px
+

@@ -7,6 +7,9 @@ import { Home } from '../../features/home/ui/Home'
 import { Summ } from '../../features/math-operations/summ/Summ'
 import { MathOperations } from '../../features/math-operations/MathOperations'
 import { Users } from '../../features/test/Users'
+import { Diff } from '../../features/math-operations/diff/Diff'
+import { Docs } from '../../features/math-operations/docs/Docs'
+import { Logout } from '../../features/auth/ui/Logout'
 
 export const router = createBrowserRouter([
   {
@@ -26,17 +29,32 @@ export const router = createBrowserRouter([
     element: <Verify />,
   },
   {
+    path: "/logout",
+    element: <Logout />
+  },
+  
+  {
     path: "/home",
     element: <Home />
+  },
+  {
+    path: "/home/math-operations",
+    element: <MathOperations />
   },
   {
     path: "/home/math-operations/summ",
     element: <Summ />
   },
   {
-    path: "/home/math-operations",
-    element: <MathOperations />
+    path: "/home/math-operations/diff",
+    element: <Diff />
   },
+  {
+    path: "/home/math-operations/docs",
+    element: <Docs />
+  },
+
+
   {
     path: "users",
     element: <Users />
