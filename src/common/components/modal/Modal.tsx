@@ -18,7 +18,7 @@ export const Modal = ({ text, outlinedButton, buttonCallback, open, setOpen, err
             <div className={styles.closeWrapper}>
               <Close
                 open={open}
-                setOpen={setOpen}
+                setOpen={back}
               />
             </div>
 
@@ -31,13 +31,13 @@ export const Modal = ({ text, outlinedButton, buttonCallback, open, setOpen, err
                 onClick={back}
                 outlined={outlinedButton}
               />
-              {!error && 
+              {(!error || text.includes('Please, check')) ? null : ( 
                 <DefaultButton 
                   type='submit' 
                   name="Yes"
                   onClick={buttonCallback}
                   outlined={outlinedButton}
-                />
+                />)
               }
             </div>
           </div>

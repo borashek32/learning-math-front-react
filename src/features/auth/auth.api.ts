@@ -1,7 +1,7 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { baseURL } from '../../common/baseUrl'
-import { RegistedUserType, RegisterType } from './auth.types'
+import { ForgotPasswordType, RegistedUserType, RegisterType, PasswordRecoveryType } from './auth.types'
 import { algByDecodingToken } from '../../common/utils/algByDecodingToken'
 
 const baseQuery = fetchBaseQuery({
@@ -106,6 +106,38 @@ export const authApi = createApi({
           url: 'logout',
         }),
       }),
+      emailSent: build.mutation<any, ForgotPasswordType>({
+        query: ({ email }: ForgotPasswordType) => {
+          return {
+            url: 'forgot-password',
+            method: 'POST',
+            body: {
+              email
+            },
+          }
+        },
+      }),  
+      // getCreateNewPassword: build.query<any, any>({
+      //   query: ({ PasswordRecoveryCode, email }: any) => {
+      //     return {
+      //       url: `create-new-password/:passwordRecoveryCode/:email`,
+      //       method: 'GET',
+      //     }
+      //   },
+      // }),
+      createNewPassword: build.mutation<any, PasswordRecoveryType>({
+        query: ({ email, password }: PasswordRecoveryType) => {
+          console.log('api ', password, ' ', email)
+          return {
+            url: `create-new-password`,
+            method: 'POST',
+            body: {
+              password,
+              email
+            }
+          }
+        },
+      }),
       me: build.query<any, any>({
         query: () => `refresh`
       }),
@@ -118,4 +150,6 @@ export const {
   useSignUpMutation,
   useVerifyQuery,
   useLogoutMutation,
+  useEmailSentMutation,
+  useCreateNewPasswordMutation
 } = authApi

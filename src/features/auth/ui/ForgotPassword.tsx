@@ -1,32 +1,31 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { useLoginMutation } from "../auth.api"
 import { useNavigate } from "react-router-dom"
-import { RegisterType } from "../auth.types"
+import { ForgotPasswordType } from "../auth.types"
 import { useState } from "react"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Loader } from "../../../common/components/loaders/CircularLoader"
 import { DefaultButton } from "../../../common/components/button/DefaultButton"
 import { Error } from "../../../common/components/error/Error"
-import { GoTo } from "../../../common/components/goTo/GoTo"
 import { Input } from "../../../common/components/input/Input"
 import { InputType } from "../../../common/components/enums/enums"
 import { FormContainer } from "../../../common/components/form/FormContainer"
-import { Note } from "../../../common/components/note/Note"
+import { useEmailSentMutation } from "../auth.api"
+import { Modal } from "../../../common/components/modal/Modal"
 
 const formSchema = yup.object().shape({
   email: yup.string()
     .required("Email is required")
     .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Email must be an email"),
-  password: yup.string()
-    .required("Password is required")
-    .min(4, "Password length should be at least 4 characters"),
 })
 
-export const Login = () => {
-  const [login, { error, isLoading }] = useLoginMutation()
-  const [serverError, setServerError] = useState('')
+export const ForgotPassword = () => {
   const navigate = useNavigate()
+  const [success, setSuccess] = useState(false)
+  const [email, setEmail] = useState('')
+  const [emailSent, { isLoading }] = useEmailSentMutation()
+  const [serverError, setServerError] = useState('')
+  const [open, setOpen] = useState(true)
 
   const {
     handleSubmit,
@@ -34,27 +33,25 @@ export const Login = () => {
     formState: { errors },
     reset,
     clearErrors,
-  } = useForm<RegisterType>({
+  } = useForm<ForgotPasswordType>({
     defaultValues: {
       email: '',
-      password: '',
     },
     mode: 'onChange',
     resolver: yupResolver(formSchema)
   })
 
-  const onSubmit: SubmitHandler<RegisterType> = (data: RegisterType) => {
-    setServerError('')
-    login(data)
+  const onSubmit: SubmitHandler<ForgotPasswordType> = (data: ForgotPasswordType) => {
+    console.log(data)
+    emailSent(data)
       .unwrap()
-      .then(response => {
-        reset()
-        navigate('/home')
+      .then(res => {
+        setSuccess(true)
+        setEmail(data.email)
       })
-      .catch(e => {
-        if (e.status === 'FETCH_ERROR') setServerError('There is no connection to the server. Please, try later')
-        if (e.status === 400) setServerError(e.data.message)
-        if (e.status === 401) setServerError(e.data.message)
+      .catch(error => {
+        console.error('error frontend', error)
+        if (error.status === 400) setServerError(error.data.message)
       })
   }
 
@@ -62,6 +59,14 @@ export const Login = () => {
     <>
       {isLoading && <Loader />}
       {serverError && <Error error={serverError} />}   
+      {success && 
+        <Modal
+          text={`Please, check ${email}`}
+          open={open}
+          setOpen={setOpen}
+          outlinedButton={true}
+        />
+      }
       <FormContainer serverError={serverError}>
         <form 
           style={serverError ? { marginTop: '-13px', width: '200px' } : {width: '200px'}}
@@ -87,42 +92,12 @@ export const Login = () => {
             )}
           />
 
-          <Controller
-            control={control}
-            name="password"
-            render={({ field: { ref, value, onChange } }) => (
-              <Input 
-                type={InputType.PASSWORD}
-                label="Password"
-                error={errors.password?.message}
-                placeholder={"Enter password"}
-                ref={ref}
-                value={value}
-                onFocus={() => {
-                  clearErrors('password')
-                  setServerError('')
-                }}
-                onChange={onChange}
-              />
-            )}
-          />
-
           <DefaultButton 
-            error={errors.password}
-            name="Login"
+            error={errors.email}
+            name="Send"
             type="submit"
           />
         </form>
-
-        <a href="/forgot-password">
-          <Note text='Forgot password?' />
-        </a>
-
-        <GoTo
-          text="If you don't have an account, go to registration page"
-          address={"/register"}
-          name="Registration"
-        />
       </FormContainer> 
     </>
   )

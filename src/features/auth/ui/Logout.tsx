@@ -24,15 +24,10 @@ export const Logout = () => {
         if (e) {
           setOpen(false)
           setModalWithErrorOpen(true)
-          setServerError(e.message)
+          if (e.name === 'Error') setServerError('User not authorized. First log in and then you can log out')
         }
       })
-      .finally(() => {
-        
-      })
   }
-
-  console.log(serverError)
 
   return (
     <>

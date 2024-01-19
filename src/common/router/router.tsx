@@ -10,6 +10,8 @@ import { Users } from '../../features/test/Users'
 import { Diff } from '../../features/math-operations/diff/Diff'
 import { Docs } from '../../features/math-operations/docs/Docs'
 import { Logout } from '../../features/auth/ui/Logout'
+import { ForgotPassword } from '../../features/auth/ui/ForgotPassword'
+import { CreateNewPassword } from '../../features/auth/ui/CreateNewPassword'
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +33,14 @@ export const router = createBrowserRouter([
   {
     path: "/logout",
     element: <Logout />
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />
+  },
+  {
+    path: "/create-new-password/:passwordRecoveryCode/:email",
+    element: <CreateNewPassword />
   },
   
   {
