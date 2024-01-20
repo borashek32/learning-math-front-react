@@ -4,7 +4,7 @@ import { DefaultButton } from '../button/DefaultButton'
 import { useNavigate } from 'react-router-dom'
 import { Close } from '../close/Close'
 
-export const Modal = ({ text, outlinedButton, buttonCallback, open, setOpen, error }: Props) => {
+export const Modal = ({ text, outlinedButton, buttonName, buttonCallback, open, setOpen, error }: Props) => {
   const modalColor = !error ? styles.modal : styles.modalWithError
   const navigate = useNavigate()
 
@@ -31,10 +31,10 @@ export const Modal = ({ text, outlinedButton, buttonCallback, open, setOpen, err
                 onClick={back}
                 outlined={outlinedButton}
               />
-              {(!error || text.includes('Please, check')) ? null : ( 
+              {(!error || text.includes('Please, check' || buttonCallback)) && ( 
                 <DefaultButton 
                   type='submit' 
-                  name="Yes"
+                  name={buttonName ? buttonName : "Yes"}
                   onClick={buttonCallback}
                   outlined={outlinedButton}
                 />)

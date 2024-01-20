@@ -1,5 +1,4 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
 import { ForgotPasswordType } from "../auth.types"
 import { useState } from "react"
 import * as yup from "yup"
@@ -20,7 +19,6 @@ const formSchema = yup.object().shape({
 })
 
 export const ForgotPassword = () => {
-  const navigate = useNavigate()
   const [success, setSuccess] = useState(false)
   const [email, setEmail] = useState('')
   const [emailSent, { isLoading }] = useEmailSentMutation()
@@ -42,12 +40,12 @@ export const ForgotPassword = () => {
   })
 
   const onSubmit: SubmitHandler<ForgotPasswordType> = (data: ForgotPasswordType) => {
-    console.log(data)
     emailSent(data)
       .unwrap()
       .then(res => {
         setSuccess(true)
         setEmail(data.email)
+        reset()
       })
       .catch(error => {
         console.error('error frontend', error)

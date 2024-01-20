@@ -10,7 +10,8 @@ import { useCreateNewPasswordMutation } from "../auth.api"
 import { PasswordRecoveryType, RegisterType } from "../auth.types"
 import { Loader } from "../../../common/components/loaders/CircularLoader"
 import { Error } from "../../../common/components/error/Error"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+import { Modal } from "../../../common/components/modal/Modal"
 
 interface IFormProps {
   password: string
@@ -32,9 +33,12 @@ const formSchema = yup.object().shape({
 
 export const CreateNewPassword = () => {
   const { passwordRecoveryCode, email } = useParams()
+  const [success, setSuccess] = useState(false)
+  const [open, setOpen] = useState(true)
   const [recoveryCode, setRecoveryCode] = useState('')
   const [serverError, setServerError] = useState('')
   const [createNewPassword, { isLoading }] = useCreateNewPasswordMutation()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (passwordRecoveryCode) setRecoveryCode(recoveryCode as string)
@@ -67,7 +71,7 @@ export const CreateNewPassword = () => {
       createNewPassword(data)
         .unwrap()
         .then(() => {
-          console.log(data)
+          setSuccess(true)
           reset()
         })
         .catch(e => {
@@ -83,6 +87,16 @@ export const CreateNewPassword = () => {
     <>
       {isLoading && <Loader />}
       {serverError && <Error error={serverError} />}
+      {success && 
+        <Modal
+          text={`Now go to login page`}
+          open={open}
+          setOpen={setOpen}
+          outlinedButton={true}
+          buttonName="Login"
+          buttonCallback={() => navigate('/login')}
+        />
+      }
       <FormContainer serverError={serverError}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
