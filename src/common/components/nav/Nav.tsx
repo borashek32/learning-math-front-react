@@ -2,11 +2,16 @@ import { Props } from './Nav.types'
 import styles from './Nav.module.sass'
 import { LogoSmall } from '../logo/LogoSmall'
 import { useState } from 'react'
+import { useMeQuery } from '../../../features/auth/auth.api'
 
-export const Nav = (props: Props) => {
+export const Nav = ({ userEmail }: Props) => {
+  // const accessToken = localStorage.getItem('accessToken')
+  // const { data } = useMeQuery()
   const [active, setActive] = useState(false)
 
-  const onClick  = () => {
+  // console.log(data)
+
+  const onClick = () => {
     setActive(!active)
   }
 
@@ -17,11 +22,15 @@ export const Nav = (props: Props) => {
     <>
       <header className={styles.header}>
         <LogoSmall />
-        <div 
+        <div className={styles.headerWithUser}>
+          {/* <p className={styles.userEmail}>{userEmail && userEmail}</p> */}
+
+          <div 
           className={menu}
           onClick={onClick}
         >
           <span className={styles.line}></span>
+        </div>
         </div>
       </header>
       {active &&

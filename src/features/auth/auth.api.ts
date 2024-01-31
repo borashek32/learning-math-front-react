@@ -1,7 +1,7 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { baseURL } from '../../common/baseUrl'
-import { ForgotPasswordType, RegistedUserType, RegisterType, PasswordRecoveryType } from './auth.types'
+import { ForgotPasswordType, RegistedUserType, RegisterType, PasswordRecoveryType, UserType } from './auth.types'
 import { algByDecodingToken } from '../../common/utils/algByDecodingToken'
 
 const baseQuery = fetchBaseQuery({
@@ -58,6 +58,15 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
     localStorage.setItem('accessToken', result.data.accessToken as string)
   }
 
+  if (
+    api.endpoint === 'me' &&
+    result.data &&
+    typeof result.data === 'object' &&
+    'accessToken' in result.data
+  ) {
+    localStorage.getItem('accessToken')
+  }
+
   if (api.endpoint === 'logout') {
     localStorage.removeItem('accessToken')
   }
@@ -68,6 +77,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: baseQueryWithReauth,
+  tagTypes: ['me'],
   endpoints: build => {
     return {
       login: build.mutation<RegistedUserType, RegisterType>({
@@ -81,6 +91,7 @@ export const authApi = createApi({
             },
           }
         },
+        invalidatesTags: ['me'],
       }),
       signUp: build.mutation<RegistedUserType, RegisterType>({
         query: ({ email, password }: RegisterType) => {
@@ -94,17 +105,15 @@ export const authApi = createApi({
           }
         },
       }),
-      verify: build.query<any, string | undefined>({
+      verify: build.query<string, string | undefined>({
         query: verificationLink => `verify/${verificationLink}`,
       }),
       logout: build.mutation<any, void>({
         query: () => ({
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
-          },
           method: 'POST',
           url: 'logout',
         }),
+        invalidatesTags: ['me'],
       }),
       emailSent: build.mutation<any, ForgotPasswordType>({
         query: ({ email }: ForgotPasswordType) => {
@@ -116,18 +125,9 @@ export const authApi = createApi({
             },
           }
         },
-      }),  
-      // getCreateNewPassword: build.query<any, any>({
-      //   query: ({ PasswordRecoveryCode, email }: any) => {
-      //     return {
-      //       url: `create-new-password/:passwordRecoveryCode/:email`,
-      //       method: 'GET',
-      //     }
-      //   },
-      // }),
+      }),
       createNewPassword: build.mutation<any, PasswordRecoveryType>({
         query: ({ email, password }: PasswordRecoveryType) => {
-          console.log('api ', password, ' ', email)
           return {
             url: `create-new-password`,
             method: 'POST',
@@ -138,8 +138,14 @@ export const authApi = createApi({
           }
         },
       }),
-      me: build.query<any, any>({
-        query: () => `refresh`
+      me: build.query<RegistedUserType, void>({
+        query: () => {
+          return {
+            method: 'GET',
+            url: 'me',
+          }
+        },
+        providesTags: ['me'],
       }),
     }
   },
@@ -151,5 +157,6 @@ export const {
   useVerifyQuery,
   useLogoutMutation,
   useEmailSentMutation,
-  useCreateNewPasswordMutation
+  useCreateNewPasswordMutation,
+  useMeQuery,
 } = authApi

@@ -11,6 +11,8 @@ import { GoTo } from "../../../common/components/goTo/GoTo"
 import { Input } from "../../../common/components/input/Input"
 import { InputType } from "../../../common/components/enums/enums"
 import { FormContainer } from "../../../common/components/form/FormContainer"
+import { Modal } from "../../../common/components/modal/Modal"
+import { useNavigate } from "react-router-dom"
 
 interface IFormProps {
   email: string
@@ -37,6 +39,12 @@ const formSchema = yup.object().shape({
 export const Register = () => {
   const [signUp, { error, isLoading }] = useSignUpMutation()
   const [serverError, setServerError] = useState('')
+  const [open, setOpen] = useState(false)
+  const navigate = useNavigate()
+
+  const back = () => navigate('/')
+
+  const handleOpenModal = () => setOpen(false)
 
   const {
     handleSubmit, 
@@ -61,6 +69,7 @@ export const Register = () => {
     signUp(data)
       .unwrap()
       .then(() => {
+        setOpen(true)
         reset()
       })
       .catch(e => {
@@ -74,9 +83,18 @@ export const Register = () => {
     <>
       {isLoading && <Loader />}
       {serverError && <Error error={serverError} />}
+      {open && 
+        <Modal
+          open={open}
+          setOpen={handleOpenModal}
+          text="We've sent you a link to verify your email. Check your mail, please"
+          buttonName='Yes'
+          buttonCallback={back}
+          outlinedButton={true}
+        />
+      }
       <FormContainer serverError={serverError}>
         <form onSubmit={handleSubmit(onSubmit)}>
-
           <Controller
             control={control}
             name="email"

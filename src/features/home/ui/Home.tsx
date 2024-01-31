@@ -1,12 +1,12 @@
-import styles from '../../App.module.sass'
+import { useMeQuery } from "../../auth/auth.api";
 
 export const Home = () => {
+  // const { data } = useMeQuery()
+  // console.log(data?.user.email)
+
   return (
     <>
-      <h1>Home</h1>
-      <a href='http://localhost:19006'>Go to app</a>
-      <a href='/'>Back to browser</a>
-      <br />
+      <h1 style={{color: 'white'}}>Hello</h1>
     </>
   )
 }

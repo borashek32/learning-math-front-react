@@ -21,10 +21,13 @@ export const Logout = () => {
         navigate('/')
       })
       .catch(e => {
+        console.log(e)
         if (e) {
           setOpen(false)
           setModalWithErrorOpen(true)
-          if (e.name === 'Error') setServerError('User not authorized. First log in and then you can log out')
+          if (e.status === 401 || e.name === 'Error') {
+            setServerError('User not authorized. First log in and then you can log out')
+          }
         }
       })
   }

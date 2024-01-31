@@ -1,14 +1,35 @@
 import styles from './Modal.module.sass'
 import { Props } from './Modal.type'
 import { DefaultButton } from '../button/DefaultButton'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Close } from '../close/Close'
 
-export const Modal = ({ text, outlinedButton, buttonName, buttonCallback, open, setOpen, error }: Props) => {
+export const Modal = ({ 
+  text, 
+  outlinedButton, 
+  buttonName, 
+  buttonCallback, 
+  open, 
+  setOpen, 
+  error 
+}: Props) => {
   const modalColor = !error ? styles.modal : styles.modalWithError
   const navigate = useNavigate()
+  const location = useLocation()
 
   const back = () => navigate(-1)
+
+  let textStyle
+  switch (location.pathname) {
+    case '/register': 
+      textStyle = styles.textSmall
+      break
+    case '/logout':
+      textStyle = styles.textSmall
+      break
+  }
+
+  if (location.pathname.startsWith('/verify/')) textStyle = styles.textSmall
 
   return (
     <>
@@ -22,7 +43,7 @@ export const Modal = ({ text, outlinedButton, buttonName, buttonCallback, open, 
               />
             </div>
 
-            <p className={styles.text}>{text}</p>
+            <p className={textStyle}>{text}</p>
 
             <div className={styles.buttonWrapper}>
               <DefaultButton

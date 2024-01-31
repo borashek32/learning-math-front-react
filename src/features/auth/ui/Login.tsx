@@ -1,6 +1,6 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { useLoginMutation } from "../auth.api"
-import { useNavigate } from "react-router-dom"
+import { useLoginMutation, useMeQuery } from "../auth.api"
+import { useLocation, useNavigate } from "react-router-dom"
 import { RegisterType } from "../auth.types"
 import { useState } from "react"
 import * as yup from "yup"
@@ -24,9 +24,14 @@ const formSchema = yup.object().shape({
 })
 
 export const Login = () => {
-  const [login, { error, isLoading }] = useLoginMutation()
+  // const { data } = useMeQuery()
+  // console.log(data)
+
+
+  const [login, { isLoading }] = useLoginMutation()
   const [serverError, setServerError] = useState('')
   const navigate = useNavigate()
+  const location  = useLocation()
 
   const {
     handleSubmit,
@@ -52,7 +57,9 @@ export const Login = () => {
         navigate('/home')
       })
       .catch(e => {
-        if (e.status === 'FETCH_ERROR') setServerError('There is no connection to the server. Please, try later')
+        if (e.status === 'FETCH_ERROR') {
+          setServerError('There is no connection to the server. Please, try later')
+        }
         if (e.status === 400) setServerError(e.data.message)
         if (e.status === 401) setServerError(e.data.message)
       })
