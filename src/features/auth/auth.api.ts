@@ -1,13 +1,23 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { baseURL } from '../../common/baseUrl'
-import { ForgotPasswordType, RegistedUserType, RegisterType, PasswordRecoveryType, UserType } from './auth.types'
+import { 
+  ForgotPasswordType, 
+  RegistedUserType, 
+  RegisterType, 
+  PasswordRecoveryType,
+} from './auth.types'
 import { algByDecodingToken } from '../../common/utils/algByDecodingToken'
+import { Mutex } from 'async-mutex'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
   method: 'POST',
-  credentials: 'same-origin',
+  credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json',
+    Cookie: document.cookie,
+  },
   prepareHeaders: headers => {
     const token = localStorage.getItem('accessToken')
 
@@ -27,6 +37,8 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 ) => {
   let result = await baseQuery(args, api, extraOptions)
 
+  console.log(result)
+
   if (result.error && result.error.status === 401) {
     const token = localStorage.getItem('accessToken')
 
@@ -37,7 +49,16 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
     const { isExpirationTimeLongerThanCurrent } = algByDecodingToken(token)
 
     if (!isExpirationTimeLongerThanCurrent) {
-      const refreshResult = await baseQuery(`${baseURL}auth/update-tokens`, api, extraOptions)
+      console.log('access token expired')
+
+      const refreshResult = await baseQuery({ 
+          method: 'GET', 
+          url: `${baseURL}refresh`,
+        }, 
+        api, 
+        extraOptions
+      )
+      console.log(refreshResult)
 
       if (
         refreshResult.data &&
@@ -53,9 +74,11 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
     api.endpoint === 'login' &&
     result.data &&
     typeof result.data === 'object' &&
-    'accessToken' in result.data
+    'accessToken' in result.data &&
+    'refreshToken' in result.data
   ) {
     localStorage.setItem('accessToken', result.data.accessToken as string)
+    document.cookie = `refreshToken=${result.data.refreshToken}; Secure; SameSite=None; Max-Age='30d'; Path=/;`;
   }
 
   if (
@@ -147,6 +170,14 @@ export const authApi = createApi({
         },
         providesTags: ['me'],
       }),
+      refresh: build.query<any, any>({
+        query: () => {
+          return {
+            method: 'GET',
+            url: 'refresh'
+          }
+        }
+      })
     }
   },
 })
