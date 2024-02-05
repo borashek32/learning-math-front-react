@@ -1,5 +1,4 @@
-import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { baseURL } from '../../common/baseUrl'
 import { 
   ForgotPasswordType, 
@@ -8,7 +7,6 @@ import {
   PasswordRecoveryType,
 } from './auth.types'
 import { algByDecodingToken } from '../../common/utils/algByDecodingToken'
-import { Mutex } from 'async-mutex'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
@@ -40,9 +38,12 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   console.log(result)
 
   if (result.error && result.error.status === 401) {
+    console.log(result)
+
     const token = localStorage.getItem('accessToken')
 
     if (!token) {
+      console.log('Token not found')
       throw new Error('Token not found')
     }
 
@@ -58,27 +59,41 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
         api, 
         extraOptions
       )
-      console.log(refreshResult)
+      console.log('refreshResult', refreshResult)
 
       if (
         refreshResult.data &&
         typeof refreshResult.data === 'object' &&
-        'accessToken' in refreshResult.data
+        'accessToken' in refreshResult.data &&
+        'refreshToken' in refreshResult.data
       ) {
         localStorage.setItem('accessToken', refreshResult.data.accessToken as string)
+        document.cookie = `
+          refreshToken=${refreshResult.data.refreshToken}; 
+          Secure; 
+          SameSite=None; 
+          Max-Age='30d'; 
+          Path=/;
+        `
       }
     }
   }
 
   if (
-    api.endpoint === 'login' &&
+    (api.endpoint === 'login' || api.endpoint === 'refresh') &&
     result.data &&
     typeof result.data === 'object' &&
     'accessToken' in result.data &&
     'refreshToken' in result.data
   ) {
     localStorage.setItem('accessToken', result.data.accessToken as string)
-    document.cookie = `refreshToken=${result.data.refreshToken}; Secure; SameSite=None; Max-Age='30d'; Path=/;`;
+    document.cookie = `
+      refreshToken=${result.data.refreshToken}; 
+      Secure; 
+      SameSite=None; 
+      Max-Age='30d'; 
+      Path=/;
+    `
   }
 
   if (
@@ -132,10 +147,15 @@ export const authApi = createApi({
         query: verificationLink => `verify/${verificationLink}`,
       }),
       logout: build.mutation<any, void>({
-        query: () => ({
-          method: 'POST',
-          url: 'logout',
-        }),
+        query: () => {
+
+          console.log('logout api')
+
+          return {
+            method: 'POST',
+            url: 'logout',
+          }
+        },  
         invalidatesTags: ['me'],
       }),
       emailSent: build.mutation<any, ForgotPasswordType>({
@@ -161,16 +181,17 @@ export const authApi = createApi({
           }
         },
       }),
-      me: build.query<RegistedUserType, void>({
-        query: () => {
-          return {
-            method: 'GET',
-            url: 'me',
-          }
-        },
-        providesTags: ['me'],
-      }),
-      refresh: build.query<any, any>({
+      // me: build.query<RegistedUserType, void>({
+      //   query: () => {
+      //     console.log('me')
+      //     return {
+      //       method: 'GET',
+      //       url: 'me',
+      //     }
+      //   },
+      //   providesTags: ['me'],
+      // }),
+      refresh: build.query<any, void>({
         query: () => {
           return {
             method: 'GET',
@@ -189,5 +210,6 @@ export const {
   useLogoutMutation,
   useEmailSentMutation,
   useCreateNewPasswordMutation,
-  useMeQuery,
+  // useMeQuery,
+  useRefreshQuery,
 } = authApi

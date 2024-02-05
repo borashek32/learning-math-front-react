@@ -1,5 +1,5 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { useLoginMutation, useMeQuery } from "../auth.api"
+import { useLoginMutation } from "../auth.api"
 import { useLocation, useNavigate } from "react-router-dom"
 import { RegisterType } from "../auth.types"
 import { useState } from "react"

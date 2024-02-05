@@ -7,5 +7,6 @@ export const router = createBrowserRouter([
     element: <PrivateRoutes />,
     children: privateRoutes,
   },
+  // ...privateRoutes,
   ...publicRoutes
 ])

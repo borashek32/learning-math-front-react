@@ -2,13 +2,12 @@ import { useNavigate } from "react-router-dom"
 import { Modal } from "../../../common/components/modal/Modal"
 import { useLogoutMutation } from "../auth.api"
 import { useState } from "react"
-import { Loader } from "../../../common/components/loaders/CircularLoader"
 
 export const Logout = () => {
   const navigate = useNavigate()
   const [open, setOpen] = useState(true)
   const [modalWithErrorOpen, setModalWithErrorOpen] = useState(false)
-  const [logout, { isLoading }] = useLogoutMutation()
+  const [logout] = useLogoutMutation()
   const [serverError, setServerError] = useState('')
 
   const handleOpenModal = () => setOpen(false)
@@ -34,7 +33,6 @@ export const Logout = () => {
 
   return (
     <>
-      {isLoading && <Loader />}
       {serverError && 
         <Modal
           open={modalWithErrorOpen}

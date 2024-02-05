@@ -1,4 +1,3 @@
-import { Note } from '../note/Note'
 import styles from './GoTo.module.sass'
 import { Props } from './GoTo.types'
 

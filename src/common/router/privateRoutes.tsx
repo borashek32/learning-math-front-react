@@ -6,9 +6,8 @@ import { Users } from '../../features/test/Users'
 import { Diff } from '../../features/math-operations/diff/Diff'
 import { Docs } from '../../features/math-operations/docs/Docs'
 import { Logout } from '../../features/auth/ui/Logout'
-import { useMeQuery } from "../../features/auth/auth.api"
-import { useState } from "react"
-import { Modal } from "../components/modal/Modal"
+import { useRefreshQuery } from "../../features/auth/auth.api"
+import { Loader } from "../components/loaders/CircularLoader"
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -44,25 +43,21 @@ export const privateRoutes: RouteObject[] = [
 ]
 
 export function PrivateRoutes() {
-  const { isLoading, isError } = useMeQuery()
-  // const [open, setOpen] = useState(true)
+  const { data, isLoading, isError } = useRefreshQuery()
+
+  console.log(data)
 
   if (isLoading) {
+    return <Loader />
+  }
+
+  if (!data) {
     return null
   }
 
-  // if (isError) {
-  //   return <Modal
-  //       open={open}
-  //       setOpen={() => setOpen(false)}
-  //       text={'User not authorized'}
-  //       error={true}
-  //     />
-  // }
+  const isAuthenticated = data ? true : false
 
-  const isAuthenticated = !isError
-
-  // return <Outlet />
+  console.log(isAuthenticated)
  
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }
