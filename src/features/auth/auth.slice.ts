@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 type Props = {
   userId: string
   userEmail: string
+  isAuthenticated: boolean
 }
 
 const userInfoSlice = createSlice({
@@ -13,9 +14,9 @@ const userInfoSlice = createSlice({
   },
   reducers: {
     setUserInfo(state, action) {
-      console.log('payload', action.payload)
       state.userId = action.payload.user.id
       state.userEmail = action.payload.user.email
+      state.isAuthenticated = true
     },
   },
 })

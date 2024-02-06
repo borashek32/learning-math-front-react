@@ -3,7 +3,6 @@ import { store } from '../common/providers/model/store'
 import { RouterProvider } from "react-router-dom"
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { router } from '../common/router/router'
-import { BaseLayout } from '../common/components/layouts/BaseLayout'
 
 const queryClient = new QueryClient()
 
@@ -11,9 +10,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <BaseLayout>
-          <RouterProvider router={router} />
-        </BaseLayout>
+        <RouterProvider router={router} />
       </Provider>
     </QueryClientProvider>
   );

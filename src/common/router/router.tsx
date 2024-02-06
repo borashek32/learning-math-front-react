@@ -1,12 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { PrivateRoutes, privateRoutes } from './privateRoutes'
-import { publicRoutes } from './publicRoutes'
+import { PublicRoutes, publicRoutes } from './publicRoutes'
 
 export const router = createBrowserRouter([
   {
     element: <PrivateRoutes />,
     children: privateRoutes,
   },
-  // ...privateRoutes,
-  ...publicRoutes
+  {
+    element: <PublicRoutes />,
+    children: publicRoutes,
+  }
 ])

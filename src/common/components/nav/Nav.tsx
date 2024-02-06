@@ -2,9 +2,12 @@ import { Props } from './Nav.types'
 import styles from './Nav.module.sass'
 import { LogoSmall } from '../logo/LogoSmall'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { selectUserEmail } from '../../../features/auth/auth.selector'
 
 export const Nav = () => {
   const [active, setActive] = useState(false)
+  const userEmail = useSelector(selectUserEmail)
 
   const onClick = () => {
     setActive(!active)
@@ -18,13 +21,16 @@ export const Nav = () => {
       <header className={styles.header}>
         <LogoSmall />
         <div className={styles.headerWithUser}>
+          <a href="/home/profile">
+            <p className={styles.userEmail}>{userEmail}</p> 
+          </a>
 
           <div 
           className={menu}
           onClick={onClick}
         >
           <span className={styles.line}></span>
-        </div>
+        p</div>
         </div>
       </header>
       {active &&
