@@ -1,10 +1,13 @@
+import { useSelector } from 'react-redux'
 import styles from './../../../common/styles/App.module.sass'
+import { selectUserEmail } from '../../auth/auth.selector'
 
 export const Home = () => {
+  const userEmail = useSelector(selectUserEmail)
   
   return (
     <>
-      <h1 style={{color: 'white'}}>Hello</h1>
+      <h3 style={{color: 'white'}}>Hello, {userEmail}</h3>
       
 
       <li className={styles.item}>
@@ -13,7 +16,7 @@ export const Home = () => {
       
       <div className={styles.footerDevideLine}></div>
       <li className={styles.item}>
-        <a className={styles.itemLink} href="#">Profile</a>
+        <a className={styles.itemLink} href="/home/profile">Profile</a>
       </li>
       <li className={styles.item}>
         <a className={styles.itemLink} href="/logout">Logout</a>

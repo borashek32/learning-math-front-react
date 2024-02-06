@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux'
-import { store } from './store'
+import { store } from '../common/providers/model/store'
 import { RouterProvider } from "react-router-dom"
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { router } from '../common/router/router'

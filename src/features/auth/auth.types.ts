@@ -28,3 +28,9 @@ export type PasswordRecoveryType = {
   password: string
   passwordRecoveryCode: string | undefined
 }
+
+export type NewPasswordType = {
+  password: string
+  newPassword: string
+  newPasswordConfirmation: string
+}

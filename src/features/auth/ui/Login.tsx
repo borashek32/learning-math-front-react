@@ -1,6 +1,6 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { useLoginMutation } from "../auth.api"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { RegisterType } from "../auth.types"
 import { useState } from "react"
 import * as yup from "yup"
@@ -13,6 +13,8 @@ import { Input } from "../../../common/components/input/Input"
 import { InputType } from "../../../common/components/enums/enums"
 import { FormContainer } from "../../../common/components/form/FormContainer"
 import { Note } from "../../../common/components/note/Note"
+import { useDispatch } from "react-redux"
+import { setUserInfo } from "../auth.slice"
 
 const formSchema = yup.object().shape({
   email: yup.string()
@@ -23,15 +25,10 @@ const formSchema = yup.object().shape({
     .min(4, "Password length should be at least 4 characters"),
 })
 
-export const Login = () => {
-  // const { data } = useMeQuery()
-  // console.log(data)
-
-
-  const [login, { isLoading }] = useLoginMutation()
+export const Login = () => {const [login, { isLoading }] = useLoginMutation()
   const [serverError, setServerError] = useState('')
+  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const location  = useLocation()
 
   const {
     handleSubmit,
@@ -54,6 +51,8 @@ export const Login = () => {
       .unwrap()
       .then(response => {
         reset()
+        console.log('response', response)
+        dispatch(setUserInfo(response))
         navigate('/home')
       })
       .catch(e => {

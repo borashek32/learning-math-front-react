@@ -5,6 +5,7 @@ import {
   RegistedUserType, 
   RegisterType, 
   PasswordRecoveryType,
+  UserType,
 } from './auth.types'
 import { algByDecodingToken } from '../../common/utils/algByDecodingToken'
 
@@ -33,33 +34,18 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   api,
   extraOptions
 ) => {
-  let result = await baseQuery(args, api, extraOptions)
+  const token = localStorage.getItem('accessToken')
 
-  console.log(result)
-
-  if (result.error && result.error.status === 401) {
-    console.log(result)
-
-    const token = localStorage.getItem('accessToken')
-
-    if (!token) {
-      console.log('Token not found')
-      throw new Error('Token not found')
-    }
-
+  if (token) {
     const { isExpirationTimeLongerThanCurrent } = algByDecodingToken(token)
 
-    if (!isExpirationTimeLongerThanCurrent) {
-      console.log('access token expired')
-
+    if (!isExpirationTimeLongerThanCurrent && api.endpoint !== 'refresh') {
       const refreshResult = await baseQuery({ 
-          method: 'GET', 
-          url: `${baseURL}refresh`,
-        }, 
-        api, 
-        extraOptions
-      )
-      console.log('refreshResult', refreshResult)
+        method: 'GET', 
+        url: `${baseURL}refresh`,
+      }, 
+      api, 
+      extraOptions)
 
       if (
         refreshResult.data &&
@@ -69,15 +55,17 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
       ) {
         localStorage.setItem('accessToken', refreshResult.data.accessToken as string)
         document.cookie = `
-          refreshToken=${refreshResult.data.refreshToken}; 
-          Secure; 
-          SameSite=None; 
-          Max-Age='30d'; 
+          refreshToken=${refreshResult.data.refreshToken};
+          Secure;
+          SameSite=None;
+          Max-Age='30d';
           Path=/;
         `
       }
     }
   }
+
+  let result = await baseQuery(args, api, extraOptions)
 
   if (
     (api.endpoint === 'login' || api.endpoint === 'refresh') &&
@@ -88,16 +76,16 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   ) {
     localStorage.setItem('accessToken', result.data.accessToken as string)
     document.cookie = `
-      refreshToken=${result.data.refreshToken}; 
-      Secure; 
-      SameSite=None; 
-      Max-Age='30d'; 
-      Path=/;
+      refreshToken=${result.data.refreshToken} 
+      Secure 
+      SameSite=None 
+      Max-Age='30d' 
+      Path=/
     `
   }
 
   if (
-    api.endpoint === 'me' &&
+    api.endpoint === 'me' && 
     result.data &&
     typeof result.data === 'object' &&
     'accessToken' in result.data
@@ -111,6 +99,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 
   return result
 }
+
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -148,9 +137,6 @@ export const authApi = createApi({
       }),
       logout: build.mutation<any, void>({
         query: () => {
-
-          console.log('logout api')
-
           return {
             method: 'POST',
             url: 'logout',
@@ -181,21 +167,20 @@ export const authApi = createApi({
           }
         },
       }),
-      // me: build.query<RegistedUserType, void>({
-      //   query: () => {
-      //     console.log('me')
-      //     return {
-      //       method: 'GET',
-      //       url: 'me',
-      //     }
-      //   },
-      //   providesTags: ['me'],
-      // }),
-      refresh: build.query<any, void>({
+      me: build.query<RegistedUserType, void>({
         query: () => {
           return {
             method: 'GET',
-            url: 'refresh'
+            url: 'me',
+          }
+        },
+        providesTags: ['me'],
+      }),
+      changePassword: build.query<UserType, { password: string }>({
+        query: () => {
+          return {
+            method: 'GET',
+            url: 'change-password'
           }
         }
       })
@@ -210,6 +195,6 @@ export const {
   useLogoutMutation,
   useEmailSentMutation,
   useCreateNewPasswordMutation,
-  // useMeQuery,
-  useRefreshQuery,
+  useMeQuery,
+  // useRefreshQuery,
 } = authApi

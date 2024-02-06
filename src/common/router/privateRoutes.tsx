@@ -6,8 +6,11 @@ import { Users } from '../../features/test/Users'
 import { Diff } from '../../features/math-operations/diff/Diff'
 import { Docs } from '../../features/math-operations/docs/Docs'
 import { Logout } from '../../features/auth/ui/Logout'
-import { useRefreshQuery } from "../../features/auth/auth.api"
+// import { useRefreshQuery } from "../../features/auth/auth.api"
 import { Loader } from "../components/loaders/CircularLoader"
+import { ChangePassword } from "../../features/auth/ui/ChangePassword"
+import { Profile } from "../../features/profile/ui/Profile"
+import { useMeQuery } from "../../features/auth/auth.api"
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -17,6 +20,14 @@ export const privateRoutes: RouteObject[] = [
   {
     path: "/home",
     element: <Home />
+  },
+  {
+    path: "/home/profile",
+    element: <Profile />
+  },
+  {
+    path: "/home/profile/change-password",
+    element: <ChangePassword />
   },
   {
     path: "/home/math-operations",
@@ -43,9 +54,11 @@ export const privateRoutes: RouteObject[] = [
 ]
 
 export function PrivateRoutes() {
-  const { data, isLoading, isError } = useRefreshQuery()
+  const { data, isLoading, isError } = useMeQuery()
 
-  console.log(data)
+  if (isError) {
+    return <Navigate to="/login" />
+  }
 
   if (isLoading) {
     return <Loader />
@@ -56,8 +69,6 @@ export function PrivateRoutes() {
   }
 
   const isAuthenticated = data ? true : false
-
-  console.log(isAuthenticated)
  
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }
