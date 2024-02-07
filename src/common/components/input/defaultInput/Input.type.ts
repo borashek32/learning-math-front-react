@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, Ref } from "react"
-import { InputType } from "../enums/enums"
+import { InputType } from "../../enums/enums"
 
 export type Props = {
   ref?: Ref<HTMLInputElement>

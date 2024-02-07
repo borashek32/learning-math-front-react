@@ -10,7 +10,9 @@ export const Modal = ({
   buttonName, 
   buttonCallback, 
   open, 
-  error 
+  error,
+  color,
+  buttonBack
 }: Props) => {
   const modalColor = !error ? styles.modal : styles.modalWithError
   const navigate = useNavigate()
@@ -29,12 +31,12 @@ export const Modal = ({
   }
 
   if (location.pathname.startsWith('/verify/')) textStyle = styles.textSmall
-
+ 
   return (
     <>
       {open && 
         <div className={styles.modalWrapper}>
-          <div className={modalColor}>
+          <div style={color ? { backgroundColor: JSON.stringify(color) } : {}} className={modalColor}>
             <div className={styles.closeWrapper}>
               <Close
                 open={open}
@@ -45,12 +47,12 @@ export const Modal = ({
             <p className={textStyle}>{text}</p>
 
             <div className={styles.buttonWrapper}>
-              <DefaultButton
+              {buttonBack && <DefaultButton
                 type="button"
                 name="Back"
                 onClick={back}
                 outlined={outlinedButton}
-              />
+              />}
               {(!error || text.includes('Please, check' || buttonCallback)) && ( 
                 <DefaultButton 
                   type='submit' 

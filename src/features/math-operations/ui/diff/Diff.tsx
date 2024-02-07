@@ -1,16 +1,23 @@
-import { useEffect, useState } from "react"
-import { GoTo } from "../../../common/components/goTo/GoTo"
-import { Header } from "../../../common/components/header/Header"
+import React, { useEffect, useState } from 'react'
+import { GoTo } from '../../../../common/components/goTo/GoTo'
+import { Header } from '../../../../common/components/header/Header'
 
-export const Summ = () => {
+export const Diff = () => {
 
   const [firstDigit, setFirstDigit] = useState<number | null>(null)
   const [secondDigit, setSecondDigit] = useState<number | null>(null)
   const [answer, setAnswer] = useState<string>('')
 
+  const generateNewDigits = () => {
+    const firstDigit = Math.floor(Math.random() * 21) + 1
+    setFirstDigit(firstDigit)
+  
+    const secondDigit = Math.floor(Math.random() * firstDigit) + 1
+    setSecondDigit(secondDigit)
+  }
+  
   const onGenerateNewDigits = () => {
-    setFirstDigit(Math.floor(Math.random() * 21) + 1)
-    setSecondDigit(Math.floor(Math.random() * 11) + 1)
+    generateNewDigits()
     setAnswer('')
     setRight(false)
     setWrong(false)
@@ -27,7 +34,7 @@ export const Summ = () => {
   const onCheck = () => {
     const answerToNumber = Number(answer)
     if (firstDigit && secondDigit) {
-      if (firstDigit + secondDigit === answerToNumber) {
+      if (firstDigit - secondDigit === answerToNumber) {
         setRight(true)
         setScore(score + 1)
       } else {
@@ -40,8 +47,7 @@ export const Summ = () => {
   const onPressPlayMore = () => {
     setRight(false)
     setAnswer('')
-    setFirstDigit(Math.floor(Math.random() * 21) + 1)
-    setSecondDigit(Math.floor(Math.random() * 11) + 1)
+    generateNewDigits()
   }
 
   const onPressTryAgain = () => {
@@ -50,14 +56,13 @@ export const Summ = () => {
   }
 
   useEffect(() => {
-    setFirstDigit(Math.floor(Math.random() * 21) + 1)
-    setSecondDigit(Math.floor(Math.random() * 11) + 1)
+    generateNewDigits()
   }, [])
 
   return (
     <>
       <GoTo address='/home/math-operations' name='Back to list' />
-      <Header title='Calculate Summ' />
+      <Header title='Calculate Difference' />
     </>
-  )
+  );
 }

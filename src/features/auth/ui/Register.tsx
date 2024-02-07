@@ -8,7 +8,7 @@ import { Loader } from "../../../common/components/loaders/CircularLoader"
 import { DefaultButton } from "../../../common/components/button/DefaultButton"
 import { Error } from "../../../common/components/error/Error"
 import { GoTo } from "../../../common/components/goTo/GoTo"
-import { Input } from "../../../common/components/input/Input"
+import { Input } from "../../../common/components/input/defaultInput/Input"
 import { InputType } from "../../../common/components/enums/enums"
 import { FormContainer } from "../../../common/components/form/FormContainer"
 import { Modal } from "../../../common/components/modal/Modal"
@@ -91,6 +91,7 @@ export const Register = () => {
           buttonName='Yes'
           buttonCallback={back}
           outlinedButton={true}
+          buttonBack={true}
         />
       }
       <FormContainer serverError={serverError}>

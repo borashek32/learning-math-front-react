@@ -32,6 +32,7 @@ export const Verify = () => {
           buttonName='Login'
           buttonCallback={() => navigate('/login')}
           outlinedButton={true}
+          buttonBack={true}
         />
     </>
   )

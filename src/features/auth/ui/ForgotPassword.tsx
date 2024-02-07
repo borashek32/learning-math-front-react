@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { Loader } from "../../../common/components/loaders/CircularLoader"
 import { DefaultButton } from "../../../common/components/button/DefaultButton"
 import { Error } from "../../../common/components/error/Error"
-import { Input } from "../../../common/components/input/Input"
+import { Input } from "../../../common/components/input/defaultInput/Input"
 import { InputType } from "../../../common/components/enums/enums"
 import { FormContainer } from "../../../common/components/form/FormContainer"
 import { useEmailSentMutation } from "../auth.api"
@@ -64,6 +64,7 @@ export const ForgotPassword = () => {
           open={open}
           setOpen={setOpen}
           outlinedButton={true}
+          buttonBack={true}
         />
       }
       <GoTo address="/login" name="Back to Login" />

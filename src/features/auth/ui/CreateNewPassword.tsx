@@ -1,5 +1,5 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { Input } from "../../../common/components/input/Input"
+import { Input } from "../../../common/components/input/defaultInput/Input"
 import { InputType } from "../../../common/components/enums/enums"
 import { DefaultButton } from "../../../common/components/button/DefaultButton"
 import { FormContainer } from "../../../common/components/form/FormContainer"
@@ -95,6 +95,7 @@ export const CreateNewPassword = () => {
           outlinedButton={true}
           buttonName="Login"
           buttonCallback={() => navigate('/login')}
+          buttonBack={true}
         />
       }
       <FormContainer serverError={serverError}>

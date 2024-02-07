@@ -1,17 +1,18 @@
 import { Navigate, Outlet, RouteObject } from "react-router-dom"
 import { Home } from '../../features/home/ui/Home'
-import { Summ } from '../../features/math-operations/summ/Summ'
+import { Summ } from '../../features/math-operations/ui/summ/Summ'
 import { MathOperations } from '../../features/math-operations/MathOperations'
 import { Users } from '../../features/test/Users'
-import { Diff } from '../../features/math-operations/diff/Diff'
+import { Diff } from '../../features/math-operations/ui/diff/Diff'
 import { Docs } from '../../features/main/ui/docs/Docs'
 import { Logout } from '../../features/auth/ui/Logout'
 import { Loader } from "../components/loaders/CircularLoader"
 import { ChangePassword } from "../../features/auth/ui/ChangePassword"
-import { Profile } from "../../features/profile/ui/Profile"
+import { Profile } from "../../features/profile/Profile"
 import { useMeQuery } from "../../features/auth/auth.api"
 import { AppLayout } from "../components/layouts/AppLayout"
-import { PrivateDocs } from "../../features/math-operations/private-docs/PrivateDocs"
+import { PrivateDocs } from "../../features/math-operations/ui/private-docs/PrivateDocs"
+import { YourScore } from "../../features/profile/ui/YourScore"
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -25,6 +26,10 @@ export const privateRoutes: RouteObject[] = [
   {
     path: "/home/profile",
     element: <Profile />
+  },
+  {
+    path: "/home/profile/your-score",
+    element: <YourScore />
   },
   {
     path: "/home/profile/change-password",

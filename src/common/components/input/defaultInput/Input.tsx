@@ -1,6 +1,6 @@
 import { forwardRef } from "react"
-import { Error } from "../error/Error"
-import { Label } from "../label/Label"
+import { Error } from "../../error/Error"
+import { Label } from "../../label/Label"
 import styles from './Input.module.sass'
 import { Props } from "./Input.type"
 

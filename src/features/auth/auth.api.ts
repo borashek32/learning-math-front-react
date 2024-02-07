@@ -48,8 +48,6 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
       api, 
       extraOptions)
 
-      console.log(refreshResult)
-
       if (
         refreshResult.data &&
         typeof refreshResult.data === 'object' &&

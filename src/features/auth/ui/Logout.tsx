@@ -45,6 +45,7 @@ export const Logout = () => {
           setOpen={handleOpenModalWithError}
           text={serverError}
           error={true}
+          buttonBack={true}
         />
       }
       {open &&
@@ -55,6 +56,7 @@ export const Logout = () => {
           buttonName='Yes'
           buttonCallback={logoutHandler}
           outlinedButton={true}
+          buttonBack={true}
         />
       }
     </>

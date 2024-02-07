@@ -47,19 +47,10 @@ export const Nav = () => {
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
-                to="/home/math-operations/summ"
+                to="/home/math-operations"
                 onClick={() => setActive(false)}
               >
-                Calculate summ
-              </Link>
-            </li>
-            <li className={styles.item}>
-              <Link 
-                className={styles.itemLink}
-                to="/home/math-operations/diff"
-                onClick={() => setActive(false)}
-              >
-                Calculate difference
+                Math operations
               </Link>
             </li>
             <li className={styles.item}>
@@ -82,6 +73,14 @@ export const Nav = () => {
                 Profile
               </Link>
             </li>
+            <li className={styles.item}>
+              <Link 
+                className={styles.itemLink} 
+                to="/home/profile/your-score"
+              >
+                Your score
+              </Link>
+            </li> 
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink} 

@@ -1,5 +1,5 @@
-import { GoTo } from '../../../common/components/goTo/GoTo'
-import { Header } from '../../../common/components/header/Header'
+import { GoTo } from '../../../../common/components/goTo/GoTo'
+import { Header } from '../../../../common/components/header/Header'
 import styles from './../../../common/styles/App.module.sass'
 
 export const PrivateDocs = () => {
