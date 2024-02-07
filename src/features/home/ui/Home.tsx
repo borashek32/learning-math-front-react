@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import styles from './../../../common/styles/App.module.sass'
-import { selectUserEmail } from '../../auth/auth.selector'
+import { selectUserEmail, selectUserId } from '../../auth/auth.selectors'
+import { Link } from 'react-router-dom'
 
 export const Home = () => {
   const userEmail = useSelector(selectUserEmail)
@@ -11,15 +12,15 @@ export const Home = () => {
       
 
       <li className={styles.item}>
-        <a className={styles.itemLink} href="/home/math-operations">Math Operations</a>
+        <Link className={styles.itemLink} to="/home/math-operations">Math Operations</Link>
       </li>
       
       <div className={styles.footerDevideLine}></div>
       <li className={styles.item}>
-        <a className={styles.itemLink} href="/home/profile">Profile</a>
+        <Link className={styles.itemLink} to="/home/profile">Profile</Link>
       </li>
       <li className={styles.item}>
-        <a className={styles.itemLink} href="/logout">Logout</a>
+        <Link className={styles.itemLink} to="/logout">Logout</Link>
       </li>
     </>
   )

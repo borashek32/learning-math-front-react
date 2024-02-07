@@ -6,14 +6,11 @@ import { Users } from '../../features/test/Users'
 import { Diff } from '../../features/math-operations/diff/Diff'
 import { Docs } from '../../features/math-operations/docs/Docs'
 import { Logout } from '../../features/auth/ui/Logout'
-// import { useRefreshQuery } from "../../features/auth/auth.api"
 import { Loader } from "../components/loaders/CircularLoader"
 import { ChangePassword } from "../../features/auth/ui/ChangePassword"
 import { Profile } from "../../features/profile/ui/Profile"
 import { useMeQuery } from "../../features/auth/auth.api"
 import { AppLayout } from "../components/layouts/AppLayout"
-import { useSelector } from "react-redux"
-import { selectIsAuthenticated } from "../../features/auth/auth.selector"
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -56,24 +53,18 @@ export const privateRoutes: RouteObject[] = [
   }
 ]
 
-// export function PrivateRoutes() {
-//   const { data, isLoading } = useMeQuery()
+export function PrivateRoutes() {
+  const { data, isLoading } = useMeQuery()
 
-//   if (isLoading) {
-//     return <Loader />
-//   }
+  if (isLoading) {
+    return <Loader />
+  }
 
-//   if (!data) {
-//     return null
-//   }
+  if (!data) {
+    return null
+  }
 
-//   const isAuthenticated = data ? true : false
+  const isAuthenticated = data ? true : false
  
-//   return isAuthenticated ? <AppLayout><Outlet /></AppLayout> : <Navigate to="/login" />
-// }
-
-export const PrivateRoutes = () => {
-  const isAuthenticated = useSelector(selectIsAuthenticated)
-
   return isAuthenticated ? <AppLayout><Outlet /></AppLayout> : <Navigate to="/login" />
 }

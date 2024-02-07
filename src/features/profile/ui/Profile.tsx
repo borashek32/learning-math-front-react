@@ -1,6 +1,5 @@
-import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import styles from './../../../common/styles/App.module.sass'
-import { selectUserEmail } from '../../auth/auth.selector'
 
 export const Profile = () => {
   
@@ -9,7 +8,7 @@ export const Profile = () => {
       <h1 style={{color: 'white'}}>Profile</h1>
 
       <li className={styles.item}>
-        <a className={styles.itemLink} href="/home/profile/change-password">Change password</a>
+        <Link className={styles.itemLink} to="/home/profile/change-password">Change password</Link>
       </li>
     </>
   )

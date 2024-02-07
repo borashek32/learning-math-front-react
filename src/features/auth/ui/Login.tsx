@@ -25,7 +25,8 @@ const formSchema = yup.object().shape({
     .min(4, "Password length should be at least 4 characters"),
 })
 
-export const Login = () => {const [login, { isLoading }] = useLoginMutation()
+export const Login = () => {
+  const [login, { isLoading }] = useLoginMutation()
   const [serverError, setServerError] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -51,8 +52,11 @@ export const Login = () => {const [login, { isLoading }] = useLoginMutation()
       .unwrap()
       .then(response => {
         reset()
-        console.log('response', response)
-        dispatch(setUserInfo(response))
+        if (data) {
+          localStorage.setItem('userId', response.user.id as string)
+          localStorage.setItem('userEmail', response.user.email as string)
+          dispatch(setUserInfo(response.user))
+        }
         navigate('/home')
       })
       .catch(e => {

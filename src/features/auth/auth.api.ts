@@ -6,6 +6,7 @@ import {
   RegisterType, 
   PasswordRecoveryType,
   UserType,
+  NewPasswordType,
 } from './auth.types'
 import { algByDecodingToken } from '../../common/utils/algByDecodingToken'
 
@@ -176,11 +177,17 @@ export const authApi = createApi({
         },
         providesTags: ['me'],
       }),
-      changePassword: build.query<UserType, { password: string }>({
-        query: () => {
+      changePassword: build.mutation<UserType, NewPasswordType>({
+        query: (data: NewPasswordType) => {
+          console.log(data)
           return {
-            method: 'GET',
-            url: 'change-password'
+            method: 'POST',
+            url: 'change-password',
+            body: {
+              userId: data.userId,
+              password: data.password,
+              newPassword: data.newPassword,
+            }
           }
         }
       })
@@ -196,5 +203,5 @@ export const {
   useEmailSentMutation,
   useCreateNewPasswordMutation,
   useMeQuery,
-  // useRefreshQuery,
+  useChangePasswordMutation,
 } = authApi

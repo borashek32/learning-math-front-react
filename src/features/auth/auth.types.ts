@@ -30,7 +30,7 @@ export type PasswordRecoveryType = {
 }
 
 export type NewPasswordType = {
+  userId: string | undefined
   password: string
   newPassword: string
-  newPasswordConfirmation: string
 }

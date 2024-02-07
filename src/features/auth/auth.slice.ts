@@ -1,23 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { UserType } from './auth.types'
 
-type Props = {
-  userId: string
-  userEmail: string
-  isAuthenticated: boolean
+interface UserInfoState {
+  user: UserType | null
 }
 
+const initialState: UserInfoState = {
+  user: null,
+} as UserInfoState
+
 const userInfoSlice = createSlice({
-  name: 'generalInfo',
-  initialState: <Props>{
-    userId: '',
-    userEmail: '',
-  },
+  name: 'userInfo',
+  initialState,
   reducers: {
-    setUserInfo(state, action) {
-      state.userId = action.payload.user.id
-      state.userEmail = action.payload.user.email
-      state.isAuthenticated = true
+    setUserInfo(state, action: PayloadAction<UserType>) {
+      state.user = action.payload
     },
+    // removeUserInfo(state) {
+    //   state.user = null
+    // }
   },
 })
 

@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom"
 import { Modal } from "../../../common/components/modal/Modal"
 import { useLogoutMutation } from "../auth.api"
 import { useState } from "react"
+import { useDispatch } from "react-redux"
+// import { removeUserInfo } from "../auth.slice"
 
 export const Logout = () => {
   const navigate = useNavigate()
@@ -9,6 +11,7 @@ export const Logout = () => {
   const [modalWithErrorOpen, setModalWithErrorOpen] = useState(false)
   const [logout] = useLogoutMutation()
   const [serverError, setServerError] = useState('')
+  const dispatch = useDispatch()
 
   const handleOpenModal = () => setOpen(false)
   const handleOpenModalWithError = () => setModalWithErrorOpen(false)
@@ -18,6 +21,7 @@ export const Logout = () => {
       .unwrap()
       .then(() => {
         navigate('/')
+        // dispatch(removeUserInfo())
       })
       .catch(e => {
         console.log(e)

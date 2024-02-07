@@ -1,11 +1,12 @@
+import { Link } from 'react-router-dom'
 import styles from '../../../common/styles/App.module.sass'
 
 export const Main = () => {
   return (
     <>
-      <a href="/register" className={styles.labelClass}>Register</a>
+      <Link to="/register" className={styles.labelClass}>Register</Link>
       <br />
-      <a href="/login" className={styles.labelClass}>Login</a>
+      <Link to="/login" className={styles.labelClass}>Login</Link>
     </>
   )
 }
