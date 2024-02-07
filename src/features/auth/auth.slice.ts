@@ -15,12 +15,18 @@ const userInfoSlice = createSlice({
   reducers: {
     setUserInfo(state, action: PayloadAction<UserType>) {
       state.user = action.payload
+      const userEmail = action.payload.email
+      const userId = action.payload.id
+      localStorage.setItem('userEmail', userEmail)
+      localStorage.setItem('userId', userId)
     },
-    // removeUserInfo(state) {
-    //   state.user = null
-    // }
+    removeUserInfo(state) {
+      state.user = null
+      localStorage.removeItem('userEmail')
+      localStorage.removeItem('userId')
+    }
   },
 })
 
-export const { setUserInfo } = userInfoSlice.actions
+export const { setUserInfo, removeUserInfo } = userInfoSlice.actions
 export default userInfoSlice.reducer

@@ -21,7 +21,8 @@ interface IFormProps {
   newPasswordConfirmation: string
 }
 
-const formSchema = yup.object().shape({password: yup.string()
+const formSchema = yup.object().shape({
+  password: yup.string()
     .required("Password is required")
     .matches(/^[A-Za-z]+$/i, "Password must contain just latin letters")
     .min(4, "Password length should be at least 4 characters")

@@ -10,7 +10,6 @@ export const Modal = ({
   buttonName, 
   buttonCallback, 
   open, 
-  setOpen, 
   error 
 }: Props) => {
   const modalColor = !error ? styles.modal : styles.modalWithError

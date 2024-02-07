@@ -52,12 +52,10 @@ export const Login = () => {
       .unwrap()
       .then(response => {
         reset()
-        if (data) {
-          localStorage.setItem('userId', response.user.id as string)
-          localStorage.setItem('userEmail', response.user.email as string)
+        if (response.user) {
           dispatch(setUserInfo(response.user))
+          navigate('/home')
         }
-        navigate('/home')
       })
       .catch(e => {
         if (e.status === 'FETCH_ERROR') {

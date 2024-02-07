@@ -61,10 +61,8 @@ export function PrivateRoutes() {
   }
 
   if (!data) {
-    return null
-  }
-
-  const isAuthenticated = data ? true : false
- 
-  return isAuthenticated ? <AppLayout><Outlet /></AppLayout> : <Navigate to="/login" />
+    return <Navigate to="/login" />
+  } 
+  
+  return <AppLayout><Outlet /></AppLayout>
 }

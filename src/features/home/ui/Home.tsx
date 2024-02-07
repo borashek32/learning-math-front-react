@@ -1,10 +1,8 @@
-import { useSelector } from 'react-redux'
 import styles from './../../../common/styles/App.module.sass'
-import { selectUserEmail, selectUserId } from '../../auth/auth.selectors'
 import { Link } from 'react-router-dom'
 
 export const Home = () => {
-  const userEmail = useSelector(selectUserEmail)
+  const userEmail = localStorage.getItem('userEmail')
   
   return (
     <>

@@ -3,7 +3,7 @@ import { Modal } from "../../../common/components/modal/Modal"
 import { useLogoutMutation } from "../auth.api"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-// import { removeUserInfo } from "../auth.slice"
+import { removeUserInfo } from "../auth.slice"
 
 export const Logout = () => {
   const navigate = useNavigate()
@@ -20,11 +20,11 @@ export const Logout = () => {
     logout()
       .unwrap()
       .then(() => {
-        navigate('/')
-        // dispatch(removeUserInfo())
+        navigate('/login')
+        setOpen(false)
+        dispatch(removeUserInfo())
       })
       .catch(e => {
-        console.log(e)
         if (e) {
           setOpen(false)
           setModalWithErrorOpen(true)
