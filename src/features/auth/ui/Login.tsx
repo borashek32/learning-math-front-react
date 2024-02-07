@@ -70,6 +70,7 @@ export const Login = () => {
     <>
       {isLoading && <Loader />}
       {serverError && <Error error={serverError} />}   
+      <GoTo address="/main" name="Back to Main" />
       <FormContainer serverError={serverError}>
         <form 
           style={serverError ? { marginTop: '-13px', width: '200px' } : {width: '200px'}}

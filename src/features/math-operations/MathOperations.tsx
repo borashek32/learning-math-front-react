@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom'
 import { GoTo } from '../../common/components/goTo/GoTo'
+import { Header } from '../../common/components/header/Header'
 import styles from './../../common/styles/App.module.sass'
 
 export const MathOperations = () => {
@@ -7,15 +9,19 @@ export const MathOperations = () => {
     <>
       <GoTo address='/home' name='Back to Home' />
 
-      <li className={styles.item}>
-        <a className={styles.itemLink} href="/home/math-operations/summ">Calculate summ</a>
-      </li>
-      <li className={styles.item}>
-        <a className={styles.itemLink} href="/home/math-operations/diff">Calculate difference</a>
-      </li>
-      <li className={styles.item}>
-        <a className={styles.itemLink} href="/home/math-operations/docs">Instructions</a>
-      </li>
+      <Header title='Math operations' />
+    
+      <ul className={styles.listItems}>
+        <li className={styles.item}>
+          <Link className={styles.itemLink} to="/home/math-operations/summ">Calculate summ</Link>
+        </li>
+        <li className={styles.item}>
+          <Link className={styles.itemLink} to="/home/math-operations/diff">Calculate difference</Link>
+        </li>
+        <li className={styles.item}>
+          <Link className={styles.itemLink} to="/home/math-operations/private-instructions">Instructions</Link>
+        </li>
+      </ul>
     </>
   )
 }

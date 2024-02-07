@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { GoTo } from '../../../common/components/goTo/GoTo'
+import { Header } from '../../../common/components/header/Header'
 
 export const Diff = () => {
 
@@ -58,6 +60,9 @@ export const Diff = () => {
   }, [])
 
   return (
-    <div>Diff</div>
+    <>
+      <GoTo address='/home/math-operations' name='Back to list' />
+      <Header title='Calculate Difference' />
+    </>
   );
 }

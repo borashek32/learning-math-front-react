@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import { GoTo } from "../../../common/components/goTo/GoTo"
+import { Header } from "../../../common/components/header/Header"
 
 export const Summ = () => {
 
@@ -53,6 +55,9 @@ export const Summ = () => {
   }, [])
 
   return (
-    <h1>Summ</h1>
+    <>
+      <GoTo address='/home/math-operations' name='Back to list' />
+      <Header title='Calculate Summ' />
+    </>
   )
 }

@@ -14,6 +14,7 @@ import { Modal } from "../../../common/components/modal/Modal"
 import { NewPasswordType } from "./../auth.types"
 import { useSelector } from "react-redux"
 import { selectUserId } from "../auth.selectors"
+import { GoTo } from "../../../common/components/goTo/GoTo"
 
 interface IFormProps {
   password: string
@@ -98,6 +99,7 @@ export const ChangePassword = () => {
           buttonCallback={() => navigate('/home/profile')}
         />
       }
+      <GoTo address="/home/profile" name="Back to Profile" />
       <FormContainer serverError={serverError}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller

@@ -1,5 +1,9 @@
-$button-bg-color: #61dafb
-$button-bg-hover: #03799a
+$button-bg-blue: #61dafb
+$button-bg-blue-hover: #03799a
+$button-bg-red: #ed1b1b
+$button-bg-red-hover: #780303
+$color-white: #fff
+$color-black: #000
   
 .button,
 .buttonOutlined
@@ -10,19 +14,25 @@ $button-bg-hover: #03799a
   transition: all ease .4s
 
 .button
-  background-color: $button-bg-color
+  background-color: $button-bg-blue
   border: none
 
   &:hover 
-    background-color: $button-bg-hover
-    color: white
+    background-color: $button-bg-blue-hover
+    color: $color-white
 
 .buttonOutlined
-  background-color: $button-bg-color
-  border: 1px solid $button-bg-hover
+  background-color: inherit
+  border: 1px solid $color-black
 
   &:hover 
-    background-color: $button-bg-hover
-    color: white
+    background-color: $button-bg-blue-hover
+    color: $color-white
 
-.buttonSpace 
+.buttonRed
+  background-color: $button-bg-red
+  color: $color-white
+  border: none
+
+  &:hover
+    background-color: $button-bg-red-hover

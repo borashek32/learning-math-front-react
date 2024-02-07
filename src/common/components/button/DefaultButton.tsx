@@ -6,7 +6,13 @@ export const DefaultButton = ({ error, type, name, onClick, outlined }: Props) =
 
   return (
     <button 
-      className={outlinedButton + ' ' + (error ? styles.buttonSpace : "")} 
+      className={styles.button + ' ' + (outlined 
+        ? styles.buttonOutlined 
+        : error 
+          ? styles.buttonSpace 
+          : name === 'Logout' 
+            ? styles.buttonRed 
+            : styles.button)} 
       type={type}
       onClick={onClick}
     >

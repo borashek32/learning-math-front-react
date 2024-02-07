@@ -11,6 +11,7 @@ import { InputType } from "../../../common/components/enums/enums"
 import { FormContainer } from "../../../common/components/form/FormContainer"
 import { useEmailSentMutation } from "../auth.api"
 import { Modal } from "../../../common/components/modal/Modal"
+import { GoTo } from "../../../common/components/goTo/GoTo"
 
 const formSchema = yup.object().shape({
   email: yup.string()
@@ -65,6 +66,7 @@ export const ForgotPassword = () => {
           outlinedButton={true}
         />
       }
+      <GoTo address="/login" name="Back to Login" />
       <FormContainer serverError={serverError}>
         <form 
           style={serverError ? { marginTop: '-13px', width: '200px' } : {width: '200px'}}

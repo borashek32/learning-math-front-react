@@ -3,6 +3,7 @@ import styles from './Nav.module.sass'
 import { LogoSmall } from '../logo/LogoSmall'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { DefaultButton } from '../button/DefaultButton'
 
 export const Nav = () => {
   const [active, setActive] = useState(false)
@@ -87,7 +88,7 @@ export const Nav = () => {
                 to="/logout"
                 onClick={() => setActive(false)}
               >
-                Logout
+                <DefaultButton type='button' name='Logout' />
               </Link>
             </li>
           </ul>

@@ -40,13 +40,15 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   if (token) {
     const { isExpirationTimeLongerThanCurrent } = algByDecodingToken(token)
 
-    if (!isExpirationTimeLongerThanCurrent && api.endpoint !== 'refresh') {
+    if (!isExpirationTimeLongerThanCurrent) {
       const refreshResult = await baseQuery({ 
         method: 'GET', 
         url: `${baseURL}refresh`,
       }, 
       api, 
       extraOptions)
+
+      console.log(refreshResult)
 
       if (
         refreshResult.data &&

@@ -4,12 +4,13 @@ import { useLogoutMutation } from "../auth.api"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { removeUserInfo } from "../auth.slice"
+import { Loader } from "../../../common/components/loaders/CircularLoader"
 
 export const Logout = () => {
   const navigate = useNavigate()
   const [open, setOpen] = useState(true)
   const [modalWithErrorOpen, setModalWithErrorOpen] = useState(false)
-  const [logout] = useLogoutMutation()
+  const [logout, { isLoading }] = useLogoutMutation()
   const [serverError, setServerError] = useState('')
   const dispatch = useDispatch()
 
@@ -37,6 +38,7 @@ export const Logout = () => {
 
   return (
     <>
+      {isLoading && <Loader />}
       {serverError && 
         <Modal
           open={modalWithErrorOpen}

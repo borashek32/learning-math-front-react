@@ -4,13 +4,14 @@ import { Summ } from '../../features/math-operations/summ/Summ'
 import { MathOperations } from '../../features/math-operations/MathOperations'
 import { Users } from '../../features/test/Users'
 import { Diff } from '../../features/math-operations/diff/Diff'
-import { Docs } from '../../features/math-operations/docs/Docs'
+import { Docs } from '../../features/main/ui/docs/Docs'
 import { Logout } from '../../features/auth/ui/Logout'
 import { Loader } from "../components/loaders/CircularLoader"
 import { ChangePassword } from "../../features/auth/ui/ChangePassword"
 import { Profile } from "../../features/profile/ui/Profile"
 import { useMeQuery } from "../../features/auth/auth.api"
 import { AppLayout } from "../components/layouts/AppLayout"
+import { PrivateDocs } from "../../features/math-operations/private-docs/PrivateDocs"
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -42,8 +43,8 @@ export const privateRoutes: RouteObject[] = [
     element: <Diff />
   },
   {
-    path: "/home/math-operations/docs",
-    element: <Docs />
+    path: "/home/math-operations/private-instructions",
+    element: <PrivateDocs />
   },
 
 

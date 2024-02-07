@@ -7,6 +7,8 @@ export const Main = () => {
       <Link to="/register" className={styles.labelClass}>Register</Link>
       <br />
       <Link to="/login" className={styles.labelClass}>Login</Link>
+      <br />
+      <Link to="/instructions" className={styles.labelClass}>Instructions</Link>
     </>
   )
 }
