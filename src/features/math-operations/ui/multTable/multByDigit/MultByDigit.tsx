@@ -1,30 +1,23 @@
 import { useEffect, useState } from 'react'
-import { GoTo } from '../../../../common/components/goTo/GoTo'
-import { Header } from '../../../../common/components/header/Header'
-import { Modal } from '../../../../common/components/modal/Modal'
-import { Score } from '../../../../common/components/score/Score'
-import { DefaultButton } from '../../../../common/components/button/DefaultButton'
-import { ResultInput } from '../../../../common/components/input/resultInput/ResultInput'
-import { MathOperation } from '../../../../common/components/mathOpertion/mathOperation'
-import { DefaultDigit } from '../../../../common/components/digits/DefaultDigit'
-import styles from './../../MathOperations.module.sass'
+import styles from './../../../MathOperations.module.sass'
+import { Modal } from '../../../../../common/components/modal/Modal'
+import { Score } from '../../../../../common/components/score/Score'
+import { DefaultButton } from '../../../../../common/components/button/DefaultButton'
+import { ResultInput } from '../../../../../common/components/input/resultInput/ResultInput'
+import { MathOperation } from '../../../../../common/components/mathOpertion/mathOperation'
+import { DefaultDigit } from '../../../../../common/components/digits/DefaultDigit'
+import { GoTo } from '../../../../../common/components/goTo/GoTo'
+import { Header } from '../../../../../common/components/header/Header'
+import { useParams } from 'react-router-dom'
 
-export const Diff = () => {
+export const MultByDigit = () => {
+  const { digit } = useParams()
 
   const [firstDigit, setFirstDigit] = useState<number | null>(null)
-  const [secondDigit, setSecondDigit] = useState<number | null>(null)
   const [answer, setAnswer] = useState<string>('')
 
-  const generateNewDigits = () => {
-    const firstDigit = Math.floor(Math.random() * 21) + 1
-    setFirstDigit(firstDigit)
-  
-    const secondDigit = Math.floor(Math.random() * firstDigit) + 1
-    setSecondDigit(secondDigit)
-  }
-  
   const onGenerateNewDigits = () => {
-    generateNewDigits()
+    setFirstDigit(Math.floor(Math.random() * (9 - 2 + 1)) + 2)
     setAnswer('')
     setRight(false)
     setWrong(false)
@@ -40,8 +33,8 @@ export const Diff = () => {
 
   const onCheck = () => {
     const answerToNumber = Number(answer)
-    if (firstDigit && secondDigit) {
-      if (firstDigit - secondDigit === answerToNumber) {
+    if (firstDigit) {
+      if (firstDigit * Number(digit) === answerToNumber) {
         setRight(true)
         setScore(score + 1)
       } else {
@@ -54,7 +47,7 @@ export const Diff = () => {
   const onPressPlayMore = () => {
     setRight(false)
     setAnswer('')
-    generateNewDigits()
+    setFirstDigit(Math.floor(Math.random() * (9 - 2 + 1)) + 2)
   }
 
   const onPressTryAgain = () => {
@@ -63,18 +56,18 @@ export const Diff = () => {
   }
 
   useEffect(() => {
-    generateNewDigits()
+    setFirstDigit(Math.floor(Math.random() * (9 - 2 + 1)) + 2)
   }, [])
 
   return (
     <>
-      <GoTo address='/home/math-operations' name='Back to list' />
-      <Header title='Calculate Summ' />
+      <GoTo address='/home/math-operations/multiplication-table' name='Back to list' />
+      <Header title={`Multiplication by ${digit}`} />
 
       <div className={styles.containerMathOperation}>
         <DefaultDigit title={firstDigit} />
-        <MathOperation title='-' />
-        <DefaultDigit title={secondDigit} />
+        <MathOperation title='*' />
+        <DefaultDigit title={Number(digit)} />
         <MathOperation title='=' />
 
         <ResultInput
@@ -119,5 +112,5 @@ export const Diff = () => {
       
       <Score score={score} />
     </>
-  );
+  )
 }

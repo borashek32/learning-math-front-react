@@ -13,6 +13,9 @@ import { useMeQuery } from "../../features/auth/auth.api"
 import { AppLayout } from "../components/layouts/AppLayout"
 import { PrivateDocs } from "../../features/math-operations/ui/private-docs/PrivateDocs"
 import { YourScore } from "../../features/profile/ui/YourScore"
+import { MultTable } from "../../features/math-operations/ui/multTable/MultTable"
+import { MultByDigit } from "../../features/math-operations/ui/multTable/multByDigit/MultByDigit"
+import { Mult } from "../../features/math-operations/ui/mult/Mult"
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -46,6 +49,18 @@ export const privateRoutes: RouteObject[] = [
   {
     path: "/home/math-operations/diff",
     element: <Diff />
+  },
+  {
+    path: "/home/math-operations/mult",
+    element: <Mult />
+  },
+  {
+    path: "/home/math-operations/multiplication-table",
+    element: <MultTable />
+  },
+  {
+    path: "/home/math-operations/multiplication-table/:digit",
+    element: <MultByDigit />
   },
   {
     path: "/home/math-operations/private-instructions",

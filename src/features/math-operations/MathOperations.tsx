@@ -13,10 +13,16 @@ export const MathOperations = () => {
     
       <ul className={styles.listItems}>
         <li className={styles.item}>
-          <Link className={styles.itemLink} to="/home/math-operations/summ">Calculate summ</Link>
+          <Link className={styles.itemLink} to="/home/math-operations/summ">Summ</Link>
         </li>
         <li className={styles.item}>
-          <Link className={styles.itemLink} to="/home/math-operations/diff">Calculate difference</Link>
+          <Link className={styles.itemLink} to="/home/math-operations/diff">Difference</Link>
+        </li>
+        <li className={styles.item}>
+          <Link className={styles.itemLink} to="/home/math-operations/mult">Multiplication</Link>
+        </li>
+        <li className={styles.item}>
+          <Link className={styles.itemLink} to="/home/math-operations/multiplication-table">Multiplication table</Link>
         </li>
         <li className={styles.item}>
           <Link className={styles.itemLink} to="/home/math-operations/private-instructions">Instructions</Link>

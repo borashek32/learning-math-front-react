@@ -14,7 +14,6 @@ export const Summ = () => {
   const [firstDigit, setFirstDigit] = useState<number | null>(null)
   const [secondDigit, setSecondDigit] = useState<number | null>(null)
   const [answer, setAnswer] = useState<string>('')
-  const [open, setOpen] = useState(false)
 
   const onGenerateNewDigits = () => {
     setFirstDigit(Math.floor(Math.random() * 21) + 1)
@@ -97,6 +96,17 @@ export const Summ = () => {
           buttonName="Play more?"
           open={right}
           buttonCallback={onPressPlayMore}
+          outlinedButton={true}
+          buttonBack={false}
+        />
+      }
+      {wrong && 
+        <Modal 
+          text="You are not right!"
+          color="red"
+          buttonName="Try again?"
+          open={wrong}
+          buttonCallback={onPressTryAgain}
           outlinedButton={true}
           buttonBack={false}
         />

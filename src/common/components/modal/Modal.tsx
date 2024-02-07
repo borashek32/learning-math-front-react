@@ -36,7 +36,7 @@ export const Modal = ({
     <>
       {open && 
         <div className={styles.modalWrapper}>
-          <div style={color ? { backgroundColor: JSON.stringify(color) } : {}} className={modalColor}>
+          <div style={color ? { backgroundColor: color } : {}} className={modalColor}>
             <div className={styles.closeWrapper}>
               <Close
                 open={open}
