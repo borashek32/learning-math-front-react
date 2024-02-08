@@ -1,0 +1,12 @@
+{
+  "lang": "en",
+  "nav": {
+    "select": {
+      "changeLang": "Change language"
+    },
+    "options": {
+      "en": "English",
+      "ru": "Russian"
+    }
+  }
+}

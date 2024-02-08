@@ -18,6 +18,7 @@ export const MultTable = ({}: Props) => {
         {digits.map(digit => {
           return (
             <DefaultButton
+              key={digit}
               type='button'
               name={digit.toString()}
               onClick={() => navigate(`/home/math-operations/multiplication-table/${digit}`)}

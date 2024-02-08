@@ -1,9 +1,10 @@
-import { Props } from './Nav.types'
+import { Trans } from "react-i18next"
 import styles from './Nav.module.sass'
 import { LogoSmall } from '../logo/LogoSmall'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { DefaultButton } from '../button/DefaultButton'
+import { SelectLang } from './SelectLang/SelectLang'
 
 export const Nav = () => {
   const [active, setActive] = useState(false)

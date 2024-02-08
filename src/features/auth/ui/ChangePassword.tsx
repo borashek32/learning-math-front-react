@@ -15,6 +15,7 @@ import { NewPasswordType } from "./../auth.types"
 import { useSelector } from "react-redux"
 import { selectUserId } from "../auth.selectors"
 import { GoTo } from "../../../common/components/goTo/GoTo"
+import { Trans } from "react-i18next"
 
 interface IFormProps {
   password: string
