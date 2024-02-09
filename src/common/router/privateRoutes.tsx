@@ -11,11 +11,11 @@ import { ChangePassword } from "../../features/auth/ui/ChangePassword"
 import { Profile } from "../../features/profile/Profile"
 import { useMeQuery } from "../../features/auth/auth.api"
 import { AppLayout } from "../components/layouts/AppLayout"
-import { PrivateDocs } from "../../features/math-operations/ui/private-docs/PrivateDocs"
 import { YourScore } from "../../features/profile/ui/YourScore"
 import { MultTable } from "../../features/math-operations/ui/multTable/MultTable"
 import { MultByDigit } from "../../features/math-operations/ui/multTable/multByDigit/MultByDigit"
 import { Mult } from "../../features/math-operations/ui/mult/Mult"
+import { ChangeEmail } from "../../features/auth/ui/ChangeEmail"
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -37,6 +37,10 @@ export const privateRoutes: RouteObject[] = [
   {
     path: "/home/profile/change-password",
     element: <ChangePassword />
+  },
+  {
+    path: "/home/profile/change-email",
+    element: <ChangeEmail />
   },
   {
     path: "/home/math-operations",
@@ -62,11 +66,6 @@ export const privateRoutes: RouteObject[] = [
     path: "/home/math-operations/multiplication-table/:digit",
     element: <MultByDigit />
   },
-  {
-    path: "/home/math-operations/private-instructions",
-    element: <PrivateDocs />
-  },
-
 
   {
     path: "users",

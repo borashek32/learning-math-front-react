@@ -4,8 +4,10 @@ import { Props } from './Error.types'
 export const Error = ({ error }: Props) => {
 
   return (
-    <p className={styles.error}>
-      {error}
-    </p>
+    <div className={styles.errorWrapper}>
+      <p className={styles.error}>
+        {error}
+      </p>
+    </div>
   )
 }

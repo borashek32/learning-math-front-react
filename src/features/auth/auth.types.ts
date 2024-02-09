@@ -34,3 +34,8 @@ export type NewPasswordType = {
   password: string
   newPassword: string
 }
+
+export type NewEmailType = {
+  userId: string | undefined
+  newEmail: string
+}

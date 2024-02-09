@@ -12,6 +12,8 @@ import { FormContainer } from "../../../common/components/form/FormContainer"
 import { useEmailSentMutation } from "../auth.api"
 import { Modal } from "../../../common/components/modal/Modal"
 import { GoTo } from "../../../common/components/goTo/GoTo"
+import { useTranslation } from "react-i18next"
+import styles from "./../Auth.module.sass"
 
 const formSchema = yup.object().shape({
   email: yup.string()
@@ -25,6 +27,8 @@ export const ForgotPassword = () => {
   const [emailSent, { isLoading }] = useEmailSentMutation()
   const [serverError, setServerError] = useState('')
   const [open, setOpen] = useState(true)
+  
+  const { t } = useTranslation()
 
   const {
     handleSubmit,
@@ -49,15 +53,19 @@ export const ForgotPassword = () => {
         reset()
       })
       .catch(error => {
-        console.error('error frontend', error)
-        if (error.status === 400) setServerError(error.data.message)
+        const serverE = t('errors.serverError')
+        if (error.status === 'FETCH_ERROR') setServerError(serverE)
       })
   }
 
   return (
     <>
       {isLoading && <Loader />}
-      {serverError && <Error error={serverError} />}   
+      {serverError && 
+        <div className={styles.errorWrapper}>
+          <Error error={serverError} />
+        </div>
+      }  
       {success && 
         <Modal
           text={`Please, check ${email}`}

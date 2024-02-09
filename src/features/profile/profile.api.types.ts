@@ -1,3 +1,4 @@
-export type Props = {
-  
+export type ScoreType = {
+  value: number
+  date: Date
 }

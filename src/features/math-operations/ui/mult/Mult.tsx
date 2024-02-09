@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react"
 import { GoTo } from "../../../../common/components/goTo/GoTo"
 import { Header } from "../../../../common/components/header/Header"
-import { DefaultButton } from "../../../../common/components/button/DefaultButton"
 import styles from './../../MathOperations.module.sass'
 import { DefaultDigit } from "../../../../common/components/digits/DefaultDigit"
 import { MathOperation } from "../../../../common/components/mathOpertion/mathOperation"
 import { ResultInput } from "../../../../common/components/input/resultInput/ResultInput"
-import { Score } from "../../../../common/components/score/Score"
-import { Modal } from "../../../../common/components/modal/Modal"
+import { useTranslation } from "react-i18next"
+import { MathOperationsFooter } from "../mathOperationsFooter/MathOperationsFooter"
 
 export const Mult = () => {
-
   const [firstDigit, setFirstDigit] = useState<number | null>(null)
   const [secondDigit, setSecondDigit] = useState<number | null>(null)
   const [answer, setAnswer] = useState<string>('')
-  const [open, setOpen] = useState(false)
+
+  const { t } = useTranslation()
 
   const onGenerateNewDigits = () => {
     setFirstDigit(Math.floor(Math.random() * 21) + 1)
@@ -64,8 +63,8 @@ export const Mult = () => {
 
   return (
     <>
-      <GoTo address='/home/math-operations' name='Back to list' />
-      <Header title='Calculate Multiplication' />
+      <GoTo address='/home/math-operations' name={t('links.back')} />
+      <Header title={t('mathOperations.multiplication')} />
 
       <div className={styles.containerMathOperation}>
         <DefaultDigit title={firstDigit} />
@@ -79,41 +78,15 @@ export const Mult = () => {
         />
       </div>
 
-      <DefaultButton 
-        type='button'
-        name='Generate new digits' 
-        onClick={onGenerateNewDigits}
+      <MathOperationsFooter
+        onCheck={onCheck}
+        onGenerateNewDigits={onGenerateNewDigits}
+        right={right}
+        wrong={wrong}
+        score={score}
+        onPressPlayMore={onPressPlayMore}
+        onPressTryAgain={onPressTryAgain}
       />
-      <DefaultButton 
-        type='button'
-        name='Check' 
-        onClick={onCheck}
-      />
-      
-      {right && 
-        <Modal 
-          text="You are right!"
-          color="green"
-          buttonName="Play more?"
-          open={right}
-          buttonCallback={onPressPlayMore}
-          outlinedButton={true}
-          buttonBack={false}
-        />
-      }
-      {wrong && 
-        <Modal 
-          text="You are not right!"
-          color="red"
-          buttonName="Try again?"
-          open={wrong}
-          buttonCallback={onPressTryAgain}
-          outlinedButton={true}
-          buttonBack={false}
-        />
-      }
-      
-      <Score score={score} />
     </>
   )
 }

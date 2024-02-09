@@ -1,14 +1,14 @@
-import { Trans } from "react-i18next"
+import { useTranslation } from "react-i18next"
 import styles from './Nav.module.sass'
 import { LogoSmall } from '../logo/LogoSmall'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { DefaultButton } from '../button/DefaultButton'
-import { SelectLang } from './SelectLang/SelectLang'
 
 export const Nav = () => {
   const [active, setActive] = useState(false)
   const userEmail = localStorage.getItem('userEmail')
+  const { t } = useTranslation()
 
   const onClick = () => {
     setActive(!active)
@@ -42,7 +42,7 @@ export const Nav = () => {
                 to="/home"
                 onClick={() => setActive(false)}
               >
-                Home
+                {t('nav.items.home')}
               </Link>
             </li>
             <li className={styles.item}>
@@ -51,7 +51,7 @@ export const Nav = () => {
                 to="/home/math-operations"
                 onClick={() => setActive(false)}
               >
-                Math operations
+                {t('nav.items.mathOperations')}
               </Link>
             </li>
             <li className={styles.item}>
@@ -60,7 +60,7 @@ export const Nav = () => {
                 to="/home/math-operations/docs"
                 onClick={() => setActive(false)}
               >
-                Instructions
+                {t('nav.items.instructions')}
               </Link>
             </li>
             
@@ -71,7 +71,7 @@ export const Nav = () => {
                 to="/home/profile"
                 onClick={() => setActive(false)}
               >
-                Profile
+                {t('nav.items.profile')}
               </Link>
             </li>
             <li className={styles.item}>
@@ -79,7 +79,7 @@ export const Nav = () => {
                 className={styles.itemLink} 
                 to="/home/profile/your-score"
               >
-                Your score
+                {t('nav.items.score')}
               </Link>
             </li> 
             <li className={styles.item}>
@@ -88,7 +88,7 @@ export const Nav = () => {
                 to="/logout"
                 onClick={() => setActive(false)}
               >
-                <DefaultButton type='button' name='Logout' />
+                <DefaultButton type='button' name={t('buttons.logout')} />
               </Link>
             </li>
           </ul>

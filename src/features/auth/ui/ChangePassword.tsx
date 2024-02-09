@@ -15,31 +15,14 @@ import { NewPasswordType } from "./../auth.types"
 import { useSelector } from "react-redux"
 import { selectUserId } from "../auth.selectors"
 import { GoTo } from "../../../common/components/goTo/GoTo"
-import { Trans } from "react-i18next"
+import { useTranslation } from "react-i18next"
+import styles from "./../Auth.module.sass"
 
 interface IFormProps {
   password: string
   newPassword: string
   newPasswordConfirmation: string
 }
-
-const formSchema = yup.object().shape({
-  password: yup.string()
-    .required("Password is required")
-    .matches(/^[A-Za-z]+$/i, "Password must contain just latin letters")
-    .min(4, "Password length should be at least 4 characters")
-    .max(64, "Password cannot exceed more than 64 characters"),
-  newPassword: yup.string()
-    .required("Password is required")
-    .matches(/^[A-Za-z]+$/i, "Password must contain just latin letters")
-    .min(4, "Password length should be at least 4 characters")
-    .max(64, "Password cannot exceed more than 64 characters"),
-  newPasswordConfirmation: yup.string()
-    .required("Confirm Password is required")
-    .min(4, "Password length should be at least 4 characters")
-    .max(64, "Password cannot exceed more than 64 characters")
-    .oneOf([yup.ref("newPassword")], "New passwords do not match"),
-})
 
 export const ChangePassword = () => {
   const [changePassword, { isLoading, error }] = useChangePasswordMutation()
@@ -48,6 +31,24 @@ export const ChangePassword = () => {
   const [serverError, setServerError] = useState('')
   const navigate = useNavigate()
   const userId = useSelector(selectUserId)
+
+  const { t } = useTranslation()
+
+  const formSchema = yup.object().shape({
+    password: yup.string()
+      .required(t('errors.required'))
+      .matches(/^[A-Za-z]+$/i, t('errors.latinLetters')),
+    newPassword: yup.string()
+      .required(t('errors.required'))
+      .matches(/^[A-Za-z]+$/i, t('errors.latinLetters'))
+      .min(4, t('errors.min'))
+      .max(64, t('errors.max')),
+    newPasswordConfirmation: yup.string()
+      .required(t('errors.required'))
+      .min(4, t('errors.min'))
+      .max(64, t('errors.max'))
+      .oneOf([yup.ref("newPassword")], t('errors.notMatch')),
+  })
 
   const {
     handleSubmit, 
@@ -69,7 +70,8 @@ export const ChangePassword = () => {
 
   const onSubmit: SubmitHandler<any> = (data: NewPasswordType) => { 
     if (!data) {
-      setServerError('Some error occured')
+      const someE = t('errors.someError')
+      setServerError(someE)
     } else {
       setServerError('')
       changePassword({ ...data, userId })
@@ -79,9 +81,11 @@ export const ChangePassword = () => {
           reset()
         })
         .catch(e => {
-          if (e.status === 'FETCH_ERROR') setServerError('There is no connection to the server. Please, try later')
-          if (e.status === 400) setServerError(e.data.message)
-          if (e.status === 401) setServerError(e.data.message)
+          const serverE = t('errors.serverError')
+          if (e.status === 'FETCH_ERROR') setServerError(serverE)
+          const error400 = t('errors.error400')
+          if (e.status === 400) setServerError(error400)
+          if (e.status === 401) setServerError(error400)
         })
     }
   }
@@ -89,19 +93,23 @@ export const ChangePassword = () => {
   return (
     <>
       {isLoading && <Loader />}
-      {serverError && <Error error={serverError} />}
+      {serverError && 
+        <div className={styles.errorWrapper}>
+          <Error error={serverError} />
+        </div>
+      }
       {success && 
         <Modal
-          text={`Your password changed successfully`}
+          text={t("modal.success")}
           open={open}
           setOpen={setOpen}
           outlinedButton={true}
-          buttonName="Back"
+          buttonName={t('links.back')}
           buttonCallback={() => navigate('/home/profile')}
           buttonBack={false}
         />
       }
-      <GoTo address="/home/profile" name="Back to Profile" />
+      <GoTo address="/home/profile" name={t('links.back')} />
       <FormContainer serverError={serverError}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
@@ -110,9 +118,9 @@ export const ChangePassword = () => {
             render={({ field: { ref, value, onChange } }) => (
               <Input 
                 type={InputType.PASSWORD}
-                label="Your old password"
+                label={t("auth.changePassword.inputs.password.label")}
                 error={errors.password?.message}
-                placeholder={"Enter your old password"}
+                placeholder={t("auth.changePassword.inputs.password.placeholder")}
                 ref={ref}
                 value={value}
                 onFocus={() => {
@@ -130,9 +138,9 @@ export const ChangePassword = () => {
             render={({ field: { ref, value, onChange } }) => (
               <Input 
                 type={InputType.PASSWORD}
-                label="New password"
+                label={t("auth.changePassword.inputs.newPassword.label")}
                 error={errors.newPassword?.message}
-                placeholder={"Enter new password"}
+                placeholder={t("auth.changePassword.inputs.newPassword.placeholder")}
                 ref={ref}
                 value={value}
                 onFocus={() => {
@@ -150,9 +158,9 @@ export const ChangePassword = () => {
             render={({ field: { value, ref, onChange } }) => (
               <Input 
                 type={InputType.PASSWORD}
-                label="New password confirmation"
+                label={t("auth.changePassword.inputs.newPasswordConfirmation.label")}
                 error={errors.newPasswordConfirmation?.message}
-                placeholder={"Enter new password confirmation"}
+                placeholder={t("auth.changePassword.inputs.newPasswordConfirmation.placeholder")}
                 ref={ref}
                 value={value}
                 onFocus={() => {
@@ -166,7 +174,7 @@ export const ChangePassword = () => {
 
           <DefaultButton
             error={errors.newPasswordConfirmation}
-            name="Submit"
+            name={t('buttons.submit')}
             type="submit"
           />
         </form>

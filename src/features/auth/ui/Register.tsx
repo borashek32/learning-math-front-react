@@ -13,6 +13,8 @@ import { InputType } from "../../../common/components/enums/enums"
 import { FormContainer } from "../../../common/components/form/FormContainer"
 import { Modal } from "../../../common/components/modal/Modal"
 import { useNavigate } from "react-router-dom"
+import { useTranslation } from "react-i18next"
+import styles from "./../Auth.module.sass"
 
 interface IFormProps {
   email: string
@@ -20,27 +22,30 @@ interface IFormProps {
   passwordConfirmation: string
 }
 
-const formSchema = yup.object().shape({
-  email: yup.string()
-    .required("Email is required")
-    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Email must be an email"),
-  password: yup.string()
-    .required("Password is required")
-    .matches(/^[A-Za-z]+$/i, "Password must contain just latin letters")
-    .min(4, "Password length should be at least 4 characters")
-    .max(64, "Password cannot exceed more than 64 characters"),
-  passwordConfirmation: yup.string()
-    .required("Confirm Password is required")
-    .min(4, "Password length should be at least 4 characters")
-    .max(64, "Password cannot exceed more than 64 characters")
-    .oneOf([yup.ref("password")], "Passwords do not match")
-})
-
 export const Register = () => {
   const [signUp, { error, isLoading }] = useSignUpMutation()
   const [serverError, setServerError] = useState('')
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
+
+  const { t } = useTranslation()
+
+  const formSchema = yup.object().shape({
+    email: yup.string()
+      .required(t('errors.required'))
+      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, t('errors.mustBeEmail')),
+    password: yup.string()
+      .required(t('errors.required'))
+      .matches(/^[A-Za-z]+$/i, t('errors.latinLetters'))
+      .min(4, t('errors.min'))
+      .max(64, t('errors.max')),
+    passwordConfirmation: yup.string()
+      .required(t('errors.required'))
+      .min(4, t('errors.min'))
+      .max(64, t('errors.max'))
+      .oneOf([yup.ref("passwordConfirmation")], t('errors.notMatch')),
+  })
+  
 
   const back = () => navigate('/')
 
@@ -73,22 +78,30 @@ export const Register = () => {
         reset()
       })
       .catch(e => {
-        if (e.status === 'FETCH_ERROR') setServerError('There is no connection to the server. Please, try later')
-        if (e.status === 400) setServerError(e.data.message)
-        if (e.status === 401) setServerError(e.data.message)
+        console.log(e)
+        // setServerError(e.data.message)
+        const serverE = t('errors.serverError')
+        if (e.status === 'FETCH_ERROR') setServerError(serverE)
+        const error400 = t('errors.error400')
+        if (e.status === 400) setServerError(error400)
+        if (e.status === 401) setServerError(error400)
       })
   }
 
   return (
     <>
       {isLoading && <Loader />}
-      {serverError && <Error error={serverError} />}
+      {serverError && 
+        <div className={styles.errorWrapper}>
+          <Error error={serverError} />
+        </div>
+      }
       {open && 
         <Modal
           open={open}
           setOpen={handleOpenModal}
-          text="We've sent you a link to verify your email. Check your mail, please"
-          buttonName='Yes'
+          text={t('modal.linkSent')}
+          buttonName='Ok'
           buttonCallback={back}
           outlinedButton={true}
           buttonBack={true}
@@ -102,9 +115,9 @@ export const Register = () => {
             render={({ field: { ref, value, onChange } }) => (
               <Input 
                 type={InputType.TEXT}
-                label="Email"
+                label={t('auth.register.inputs.email.label')}
                 error={errors.email?.message}
-                placeholder={"Enter email"}
+                placeholder={t('auth.register.inputs.email.placeholder')}
                 ref={ref}
                 value={value}
                 onFocus={() => {
@@ -122,9 +135,9 @@ export const Register = () => {
             render={({ field: { ref, value, onChange } }) => (
               <Input 
                 type={InputType.PASSWORD}
-                label="Password"
+                label={t('auth.register.inputs.password.label')}
                 error={errors.password?.message}
-                placeholder={"Enter password"}
+                placeholder={t('auth.register.inputs.password.placeholder')}
                 ref={ref}
                 value={value}
                 onFocus={() => {
@@ -142,9 +155,9 @@ export const Register = () => {
             render={({ field: { value, ref, onBlur, onChange } }) => (
               <Input 
                 type={InputType.PASSWORD}
-                label="Password confirmation"
+                label={t("auth.register.inputs.passwordConfirmation.label")}
                 error={errors.passwordConfirmation?.message}
-                placeholder={"Enter password confirmation"}
+                placeholder={t("auth.register.inputs.passwordConfirmation.placeholder")}
                 ref={ref}
                 value={value}
                 onFocus={() => {
@@ -158,15 +171,15 @@ export const Register = () => {
 
           <DefaultButton
             error={errors.passwordConfirmation}
-            name="Register"
+            name={t('buttons.register')}
             type="submit"
           />
         </form>
 
         <GoTo
-          text="If you already have an account, go to login page"
+          text={t('auth.register.note')}
           address={"/login"}
-          name="Login"
+          name={t('buttons.login')}
         />
       </FormContainer>
     </>

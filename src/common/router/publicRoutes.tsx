@@ -41,7 +41,6 @@ export const publicRoutes: RouteObject[] = [
 ]
 
 export function PublicRoutes() {
-  const { data, isError } = useMeQuery()
 
   return <BaseLayout><Outlet /></BaseLayout>
 }

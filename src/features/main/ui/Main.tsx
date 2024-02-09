@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom'
 import styles from '../../../common/styles/App.module.sass'
+import { useTranslation } from 'react-i18next'
 
 export const Main = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'auth.links' })
+
   return (
     <>
-      <Link to="/register" className={styles.labelClass}>Register</Link>
+      <Link to="/register" className={styles.labelClass}>{t('register')}</Link>
       <br />
-      <Link to="/login" className={styles.labelClass}>Login</Link>
+      <Link to="/login" className={styles.labelClass}>{t('login')}</Link>
       <br />
-      <Link to="/instructions" className={styles.labelClass}>Instructions</Link>
+      <Link to="/instructions" className={styles.labelClass}>{t('instructions')}</Link>
     </>
   )
 }

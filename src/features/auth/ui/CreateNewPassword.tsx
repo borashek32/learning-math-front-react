@@ -12,24 +12,13 @@ import { Loader } from "../../../common/components/loaders/CircularLoader"
 import { Error } from "../../../common/components/error/Error"
 import { useNavigate, useParams } from "react-router-dom"
 import { Modal } from "../../../common/components/modal/Modal"
+import { useTranslation } from "react-i18next"
+import styles from "./../Auth.module.sass"
 
 interface IFormProps {
   password: string
   passwordConfirmation: string
 }
-
-const formSchema = yup.object().shape({
-  password: yup.string()
-    .required("Password is required")
-    .matches(/^[A-Za-z]+$/i, "Password must contain just latin letters")
-    .min(4, "Password length should be at least 4 characters")
-    .max(64, "Password cannot exceed more than 64 characters"),
-  passwordConfirmation: yup.string()
-    .required("Confirm Password is required")
-    .min(4, "Password length should be at least 4 characters")
-    .max(64, "Password cannot exceed more than 64 characters")
-    .oneOf([yup.ref("password")], "Passwords do not match"),
-})
 
 export const CreateNewPassword = () => {
   const { passwordRecoveryCode, email } = useParams()
@@ -39,6 +28,21 @@ export const CreateNewPassword = () => {
   const [serverError, setServerError] = useState('')
   const [createNewPassword, { isLoading }] = useCreateNewPasswordMutation()
   const navigate = useNavigate()
+
+  const { t } = useTranslation()
+
+  const formSchema = yup.object().shape({
+    password: yup.string()
+      .required(t('errors.required'))
+      .matches(/^[A-Za-z]+$/i, t('errors.latinLetters'))
+      .min(4, t('errors.min'))
+      .max(64, t('errors.max')),
+    passwordConfirmation: yup.string()
+      .required(t('errors.required'))
+      .min(4, t('errors.min'))
+      .max(64, t('errors.max'))
+      .oneOf([yup.ref("passwordConfirmation")], t('errors.notMatch')),
+  })
 
   useEffect(() => {
     if (passwordRecoveryCode) setRecoveryCode(recoveryCode as string)
@@ -67,7 +71,6 @@ export const CreateNewPassword = () => {
     } else {
       data.email = email
       setServerError('')
-      console.log()
       createNewPassword(data)
         .unwrap()
         .then(() => {
@@ -75,10 +78,11 @@ export const CreateNewPassword = () => {
           reset()
         })
         .catch(e => {
-          console.log(e)
-          if (e.status === 'FETCH_ERROR') setServerError('There is no connection to the server. Please, try later')
-          if (e.status === 400) setServerError(e.data.message)
-          if (e.status === 401) setServerError(e.data.message)
+          const serverE = t('errors.serverError')
+          if (e.status === 'FETCH_ERROR') setServerError(serverE)
+          const error400 = t('errors.error400')
+          if (e.status === 400) setServerError(error400)
+          if (e.status === 401) setServerError(error400)
         })
     }
   }
@@ -86,14 +90,18 @@ export const CreateNewPassword = () => {
   return (
     <>
       {isLoading && <Loader />}
-      {serverError && <Error error={serverError} />}
+      {serverError && 
+        <div className={styles.errorWrapper}>
+          <Error error={serverError} />
+        </div>
+      }
       {success && 
         <Modal
-          text={`Now go to login page`}
+          text={t('modal.success')}
           open={open}
           setOpen={setOpen}
           outlinedButton={true}
-          buttonName="Login"
+          buttonName={t('auth.links.login')}
           buttonCallback={() => navigate('/login')}
           buttonBack={true}
         />
@@ -106,9 +114,9 @@ export const CreateNewPassword = () => {
             render={({ field: { ref, value, onChange } }) => (
               <Input 
                 type={InputType.PASSWORD}
-                label="Password"
+                label={t("auth.changePassword.inputs.newPassword.label")}
                 error={errors.password?.message}
-                placeholder={"Enter password"}
+                placeholder={t("auth.changePassword.inputs.newPassword.placeholder")}
                 ref={ref}
                 value={value}
                 onFocus={() => {
@@ -123,12 +131,12 @@ export const CreateNewPassword = () => {
           <Controller
             control={control}
             name="passwordConfirmation"
-            render={({ field: { value, ref, onBlur, onChange } }) => (
+            render={({ field: { value, ref, onChange } }) => (
               <Input 
                 type={InputType.PASSWORD}
-                label="Password confirmation"
+                label={t("auth.changePassword.inputs.newPasswordConfirmation.label")}
                 error={errors.passwordConfirmation?.message}
-                placeholder={"Enter password confirmation"}
+                placeholder={t("auth.changePassword.inputs.newPasswordConfirmation.placeholder")}
                 ref={ref}
                 value={value}
                 onFocus={() => {
@@ -142,7 +150,7 @@ export const CreateNewPassword = () => {
 
           <DefaultButton
             error={errors.passwordConfirmation}
-            name="Submit"
+            name={t('buttons.submit')}
             type="submit"
           />
         </form>

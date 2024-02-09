@@ -5,6 +5,7 @@ import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { removeUserInfo } from "../auth.slice"
 import { Loader } from "../../../common/components/loaders/CircularLoader"
+import { useTranslation } from "react-i18next"
 
 export const Logout = () => {
   const navigate = useNavigate()
@@ -13,6 +14,8 @@ export const Logout = () => {
   const [logout, { isLoading }] = useLogoutMutation()
   const [serverError, setServerError] = useState('')
   const dispatch = useDispatch()
+
+  const { t } = useTranslation()
 
   const handleOpenModal = () => setOpen(false)
   const handleOpenModalWithError = () => setModalWithErrorOpen(false)
@@ -30,7 +33,7 @@ export const Logout = () => {
           setOpen(false)
           setModalWithErrorOpen(true)
           if (e.status === 401 || e.name === 'Error') {
-            setServerError('User not authorized. First log in and then you can log out')
+            setServerError(t('errors.logout'))
           }
         }
       })
@@ -52,8 +55,8 @@ export const Logout = () => {
         <Modal
           open={open}
           setOpen={handleOpenModal}
-          text='Are you sure?'
-          buttonName='Yes'
+          text={t('auth.logout.sure')}
+          buttonName='Ok'
           buttonCallback={logoutHandler}
           outlinedButton={true}
           buttonBack={true}

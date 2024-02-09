@@ -15,21 +15,25 @@ import { FormContainer } from "../../../common/components/form/FormContainer"
 import { Note } from "../../../common/components/note/Note"
 import { useDispatch } from "react-redux"
 import { setUserInfo } from "../auth.slice"
-
-const formSchema = yup.object().shape({
-  email: yup.string()
-    .required("Email is required")
-    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Email must be an email"),
-  password: yup.string()
-    .required("Password is required")
-    .min(4, "Password length should be at least 4 characters"),
-})
+import { useTranslation } from "react-i18next"
+import styles from "./../Auth.module.sass"
 
 export const Login = () => {
   const [login, { isLoading }] = useLoginMutation()
   const [serverError, setServerError] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const { t } = useTranslation()
+
+  const formSchema = yup.object().shape({
+    email: yup.string()
+      .required(t('errors.required'))
+      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, t('errors.mustBeEmail')),
+    password: yup.string()
+      .required(t('errors.required'))
+      .min(4, t('errors.min')),
+  })
 
   const {
     handleSubmit,
@@ -57,20 +61,26 @@ export const Login = () => {
           navigate('/home')
         }
       })
-      .catch(e => {
-        if (e.status === 'FETCH_ERROR') {
-          setServerError('There is no connection to the server. Please, try later')
-        }
-        if (e.status === 400) setServerError(e.data.message)
-        if (e.status === 401) setServerError(e.data.message)
+      .catch((e: any) => {
+        console.log(e)
+        setServerError(e.data.message)
+        // const serverE = t('errors.serverError')
+        //   if (e.status === 'FETCH_ERROR') setServerError(serverE)
+        //   const error400 = t('errors.error400')
+        //   if (e.status === 400) setServerError(error400)
+        //   if (e.status === 401) setServerError(error400)
       })
   }
 
   return (
     <>
       {isLoading && <Loader />}
-      {serverError && <Error error={serverError} />}   
-      <GoTo address="/main" name="Back to Main" />
+      {serverError && 
+        <div className={styles.errorWrapper}>
+          <Error error={serverError} />
+        </div>
+      } 
+      <GoTo address="/" name={t('links.back')} />
       <FormContainer serverError={serverError}>
         <form 
           style={serverError ? { marginTop: '-13px', width: '200px' } : {width: '200px'}}
@@ -82,9 +92,9 @@ export const Login = () => {
             render={({ field: { ref, value, onChange } }) => (
               <Input 
                 type={InputType.TEXT}
-                label="Email"
+                label={t('auth.login.inputs.email.label')}
                 error={errors.email?.message}
-                placeholder="Enter email"
+                placeholder={t('auth.login.inputs.email.placeholder')}
                 ref={ref}
                 value={value}
                 onFocus={() => {
@@ -102,9 +112,9 @@ export const Login = () => {
             render={({ field: { ref, value, onChange } }) => (
               <Input 
                 type={InputType.PASSWORD}
-                label="Password"
+                label={t('auth.login.inputs.password.label')}
                 error={errors.password?.message}
-                placeholder={"Enter password"}
+                placeholder={t('auth.login.inputs.password.placeholder')}
                 ref={ref}
                 value={value}
                 onFocus={() => {
@@ -118,19 +128,19 @@ export const Login = () => {
 
           <DefaultButton 
             error={errors.password}
-            name="Login"
+            name={t('buttons.login')}
             type="submit"
           />
         </form>
 
         <a href="/forgot-password">
-          <Note text='Forgot password?' />
+          <Note text={t('auth.links.forgotPassword')} />
         </a>
 
         <GoTo
-          text="If you don't have an account, go to registration page"
+          text={t('auth.login.note')}
           address={"/register"}
-          name="Registration"
+          name={t('auth.links.register')}
         />
       </FormContainer> 
     </>

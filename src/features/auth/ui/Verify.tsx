@@ -3,12 +3,15 @@ import { useVerifyQuery } from '../auth.api'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Error } from '../../../common/components/error/Error'
 import { Modal } from '../../../common/components/modal/Modal'
+import { useTranslation } from 'react-i18next'
 
 export const Verify = () => {
   const { verificationLink } = useParams()
   const [open, setOpen] = useState(true)
   const [err, setErr] = useState('')
   const navigate = useNavigate()
+
+  const { t } = useTranslation()
 
   const { data: error } = useVerifyQuery(verificationLink)
 
@@ -28,8 +31,8 @@ export const Verify = () => {
       <Modal
           open={open}
           setOpen={handleOpenModal}
-          text="Your account is verified successfully"
-          buttonName='Login'
+          text={t('auth.verify')}
+          buttonName={t('buttons.login')}
           buttonCallback={() => navigate('/login')}
           outlinedButton={true}
           buttonBack={true}
