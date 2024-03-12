@@ -1,13 +1,13 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { Input } from "../../../common/components/input/defaultInput/Input"
 import { InputType } from "../../../common/components/enums/enums"
-import { DefaultButton } from "../../../common/components/button/DefaultButton"
+import { DefaultButton } from "../../../common/components/buttons/DefaultButton"
 import { FormContainer } from "../../../common/components/form/FormContainer"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useEffect, useState } from "react"
-import { useCreateNewPasswordMutation } from "../auth.api"
-import { PasswordRecoveryType, RegisterType } from "../auth.types"
+import { useSaveNewPasswordMutation } from "../auth.api"
+import { PasswordRecoveryType } from "../auth.api.types"
 import { Loader } from "../../../common/components/loaders/CircularLoader"
 import { Error } from "../../../common/components/error/Error"
 import { useNavigate, useParams } from "react-router-dom"
@@ -26,7 +26,7 @@ export const CreateNewPassword = () => {
   const [open, setOpen] = useState(true)
   const [recoveryCode, setRecoveryCode] = useState('')
   const [serverError, setServerError] = useState('')
-  const [createNewPassword, { isLoading }] = useCreateNewPasswordMutation()
+  const [createNewPassword, { isLoading }] = useSaveNewPasswordMutation()
   const navigate = useNavigate()
 
   const { t } = useTranslation()

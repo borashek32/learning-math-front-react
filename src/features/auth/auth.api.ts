@@ -1,5 +1,5 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { baseURL } from '../../common/baseUrl'
+import { baseURL } from '../../common/baseUrl/baseUrl'
 import { 
   ForgotPasswordType, 
   RegistedUserType, 
@@ -8,8 +8,9 @@ import {
   UserType,
   NewPasswordType,
   NewEmailType,
-} from './auth.types'
-import { algByDecodingToken } from '../../common/utils/algByDecodingToken'
+  LogoutType,
+} from './auth.api.types'
+import { algByDecodingToken } from '../../common/utils/string/algByDecodingToken'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
@@ -109,13 +110,14 @@ export const authApi = createApi({
   endpoints: build => {
     return {
       login: build.mutation<RegistedUserType, RegisterType>({
-        query: ({ email, password }: RegisterType) => {
+        query: ({ email, password, rememberMe }: RegisterType) => {
           return {
             method: 'POST',
             url: 'login',
             body: {
               email,
               password,
+              rememberMe,
             },
           }
         },
@@ -136,11 +138,15 @@ export const authApi = createApi({
       verify: build.query<string, string | undefined>({
         query: verificationLink => `verify/${verificationLink}`,
       }),
-      logout: build.mutation<any, void>({
-        query: () => {
+      logout: build.mutation<void, LogoutType>({
+        query: (data: LogoutType) => {
           return {
             method: 'POST',
             url: 'logout',
+            body: {
+              refreshToken: data.refreshToken,
+              accessToken: data.accessToken
+            }
           }
         },  
         invalidatesTags: ['me'],
@@ -156,10 +162,10 @@ export const authApi = createApi({
           }
         },
       }),
-      createNewPassword: build.mutation<any, PasswordRecoveryType>({
+      saveNewPassword: build.mutation<any, PasswordRecoveryType>({
         query: ({ email, password }: PasswordRecoveryType) => {
           return {
-            url: `create-new-password`,
+            url: `save-new-password`,
             method: 'POST',
             body: {
               password,
@@ -168,7 +174,7 @@ export const authApi = createApi({
           }
         },
       }),
-      me: build.query<RegistedUserType, void>({
+      me: build.query<UserType | null, void>({
         query: () => {
           return {
             method: 'GET',
@@ -178,7 +184,7 @@ export const authApi = createApi({
         providesTags: ['me'],
       }),
       changePassword: build.mutation<UserType, NewPasswordType>({
-        query: (data: NewPasswordType) => {
+        query: (data: NewPasswordType) => { 
           return {
             method: 'POST',
             url: 'change-password',
@@ -192,7 +198,6 @@ export const authApi = createApi({
       }),
       changeEmail: build.mutation<UserType, NewEmailType>({
         query: (data: NewEmailType) => {
-          console.log(data)
           return {
             method: 'POST',
             url: 'change-email',
@@ -213,7 +218,7 @@ export const {
   useVerifyQuery,
   useLogoutMutation,
   useEmailSentMutation,
-  useCreateNewPasswordMutation,
+  useSaveNewPasswordMutation,
   useMeQuery,
   useChangePasswordMutation,
   useChangeEmailMutation,

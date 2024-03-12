@@ -1,3 +1,4 @@
 export type Props = {
-  title: number | null
+  title: number | string | null | undefined
+  italic?: boolean
 }

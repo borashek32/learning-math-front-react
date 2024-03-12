@@ -1,21 +1,23 @@
 import { Navigate, Outlet, RouteObject } from "react-router-dom"
 import { Home } from '../../features/home/ui/Home'
-import { Summ } from '../../features/math-operations/ui/summ/Summ'
 import { MathOperations } from '../../features/math-operations/MathOperations'
 import { Users } from '../../features/test/Users'
-import { Diff } from '../../features/math-operations/ui/diff/Diff'
 import { Docs } from '../../features/main/ui/docs/Docs'
 import { Logout } from '../../features/auth/ui/Logout'
 import { Loader } from "../components/loaders/CircularLoader"
 import { ChangePassword } from "../../features/auth/ui/ChangePassword"
-import { Profile } from "../../features/profile/Profile"
+import { Profile } from "../../features/profile/ui/Profile"
 import { useMeQuery } from "../../features/auth/auth.api"
 import { AppLayout } from "../components/layouts/AppLayout"
 import { YourScore } from "../../features/profile/ui/YourScore"
-import { MultTable } from "../../features/math-operations/ui/multTable/MultTable"
-import { MultByDigit } from "../../features/math-operations/ui/multTable/multByDigit/MultByDigit"
-import { Mult } from "../../features/math-operations/ui/mult/Mult"
+import { MultiplicationTable } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationTable"
+import { MultiplicationNumber } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationNumber"
+import { Mult } from "../../features/math-operations/ui/multiplication/Multiplication"
 import { ChangeEmail } from "../../features/auth/ui/ChangeEmail"
+import { useDispatch } from "react-redux"
+import { useEffect } from "react"
+import { removeUserInfo, setUserInfo } from "../../features/auth/auth.slice"
+import { SummDifference } from "../../features/math-operations/ui/summ-difference/SummDifference"
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -47,12 +49,8 @@ export const privateRoutes: RouteObject[] = [
     element: <MathOperations />
   },
   {
-    path: "/home/math-operations/summ",
-    element: <Summ />
-  },
-  {
-    path: "/home/math-operations/diff",
-    element: <Diff />
+    path: `/home/math-operations/:mathOperation`,
+    element: <SummDifference />
   },
   {
     path: "/home/math-operations/mult",
@@ -60,11 +58,11 @@ export const privateRoutes: RouteObject[] = [
   },
   {
     path: "/home/math-operations/multiplication-table",
-    element: <MultTable />
+    element: <MultiplicationTable />
   },
   {
     path: "/home/math-operations/multiplication-table/:digit",
-    element: <MultByDigit />
+    element: <MultiplicationNumber />
   },
 
   {
@@ -75,14 +73,23 @@ export const privateRoutes: RouteObject[] = [
 
 export function PrivateRoutes() {
   const { data, isLoading } = useMeQuery()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      dispatch(setUserInfo(data))
+    } else if (!isLoading && !data) {
+      dispatch(removeUserInfo())
+    }
+  }, [data, isLoading, dispatch])
 
   if (isLoading) {
-    return <Loader />
+    return <AppLayout><Loader /></AppLayout>
   }
 
   if (!data) {
     return <Navigate to="/login" />
   } 
-  
+
   return <AppLayout><Outlet /></AppLayout>
 }

@@ -1,5 +1,5 @@
 $button-bg-blue: #61dafb
-$button-bg-blue-hover: #03799a
+$button-bg-blue-hover: #0096c0
 $button-bg-red: #ed1b1b
 $button-bg-red-hover: #780303
 $color-white: #fff
@@ -36,3 +36,23 @@ $color-black: #000
 
   &:hover
     background-color: $button-bg-red-hover
+
+.blueButton
+  background-color: #61dafb
+  padding: 10px
+  margin-bottom: 10px
+  border-radius: 5px
+  display: flex
+  align-items: center
+  justify-content: center
+
+  &:hover
+    background-color: $button-bg-blue-hover
+    .blueButtonText
+      color: $color-white
+
+.blueButtonText
+  font-size: 18px
+  font-weight: 700
+  color: #01143d
+  text-align: center

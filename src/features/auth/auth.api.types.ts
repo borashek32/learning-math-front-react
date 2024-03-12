@@ -1,10 +1,12 @@
 export type UserType = {
-  id: string
+  _id: string
   email: string
   password: string
   isVerified: boolean
   role: "USER" | "ADMIN"
   score: number
+  avatarPath: string
+  avatarName: string
 }
 
 export type RegistedUserType = {
@@ -16,6 +18,7 @@ export type RegistedUserType = {
 export type RegisterType = {
   email: string
   password: string
+  rememberMe?: boolean
 }
 
 export type ForgotPasswordType = {
@@ -26,7 +29,7 @@ export type ForgotPasswordType = {
 export type PasswordRecoveryType = {
   email: string | undefined
   password: string
-  passwordRecoveryCode: string | undefined
+  // createNewPasswordLink: string
 }
 
 export type NewPasswordType = {
@@ -38,4 +41,9 @@ export type NewPasswordType = {
 export type NewEmailType = {
   userId: string | undefined
   newEmail: string
+}
+
+export type LogoutType = {
+  accessToken: string | null
+  refreshToken: string | null
 }

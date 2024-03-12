@@ -1,9 +1,10 @@
 import styles from './Logo.module.sass'
+import { Props } from './Logo.types'
 
-export const LogoSmall = () => {
+export const LogoSmall = ({ path }: Props) => {
 
   return (
-    <a href="/" className={styles.logoLink}>
+    <a href={path} className={styles.logoLink}>
       <div className={styles.logoWrapperSmall}>
         <div className={styles.learnMathComWrapperSmall}>
           <p className={styles.learnSmall}>Learn</p>

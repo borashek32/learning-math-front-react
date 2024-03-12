@@ -1,7 +1,7 @@
-import styles from "./Alert.module.sass";
+import styles from "./Alert.module.sass"
 import { Props } from "./Alert.types"
-import { DefaultButton } from "../button/DefaultButton";
-import { Header } from "../header/Header";
+import { DefaultButton } from "../buttons/DefaultButton"
+import { Header } from "../header/Header"
 
 export const AlertResult = ({ right, wrong, onClick, title }: Props) => {
 

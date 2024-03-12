@@ -1,7 +1,7 @@
 import { Logo } from '../logo/Logo'
-import { SelectLang } from '../nav/SelectLang/SelectLang'
-import styles from './BaseLayout.module.sass'
-import { Props } from './BaseLayout.types'
+import { SelectLang } from '../selectLang/SelectLang'
+import styles from './Layouts.module.sass'
+import { Props } from './Layouts.types'
 
 export const BaseLayout = ({ children }: Props) => {
 

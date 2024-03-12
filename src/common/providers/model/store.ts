@@ -1,18 +1,27 @@
-import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
+import { Action, ThunkAction, combineReducers, configureStore } from '@reduxjs/toolkit'
 import { authApi } from '../../../features/auth/auth.api'
 import { usersApi } from '../../../features/test/users.api'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import userInfoReducer from './../../../features/auth/auth.slice'
+import { userInfoReducer } from './../../../features/auth/auth.slice'
+import { profileApi } from '../../../features/profile/profile.api'
+import { rickMortyApi } from '../../../features/profile/rickMorty/rickMorty.api'
+import { profileReducer } from '../../../features/profile/profile.slice'
+import { appReducer } from '../../../app/app.slice'
  
 export const store = configureStore({
   reducer: {
-    userInfo: userInfoReducer,
     [authApi.reducerPath]: authApi.reducer,
-    [usersApi.reducerPath]: usersApi.reducer,
+    [profileApi.reducerPath]: profileApi.reducer,
+    [rickMortyApi.reducerPath]: rickMortyApi.reducer,
+    userInfo: userInfoReducer,
+    profile: profileReducer,
+    app: appReducer,
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware()
-    .concat(authApi.middleware)
-    .concat(usersApi.middleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(
+    profileApi.middleware,
+    authApi.middleware,
+    rickMortyApi.middleware,
+  ),
 })
 
 setupListeners(store.dispatch)

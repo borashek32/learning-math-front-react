@@ -1,5 +1,31 @@
 {
   "lang": "en",
+  "screens": {
+    "main": "Welcome",
+    "home": "Home",
+    "instructions": "Instructions",
+    "math": "Math Operations",
+    "summ": "Summ",
+    "diff": "Difference",
+    "mult": "Multiplication",
+    "multDigit": "Multiplication by",
+    "multCheck": "Check mutiplication knowledge",
+    "multNulls": "Multiplication of numbers with nulls",
+    "login": "Login",
+    "register": "Registration",
+    "verify": "Verify",
+    "logout": "Logout",
+    "forgotPassword": "Forgot password",
+    "createNewPassword": "Create new password",
+    "changeEmail": "Change email",
+    "changePassword": "Change password",
+    "changeAvatar": "Choose avatar",
+    "profile": "Profile",
+    "yourScore": "Your score",
+    "equations": "Equations",
+    "equationsWithX": "Equations with one unknown",
+    "equationsWithXY": "Equations with two unknown"
+  },
   "nav": {
     "select": {
       "changeLang": "Change language",
@@ -23,8 +49,15 @@
     "register": "Register"
   },
   "modal": {
-    "success": "Yeah success)))",
-    "linkSent": "We've sent you a link to verify your email. Check your mail, please"
+    "registrationSuccess": "Registration was successfull",
+    "changePasswordSuccess": "Your password was changed successfully",
+    "fail": "Something went wrong. Please, try later",
+    "linkSent": "We've sent you a link to verify your email. Check your mail, please",
+    "forgotPassword": "Please, check your email",
+    "checkMathOperationSuccess": "Right answer!",
+    "checkMathOperationFail": "Wrong! Please, try again",
+    "changeAvatarSuccess": "Your avatar was changed successfully",
+    "button": "Ok"
   },
   "links": {
     "back": "Back"
@@ -32,7 +65,9 @@
   "errors": {
     "serverError": "There is no connection to the server. Please, try later",
     "someError": "Some error occured",
-    "error400": "User with this email already exists",
+    "error400register": "User with this email already exists",
+    "error400login": "User password not correct",
+    "error401login": "User not found",
     "required": "Field required",
     "latinLetters": "Only latin letters are supported",
     "min": "Field length should be at least 4 characters",
@@ -65,6 +100,7 @@
       }
     },
     "changeEmail": {
+      "title": "Change email",
       "inputs": {
         "newEmail": {
           "label": "Your new email",
@@ -81,7 +117,8 @@
         "password": {
           "label": "Password",
           "placeholder": "Enter your password"
-        }
+        },
+        "rememberMe": "Remember me"
       },
       "note": "If you don't have an account, go to registration page"
     },
@@ -100,12 +137,21 @@
           "placeholder": "Enter your password confirmation"
         }
       },
-      "note": "If you already have an account, go to login page"
+      "note": "If you already have an account, go to login page",
+      "alerts": {
+        "success": "Registration was successfull, check your inbox to verify your email"
+      }
     },
     "logout": {
       "sure": "Are you sure?"
     },
-    "verify": "Your email is verified successfully"
+    "verify": {
+      "success": "Your email is verified successfully",
+      "error": "Some error occured during verification, go to registration page again"
+    },
+    "forgotPassword": {
+      "note": "If you forget your password, follow the link below"
+    }
   },
   "home": {
     "hello": "Hello"
@@ -119,19 +165,46 @@
       "notRight": "You are not right",
       "more": "Play more?",
       "again": "Try again?",
-      "choose": "Choose a number:"
+      "choose": "Choose a number:",
+      "saveScore": "Save today score",
+      "getHint": "Get a hint"
     },
     "score": "Your score:",
     "diff": "Calculate difference",
     "summ": "Calculate summ",
     "multiplication": "Multiplication",
     "multTable": "Multiplication table",
-    "multBy": "Multiplication by"
+    "multBy": "Multiplication by",
+    "multCheck": "Check mutiplication knowledge",
+    "multNulls": "Multiplication of numbers with nulls",
+    "equationsWithX": "Equations with one unknown",
+    "equationsWithXY": "Equations with two unknown"
   },
   "profile": {
-    "title": "Profile",
-    "changePassword": "Change password",
-    "changeEmail": "Change email",
-    "yourScore": "Your score"
+    "changePassword": {
+      "inputs": {
+        "oldPassword": {
+          "placeholder": "Enter your old password"
+        }
+      }
+    },
+    "changeEmail": {
+      "inputs": {
+        "oldPassword": {
+          "placeholder": "Enter your new email"
+        }
+      }
+    },
+    "changeAvatar": {
+      "title": "Who are you from Rick & Morty?",
+      "button": "Choose",
+      "name": "Name",
+      "location": "Location",
+      "status": "Status",
+      "species": "Species",
+      "changeAvatar": "Choose your avatar",
+      "youAre": "You are ",
+      "fromRickMorty": " from Rick and Morty"
+    }
   }
 }

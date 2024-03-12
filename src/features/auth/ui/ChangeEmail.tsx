@@ -1,7 +1,7 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { Input } from "../../../common/components/input/defaultInput/Input"
 import { InputType } from "../../../common/components/enums/enums"
-import { DefaultButton } from "../../../common/components/button/DefaultButton"
+import { DefaultButton } from "../../../common/components/buttons/DefaultButton"
 import { FormContainer } from "../../../common/components/form/FormContainer"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -11,7 +11,7 @@ import { Loader } from "../../../common/components/loaders/CircularLoader"
 import { Error } from "../../../common/components/error/Error"
 import { useNavigate } from "react-router-dom"
 import { Modal } from "../../../common/components/modal/Modal"
-import { NewEmailType } from "./../auth.types"
+import { NewEmailType } from "../auth.api.types"
 import { useSelector } from "react-redux"
 import { selectUserId } from "../auth.selectors"
 import { GoTo } from "../../../common/components/goTo/GoTo"
@@ -64,14 +64,8 @@ export const ChangeEmail = () => {
           setSuccess(true)
           reset()
         })
-        .catch((e: any) => {
-          console.log(e)
-          setServerError(e.data.message)
-          // const serverE = t('errors.serverError')
-          // if (e.status === 'FETCH_ERROR') setServerError(e.message)
-          // const error400 = t('errors.error400')
-          // if (e.status === 400) setServerError(e.message)
-          // if (e.status === 401) setServerError(e.message)
+        .catch(e => {
+          if (e.status === 'FETCH_ERROR') setServerError(t('errors.serverError'))
         })
     }
   }

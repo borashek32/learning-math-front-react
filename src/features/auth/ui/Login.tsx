@@ -1,12 +1,12 @@
-import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import { Controller, Resolver, SubmitHandler, useForm } from "react-hook-form"
 import { useLoginMutation } from "../auth.api"
 import { useNavigate } from "react-router-dom"
-import { RegisterType } from "../auth.types"
+import { RegisterType } from "../auth.api.types"
 import { useState } from "react"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Loader } from "../../../common/components/loaders/CircularLoader"
-import { DefaultButton } from "../../../common/components/button/DefaultButton"
+import { DefaultButton } from "../../../common/components/buttons/DefaultButton"
 import { Error } from "../../../common/components/error/Error"
 import { GoTo } from "../../../common/components/goTo/GoTo"
 import { Input } from "../../../common/components/input/defaultInput/Input"
@@ -32,22 +32,26 @@ export const Login = () => {
       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, t('errors.mustBeEmail')),
     password: yup.string()
       .required(t('errors.required'))
-      .min(4, t('errors.min')),
+      .matches(/^[A-Za-z]+$/i, t('errors.latinLetters'))
+      .min(4, t('errors.min'))
+      .max(164, t('errors.max')),
+    rememberMe: yup.boolean()
   })
 
   const {
     handleSubmit,
     control,
     formState: { errors },
-    reset,
     clearErrors,
+    reset,
   } = useForm<RegisterType>({
     defaultValues: {
       email: '',
       password: '',
+      rememberMe: false
     },
     mode: 'onChange',
-    resolver: yupResolver(formSchema)
+    resolver: yupResolver(formSchema) as Resolver<RegisterType>,
   })
 
   const onSubmit: SubmitHandler<RegisterType> = (data: RegisterType) => {
@@ -62,13 +66,9 @@ export const Login = () => {
         }
       })
       .catch((e: any) => {
-        console.log(e)
-        setServerError(e.data.message)
-        // const serverE = t('errors.serverError')
-        //   if (e.status === 'FETCH_ERROR') setServerError(serverE)
-        //   const error400 = t('errors.error400')
-        //   if (e.status === 400) setServerError(error400)
-        //   if (e.status === 401) setServerError(error400)
+        if (e.status === 'FETCH_ERROR') setServerError(t('errors.serverError'))
+        if (e.data.message === 'User password not correct') setServerError(t('errors.error400login'))
+        if (e.data.message === 'User not found') setServerError(t('errors.error401login'))
       })
   }
 

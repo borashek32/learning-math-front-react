@@ -1,11 +1,13 @@
 import { useTranslation } from 'react-i18next'
-import { DefaultButton } from '../../../common/components/button/DefaultButton'
+import { DefaultButton } from '../../../common/components/buttons/DefaultButton'
 import { Header } from '../../../common/components/header/Header'
 import styles from './../../../common/styles/App.module.sass'
 import { Link } from 'react-router-dom'
+import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { selectUserEmail } from '../../auth/auth.selectors'
 
 export const Home = () => {
-  const userEmail = localStorage.getItem('userEmail')
+  const userEmail = useAppSelector(selectUserEmail)
 
   const { t } = useTranslation()
   

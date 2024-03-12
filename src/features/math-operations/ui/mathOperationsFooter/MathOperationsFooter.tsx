@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import { DefaultButton } from "../../../../common/components/button/DefaultButton"
+import { DefaultButton } from "../../../../common/components/buttons/DefaultButton"
 import { Modal } from "../../../../common/components/modal/Modal"
 import { Props } from "./MathOperationsFooter.types"
 import { Score } from "../../../../common/components/score/Score"

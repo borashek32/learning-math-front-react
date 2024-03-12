@@ -6,7 +6,6 @@ import { ForgotPassword } from '../../features/auth/ui/ForgotPassword'
 import { CreateNewPassword } from '../../features/auth/ui/CreateNewPassword'
 import { Outlet, RouteObject } from 'react-router-dom'
 import { BaseLayout } from '../components/layouts/BaseLayout'
-import { useMeQuery } from '../../features/auth/auth.api'
 import { Docs } from '../../features/main/ui/docs/Docs'
 
 export const publicRoutes: RouteObject[] = [
@@ -43,4 +42,5 @@ export const publicRoutes: RouteObject[] = [
 export function PublicRoutes() {
 
   return <BaseLayout><Outlet /></BaseLayout>
+  // return <Outlet />
 }

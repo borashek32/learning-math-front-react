@@ -1,7 +1,7 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { baseURL } from '../../common/baseUrl'
-import { UserType } from '../auth/auth.types'
-import { algByDecodingToken } from '../../common/utils/algByDecodingToken'
+import { baseURL } from '../../common/baseUrl/baseUrl'
+import { UserType } from '../auth/auth.api.types'
+import { algByDecodingToken } from '../../common/utils/string/algByDecodingToken'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,

@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom'
-import { DefaultButton } from '../../../../common/components/button/DefaultButton'
-import { GoTo } from '../../../../common/components/goTo/GoTo'
-import { Header } from '../../../../common/components/header/Header'
-import styles from './../../MathOperations.module.sass'
-import { Props } from './MultTable.types'
+import { DefaultButton } from '../../../../../common/components/buttons/DefaultButton'
+import { GoTo } from '../../../../../common/components/goTo/GoTo'
+import { Header } from '../../../../../common/components/header/Header'
+import styles from './../../../MathOperations.module.sass'
+import { Props } from './MultiplicationTable.types'
 import { useTranslation } from 'react-i18next'
-import { Note } from '../../../../common/components/note/Note'
+import { Note } from '../../../../../common/components/note/Note'
 
-export const MultTable = ({}: Props) => {
+export const MultiplicationTable = ({}: Props) => {
   const navigate = useNavigate()
   const digits: Array<number> = [2, 3, 4, 5, 6, 7, 8, 9]
 

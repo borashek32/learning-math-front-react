@@ -8,7 +8,7 @@ export const Score = ({ score }: Props) => {
   return (
     <div>
       <h3 className={styles.title}>
-        {t('profile.yourScore')} {score}
+        {t('mathOperations.score')} {score} XP
       </h3>
     </div>
   )

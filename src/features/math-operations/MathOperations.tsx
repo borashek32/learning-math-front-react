@@ -1,12 +1,13 @@
-import { Link } from 'react-router-dom'
 import { GoTo } from '../../common/components/goTo/GoTo'
 import { Header } from '../../common/components/header/Header'
 import styles from './../../common/styles/App.module.sass'
 import { useTranslation } from 'react-i18next'
+import { BlueButton } from '../../common/components/buttons/BlueButton'
+import { MathOperationsConstants } from '../../common/constants/MathConstants'
 
 export const MathOperations = () => {
-
   const { t } = useTranslation()
+  const mathOperation: Array<string> = [MathOperationsConstants.SUMM, MathOperationsConstants.DIFF]
 
   return (
     <>
@@ -15,24 +16,16 @@ export const MathOperations = () => {
     
       <ul className={styles.listItems}>
         <li className={styles.item}>
-          <Link className={styles.itemLink} to="/home/math-operations/summ">
-            {t('mathOperations.summ')}
-          </Link>
+          <BlueButton name={t('mathOperations.summ')} type={'button'} path={`/home/math-operations/${mathOperation[0]}`} />
         </li>
         <li className={styles.item}>
-          <Link className={styles.itemLink} to="/home/math-operations/diff">
-            {t('mathOperations.diff')}  
-          </Link>
+          <BlueButton name={t('mathOperations.diff')} type={'button'} path={`/home/math-operations/${mathOperation[1]}`} />
         </li>
         <li className={styles.item}>
-          <Link className={styles.itemLink} to="/home/math-operations/mult">
-            {t('mathOperations.multiplication')}  
-          </Link>
+          <BlueButton name={t('mathOperations.multiplication')} type={'button'} path={"/home/math-operations/mult"} />
         </li>
         <li className={styles.item}>
-          <Link className={styles.itemLink} to="/home/math-operations/multiplication-table">
-            {t('mathOperations.multTable')} 
-          </Link>
+          <BlueButton name={t('mathOperations.multTable')} type={'button'} path={"/home/math-operations/multiplication-table"} />
         </li>
       </ul>
     </>

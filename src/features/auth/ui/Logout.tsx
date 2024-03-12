@@ -20,8 +20,11 @@ export const Logout = () => {
   const handleOpenModal = () => setOpen(false)
   const handleOpenModalWithError = () => setModalWithErrorOpen(false)
 
-  const logoutHandler = () => {
-    logout()
+  const logoutHandler = async () => {
+    const refreshToken = await localStorage.getItem('refreshToken')
+    const accessToken = await localStorage.getItem('accessToken')
+    
+    logout({ refreshToken, accessToken })
       .unwrap()
       .then(() => {
         navigate('/login')
