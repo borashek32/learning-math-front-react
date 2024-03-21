@@ -13,6 +13,10 @@ export const Avatar = ({
 }: Props) => {
   const { t } = useTranslation()
 
+  const onPressWithValue = () => {
+    console.log()
+  }
+
   return (
     <>
       <div className={styles.imageContainer}>
@@ -54,6 +58,7 @@ export const Avatar = ({
               // onPressWithValue={
               //   (source: string | undefined, name: string | undefined) => onPress(source, name)
               // }
+              onPressWithValue={onPressWithValue}
             />
           </div>
         }
