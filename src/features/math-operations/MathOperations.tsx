@@ -12,20 +12,36 @@ export const MathOperations = () => {
   return (
     <>
       <GoTo address='/home' name={t('links.back')} />
-      <Header title={t('mathOperations.title')}  />
+      <Header title={t('screens.math')}  />
     
       <ul className={styles.listItems}>
         <li className={styles.item}>
-          <BlueButton name={t('mathOperations.summ')} type={'button'} path={`/home/math-operations/${mathOperation[0]}`} />
+          <BlueButton 
+            name={t('mathOperations.summ')} 
+            type={'button'} 
+            path={`/home/math-operations/${mathOperation[0]}`} 
+          />
         </li>
         <li className={styles.item}>
-          <BlueButton name={t('mathOperations.diff')} type={'button'} path={`/home/math-operations/${mathOperation[1]}`} />
+          <BlueButton 
+            name={t('mathOperations.diff')} 
+            type={'button'} 
+            path={`/home/math-operations/${mathOperation[1]}`} 
+          />
         </li>
         <li className={styles.item}>
-          <BlueButton name={t('mathOperations.multiplication')} type={'button'} path={"/home/math-operations/mult"} />
+          <BlueButton 
+            name={t('mathOperations.multiplication')} 
+            type={'button'} 
+            path={"/home/math-operations/multiplication"} 
+          />
         </li>
         <li className={styles.item}>
-          <BlueButton name={t('mathOperations.multTable')} type={'button'} path={"/home/math-operations/multiplication-table"} />
+          <BlueButton
+            name={t('mathOperations.equations')}
+            type={'button'}
+            path={'/home/math-operations/equations'}
+          />
         </li>
       </ul>
     </>

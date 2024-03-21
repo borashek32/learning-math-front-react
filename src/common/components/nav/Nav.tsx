@@ -1,32 +1,19 @@
 import { useTranslation } from "react-i18next"
 import styles from './Nav.module.sass'
 import { LogoSmall } from '../logo/LogoSmall'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { DefaultButton } from '../buttons/DefaultButton'
-import { SelectLang } from "../selectLang/SelectLang"
 import { useAppSelector } from "../../hooks/useAppSelector"
-import { selectUserEmail, selectUserId } from "../../../features/auth/auth.selectors"
-import { useDispatch } from "react-redux"
-import { selectTotalUserScore } from "../../../features/profile/profile.selectors"
-import { useGetTotalUserScoreQuery } from "../../../features/profile/profile.api"
-import { setTotalUserScore } from "../../../features/profile/profile.slice"
+import { selectUserEmail } from "../../../features/auth/auth.selectors"
 import { PATHS } from "../../constants/paths"
+import { selectTotalUserScore } from "../../../features/profile/profile.selectors"
 
 export const Nav = () => {
   const [active, setActive] = useState(false)
   const userEmail = useAppSelector(selectUserEmail)
-
   const totalUserScore = useAppSelector(selectTotalUserScore)
-  const dispatch = useDispatch()
-  const userId = useAppSelector(selectUserId)
-  const { data: userScoreData, isLoading } = useGetTotalUserScoreQuery(userId || '')
-  console.log('userScoreData', userScoreData, 'selectjr', totalUserScore)
 
-  useEffect(() => {
-    userScoreData && dispatch(setTotalUserScore(userScoreData.score))
-  }, [userScoreData, dispatch])
-  
   const { t } = useTranslation()
 
   const onClick = () => {
@@ -45,7 +32,10 @@ export const Nav = () => {
             onClick={() => setActive(false)}
           >
             <p className={styles.userEmail}>{userEmail && userEmail}</p> 
-            <p className={styles.titleScore}>{totalUserScore && totalUserScore} XP</p> 
+            <div className={styles.yourScore}>
+              <p className={styles.scoreText}>{t('yourScore.total')}</p>
+              <p className={styles.titleScore}>{totalUserScore && totalUserScore} XP</p>
+            </div> 
           </Link>
 
           <div className={menu} onClick={onClick}>
@@ -62,7 +52,7 @@ export const Nav = () => {
                 to="/home"
                 onClick={() => setActive(false)}
               >
-                {t('nav.items.home')}
+                {t('screens.home')}
               </Link>
             </li>
             <li className={styles.item}>
@@ -71,7 +61,7 @@ export const Nav = () => {
                 to="/home/math-operations"
                 onClick={() => setActive(false)}
               >
-                {t('nav.items.mathOperations')}
+                {t('screens.math')}
               </Link>
             </li>
             <li className={styles.item}>
@@ -80,7 +70,7 @@ export const Nav = () => {
                 to="/home/math-operations/docs"
                 onClick={() => setActive(false)}
               >
-                {t('nav.items.instructions')}
+                {t('screens.instructions')}
               </Link>
             </li>
             
@@ -88,20 +78,20 @@ export const Nav = () => {
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink} 
-                to="/home/profile"
-                onClick={() => setActive(false)}
+                to="/home/profile/your-score"
               >
-                {t('nav.items.profile')}
+                {t('screens.yourScore')}
               </Link>
-            </li>
+            </li> 
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink} 
-                to="/home/profile/your-score"
+                to="/home/profile"
+                onClick={() => setActive(false)}
               >
-                {t('nav.items.score')}
+                {t('screens.profile')}
               </Link>
-            </li> 
+            </li>
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink} 
@@ -110,9 +100,6 @@ export const Nav = () => {
               >
                 <DefaultButton type='button' name={t('buttons.logout')} />
               </Link>
-            </li>
-            <li className={styles.item}>
-              123<SelectLang />
             </li>
           </ul>
         </div>

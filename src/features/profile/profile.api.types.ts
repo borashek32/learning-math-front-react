@@ -7,5 +7,5 @@ export type ScoreType = {
 export type AvatarType = {
   avatarPath: string
   avatarName: string
-  userId: string
+  userId?: string
 }

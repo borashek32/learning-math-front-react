@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface ScoreState {
   score: number
-  totalUserScore: number
+  totalUserScore: number | undefined
 }
 
 const initialState: ScoreState = {
@@ -17,7 +17,7 @@ const profileSlice = createSlice({
     setUserScore(state, action: PayloadAction<number>) {
       state.score = action.payload
     },
-    setTotalUserScore(state, action: PayloadAction<number>) {
+    setTotalUserScore(state, action: PayloadAction<number | undefined>) {
       state.totalUserScore = action.payload
     }
   },

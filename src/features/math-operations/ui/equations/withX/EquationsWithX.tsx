@@ -1,11 +1,9 @@
-import React, { ReactNode, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { AnswerType } from '../../../MathOperations.types'
 import { useDispatch } from 'react-redux'
 import { Loader } from '../../../../../common/components/loaders/CircularLoader'
 import { Modal } from '../../../../../common/components/modal/Modal'
 import { useTranslation } from 'react-i18next'
-import { AppLayout } from '../../../../../common/components/layouts/AppLayout'
-import { Error } from '../../../../../common/components/error/Error'
 import { Score } from '../../../../../common/components/score/Score'
 import { useUpdateScoreMutation } from '../../../../profile/profile.api'
 import { useFormSchema } from '../../../../../common/utils/math/validationShemaMathOperations'
@@ -16,38 +14,41 @@ import { selectUserId } from '../../../../auth/auth.selectors'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { setTotalUserScore } from '../../../../profile/profile.slice'
 import { MathOperationsConstants, MathSignsConstants } from '../../../../../common/constants/MathConstants'
-import { getRandomMathOperation } from '../../../../../common/utils/math/getRandomMathOperation'
-import { getCheckMathOperation } from '../../../../../common/utils/math/getCheckMathOperation'
 import { generateRandomNumber } from '../../../../../common/utils/math/generateRandomNumber'
 import { MathExampleLayout } from '../../../../../common/components/layouts/MathExamlpeLayout'
 import { DefaultDigit } from '../../../../../common/components/digits/DefaultDigit'
-import { MathOperation } from '../../../../../common/components/mathOpertion/mathOperation'
 import { AppText } from '../../../../../common/components/text/AppText'
 import { ResultInput } from '../../../../../common/components/input/resultInput/ResultInput'
 import { ButtonsLayout } from '../../../../../common/components/layouts/ButtonsLayout'
 import { MathOperationButton } from '../../../../../common/components/buttons/MathOperationButton'
+import { Header } from '../../../../../common/components/header/Header'
+import { GoTo } from '../../../../../common/components/goTo/GoTo'
+import { getRandomMathOperation } from '../../../../../common/utils/math/getRandomMathOperation'
+import { getCheckMathOperation } from '../../../../../common/utils/math/getCheckMathOperation'
+import { Error } from '../../../../../common/components/error/Error'
 
 export const EquationsWithX = () => {
   const [firstNumber, setFirstNumber] = useState<number>(generateRandomNumber(1, 10))
-  const [secondNumber, setSecondNumber] = useState<number>(generateRandomNumber(1, 10))
+  const [secondNumber, setSecondNumber] = useState<number>(generateRandomNumber(10, 100))
   const [hint, setHint] = useState(false)
+  const [hintIsUsed, setHintIsUsed] = useState(false)
   const [score, setScore] = useState(0) 
   const [serverError, setServerError] = useState('')
   const [answer, setAnswer] = useState<string>('')
   const [rightWrong, setRightWrong] = useState<AnswerType>(null)
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
-
-  const randomOperation = useMemo(() => getRandomMathOperation(), [])
-  const checkRandomOperation = useMemo(() => getCheckMathOperation(randomOperation), [randomOperation])
   
   const [updateScore, { isLoading }] = useUpdateScoreMutation()
   const { t } = useTranslation('translation')
   const formSchema = useFormSchema()
 
+  const randomOperation = useMemo(() => getRandomMathOperation(), [])
+  const checkRandomOperation = useMemo(() => getCheckMathOperation(randomOperation), [randomOperation])
+
   const generateNewNumbers = () => {
     setFirstNumber(generateRandomNumber(1, 10))
-    setSecondNumber(generateRandomNumber(1, 10))
+    setSecondNumber(generateRandomNumber(10, 100))
   }
 
   const onGenerateNewNumbers = () => {
@@ -73,41 +74,28 @@ export const EquationsWithX = () => {
     resolver: yupResolver(formSchema) as Resolver<ScoreType>,
   })
 
+  useEffect(() => {
+    if (hint) {
+      setHintIsUsed(true)
+    }
+  }, [hint])
+
   const onSubmit: SubmitHandler<ScoreType> = (data: ScoreType) => {
     setHint(false)
+    setHintIsUsed(false)
     setServerError('')
 
-    // if (checkMathOperation({
-    //   score,
-    //   answer: Number(answer),
-    //   operation: randomOperation, 
-    //   firstOperand: firstNumber, 
-    //   secondOperand: secondNumber,
-    // }) === true) {
-    //   setScore(score + 1)
-    //   setRightWrong('right')
-    //   data = { ...data, score: 1 }
-    // }
-    // else {
-    //   setScore(score - 1)
-    //   setRightWrong('wrong')
-    //   data = { ...data, score: -1 }
-    // }
-
     if (
-      (randomOperation === MathOperationsConstants.SUMM) && (Number(answer) + firstNumber === secondNumber) ||
-      (randomOperation === MathOperationsConstants.DIFF) && (firstNumber + secondNumber === Number(answer)) ||
-      (randomOperation === MathOperationsConstants.MULTIPLY) && (secondNumber / firstNumber === Number(answer)) ||
-      (randomOperation === MathOperationsConstants.DIVIDE) && (secondNumber * firstNumber === Number(answer))
+      MathOperationsConstants.SUMM && secondNumber - firstNumber === Number(answer) ||
+      MathOperationsConstants.DIFF && secondNumber + firstNumber === Number(answer)
     ) {
-      setScore(hint ? (score + 1) : (score + 2))
+      setScore(hintIsUsed ? (score + 1) : (score + 2))
       setRightWrong('right')
       data = { ...data, score: 2 }
-    }
-    else {
+    } else {
       setScore(score - 1)
       setRightWrong('wrong')
-      data = { ...data, score: -2 }
+      data = { ...data, score: -1 }
     }
     
     updateScore(data)
@@ -151,49 +139,53 @@ export const EquationsWithX = () => {
           buttonBack={false}
         />
       )}
-      <AppLayout title={t('screens.equations')}>
-        {/* {serverError && <Error error={serverError} />} */}
-        <MathExampleLayout>
-          <DefaultDigit title={MathSignsConstants.X} />
-          <MathOperation title={randomOperation} />
-          <DefaultDigit title={firstNumber} />
-          <MathOperation title={MathSignsConstants.EQUAL} />
-          <DefaultDigit title={secondNumber} />
+      <GoTo address='/home/math-operations/equations' name={t('links.back')} />
+      <Header title={t('mathOperations.equationsWithX')} />
+      {serverError && <Error error={serverError} />}
+      <MathExampleLayout>
+        <DefaultDigit title={MathSignsConstants.X} />
+        <DefaultDigit title={randomOperation} />
+        <DefaultDigit title={firstNumber} />
+        <DefaultDigit title={MathSignsConstants.EQUAL} />
+        <DefaultDigit title={secondNumber} />
+      </MathExampleLayout>
+
+      {!hint
+      ? <AppText 
+          onPress={() => 
+          setHint(true)} desc={t('mathOperations.common.getHint')} 
+          link={true}
+        />
+      : <MathExampleLayout onPress={() => setHint(false)}>
+          <DefaultDigit title={MathSignsConstants.X} italic={true} />
+          <DefaultDigit title={MathSignsConstants.EQUAL} italic={true} />
+          <DefaultDigit title={secondNumber} italic={true} />
+          <DefaultDigit title={checkRandomOperation} italic={true} />
+          <DefaultDigit title={firstNumber} italic={true} />
         </MathExampleLayout>
+      }
 
-        {!hint
-        ? <AppText onPress={() => setHint(true)} desc={t('mathOperations.common.getHint')} />
-        : <MathExampleLayout onPress={() => setHint(false)}>
-            <DefaultDigit title={MathSignsConstants.X} italic={true} />
-            <DefaultDigit title={MathSignsConstants.EQUAL} italic={true} />
-            <DefaultDigit title={secondNumber} italic={true} />
-            <DefaultDigit title={checkRandomOperation as string} italic={true} />
-            <DefaultDigit title={firstNumber} italic={true} />
-          </MathExampleLayout>
-        }
+      <MathExampleLayout>
+        <DefaultDigit title={MathSignsConstants.X} />
+        <DefaultDigit title={MathSignsConstants.EQUAL} />
+        <ResultInput 
+          value={answer} 
+          onChange={onChangeHandler}
+        />
+      </MathExampleLayout>
 
-        <MathExampleLayout>
-          <DefaultDigit title={MathSignsConstants.X} />
-          <MathOperation title={MathSignsConstants.EQUAL} />
-          <ResultInput 
-            value={answer} 
-            onChange={onChangeHandler}
-          />
-        </MathExampleLayout>
+      <ButtonsLayout>
+        <MathOperationButton
+          onClick={onGenerateNewNumbers}
+          name={t('mathOperations.common.generate')}
+        />
+        <MathOperationButton
+          onClick={handleSubmit(onSubmit)}
+          name={t('mathOperations.common.check')}
+        />
+      </ButtonsLayout>
 
-        <ButtonsLayout>
-          <MathOperationButton
-            onClick={onGenerateNewNumbers}
-            name={t('mathOperations.common.generate')}
-          />
-          <MathOperationButton
-            onClick={handleSubmit(onSubmit)}
-            name={t('mathOperations.common.check')}
-          />
-        </ButtonsLayout>
-        
-        <Score score={score} />
-      </AppLayout>
+      <Score score={score} />
     </>
   )
 }

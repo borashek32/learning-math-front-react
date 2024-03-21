@@ -8,7 +8,7 @@ export const Score = ({ score }: Props) => {
   return (
     <div>
       <h3 className={styles.title}>
-        {t('mathOperations.score')} {score} XP
+        {t('screens.yourScore')} {score} XP
       </h3>
     </div>
   )

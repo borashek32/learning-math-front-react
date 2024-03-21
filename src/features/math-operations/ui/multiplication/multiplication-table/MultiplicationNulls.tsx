@@ -1,36 +1,34 @@
-import { useEffect, useState } from 'react'
-import styles from './../../../MathOperations.module.sass'
-import { ResultInput } from '../../../../../common/components/input/resultInput/ResultInput'
-import { MathOperation } from '../../../../../common/components/mathOpertion/mathOperation'
-import { DefaultDigit } from '../../../../../common/components/digits/DefaultDigit'
-import { GoTo } from '../../../../../common/components/goTo/GoTo'
-import { Header } from '../../../../../common/components/header/Header'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { MathOperationsFooter } from '../../mathOperationsFooter/MathOperationsFooter'
-import { setTotalUserScore } from '../../../../profile/profile.slice'
-import { AnswerType } from '../../../MathOperations.types'
-import { useDispatch } from 'react-redux'
-import { useFormSchema } from '../../../../../common/utils/math/validationShemaMathOperations'
+import { AppLayout } from '../../../../../common/components/layouts/AppLayout'
+import { ButtonsLayout } from '../../../../../common/components/layouts/ButtonsLayout'
+import { MathOperationButton } from '../../../../../common/components/buttons/MathOperationButton'
+import { MathExampleLayout } from '../../../../../common/components/layouts/MathExamlpeLayout'
 import { useUpdateScoreMutation } from '../../../../profile/profile.api'
+import { useFormSchema } from '../../../../../common/utils/math/validationShemaMathOperations'
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form'
 import { ScoreType } from '../../../../profile/profile.api.types'
 import { useAppSelector } from '../../../../../common/hooks/useAppSelector'
 import { selectUserId } from '../../../../auth/auth.selectors'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { ButtonsLayout } from '../../../../../common/components/layouts/ButtonsLayout'
-import { MathOperationButton } from '../../../../../common/components/buttons/MathOperationButton'
 import { Loader } from '../../../../../common/components/loaders/CircularLoader'
 import { Modal } from '../../../../../common/components/modal/Modal'
-import { generateRandomNumber } from '../../../../../common/utils/math/generateRandomNumber'
+import { Error } from '../../../../../common/components/error/Error'
+import { setTotalUserScore } from '../../../../profile/profile.slice'
+import { useDispatch } from 'react-redux'
+import { DefaultDigit } from '../../../../../common/components/digits/DefaultDigit'
+import { ResultInput } from '../../../../../common/components/input/resultInput/ResultInput'
+import { AnswerType } from '../../../MathOperations.types'
 import { Score } from '../../../../../common/components/score/Score'
+import { Header } from '../../../../../common/components/header/Header'
+import { GoTo } from '../../../../../common/components/goTo/GoTo'
 
-export const MultiplicationNumber = () => {
-  const { digit } = useParams()
-  const [firstDigit, setFirstDigit] = useState<number>(generateRandomNumber(1, 10))
+export const MultiplicationNulls = () => {
+  const [firstMultiplier, setFirstMultiplier] = useState<number>((Math.floor(Math.random() * 8) + 2) * 10)
+  const [secondMultiplier, setSecondMultiplier] = useState<number>((Math.floor(Math.random() * 8) + 2) * 10)
   const [score, setScore] = useState(0)
+  const [answer, setAnswer] = useState<string>('')
   const [serverError, setServerError] = useState('')
-  const [answer, setAnswer] = useState('')
   const [rightWrong, setRightWrong] = useState<AnswerType>(null)
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
@@ -40,13 +38,14 @@ export const MultiplicationNumber = () => {
   const formSchema = useFormSchema()
 
   const generateNewDigits = () => {
-    setFirstDigit(Math.floor(Math.random() * (9 - 2 + 1)) + 2)
+    setFirstMultiplier((Math.floor(Math.random() * 8) + 2) * 10)
+    setSecondMultiplier((Math.floor(Math.random() * 8) + 2) * 10)
   }
 
-  const onGenerateNewNumbers = () => {
+  const onGenerateNewDigits = () => {
+    generateNewDigits()
     setAnswer('')
     setOpen(false)
-    generateNewDigits()
   }
 
   const onChangeHandler = (answer: string) => {
@@ -69,13 +68,11 @@ export const MultiplicationNumber = () => {
   const onSubmit: SubmitHandler<ScoreType> = (data: ScoreType) => {
     setServerError('')
     const answerToNumber = Number(answer)
-
-    if (Number(digit) * firstDigit === answerToNumber) {
+    if (answerToNumber / firstMultiplier === secondMultiplier) {
       setScore(score + 1)
       setRightWrong('right')
       data = { ...data, score: 1 }
-    }
-    else {
+    } else {
       setScore(score - 1)
       setRightWrong('wrong')
       data = { ...data, score: -1 }
@@ -96,7 +93,7 @@ export const MultiplicationNumber = () => {
   const onPressPlayMore = () => {
     setOpen(false)
     setAnswer('')
-    setFirstDigit(Math.floor(Math.random() * (9 - 2 + 1)) + 2)
+    generateNewDigits()
   }
 
   const onPressTryAgain = () => {
@@ -105,7 +102,7 @@ export const MultiplicationNumber = () => {
   }
 
   useEffect(() => {
-    setFirstDigit(Math.floor(Math.random() * (9 - 2 + 1)) + 2)
+    generateNewDigits()
   }, [])
 
   return (
@@ -125,25 +122,25 @@ export const MultiplicationNumber = () => {
           color={rightWrong === 'right' ? 'blue' : 'red'}
         />
       )}
-      
+
       <GoTo address='/home/math-operations/multiplication' name={t('links.back')} />
-      <Header title={t('mathOperations.multBy') + ' ' + digit} />
+      <Header title={t('mathOperations.multNulls')} />
+      {/* {serverError && <Error error={serverError} />} */}
+      <MathExampleLayout>
+        <DefaultDigit title={firstMultiplier} />
+        <DefaultDigit title='*' />
+        <DefaultDigit title={secondMultiplier} />
+        <DefaultDigit title='=' />
 
-      <div className={styles.containerMathOperation}>
-        <DefaultDigit title={firstDigit} />
-        <MathOperation title='*' />
-        <DefaultDigit title={Number(digit)} />
-        <MathOperation title='=' />
-
-        <ResultInput
+        <ResultInput 
           value={answer} 
           onChange={onChangeHandler}
         />
-      </div>
+      </MathExampleLayout>
 
       <ButtonsLayout>
         <MathOperationButton
-          onClick={onGenerateNewNumbers}
+          onClick={onGenerateNewDigits}
           name={t('mathOperations.common.generate')}
         />
         <MathOperationButton
@@ -151,7 +148,7 @@ export const MultiplicationNumber = () => {
           name={t('mathOperations.common.check')}
         />
       </ButtonsLayout>
-
+      
       <Score score={score} />
     </>
   )

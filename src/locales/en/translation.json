@@ -5,12 +5,6 @@
     "home": "Home",
     "instructions": "Instructions",
     "math": "Math Operations",
-    "summ": "Summ",
-    "diff": "Difference",
-    "mult": "Multiplication",
-    "multDigit": "Multiplication by",
-    "multCheck": "Check mutiplication knowledge",
-    "multNulls": "Multiplication of numbers with nulls",
     "login": "Login",
     "register": "Registration",
     "verify": "Verify",
@@ -21,25 +15,13 @@
     "changePassword": "Change password",
     "changeAvatar": "Choose avatar",
     "profile": "Profile",
-    "yourScore": "Your score",
-    "equations": "Equations",
-    "equationsWithX": "Equations with one unknown",
-    "equationsWithXY": "Equations with two unknown"
+    "yourScore": "Your score"
   },
-  "nav": {
-    "select": {
-      "changeLang": "Change language",
-      "options": {
-        "en": "English",
-        "ru": "Russian"
-      }
-    },
-    "items": {
-      "home": "Home",
-      "mathOperations": "Math Operations",
-      "instructions": "Instructions",
-      "profile": "Profile",
-      "score": "Your score"
+  "changeLang": {
+    "select": "Change language",
+    "options": {
+      "en": "English",
+      "ru": "Russian"
     }
   },
   "buttons": {
@@ -49,7 +31,7 @@
     "register": "Register"
   },
   "modal": {
-    "registrationSuccess": "Registration was successfull",
+    "registrationSuccess": "Registration was successfull, check your inbox to verify your email",
     "changePasswordSuccess": "Your password was changed successfully",
     "fail": "Something went wrong. Please, try later",
     "linkSent": "We've sent you a link to verify your email. Check your mail, please",
@@ -77,12 +59,6 @@
     "logout": "User not authorized. First log in and then you can log out"
   },
   "auth": {
-    "links": {
-      "register": "Register",
-      "login": "Login",
-      "forgotPassword": "Forgot password",
-      "instructions": "Instructions"
-    },
     "changePassword": {
       "inputs": {
         "password": {
@@ -100,7 +76,6 @@
       }
     },
     "changeEmail": {
-      "title": "Change email",
       "inputs": {
         "newEmail": {
           "label": "Your new email",
@@ -124,23 +99,12 @@
     },
     "register": {
       "inputs": {
-        "email": {
-          "label": "Email",
-          "placeholder": "Enter your email"
-        },
-        "password": {
-          "label": "Password",
-          "placeholder": "Enter your password"
-        },
         "passwordConfirmation": {
           "label": "Password confirmation",
           "placeholder": "Enter your password confirmation"
         }
       },
-      "note": "If you already have an account, go to login page",
-      "alerts": {
-        "success": "Registration was successfull, check your inbox to verify your email"
-      }
+      "note": "If you already have an account, go to login page"
     },
     "logout": {
       "sure": "Are you sure?"
@@ -157,7 +121,6 @@
     "hello": "Hello"
   },
   "mathOperations": {
-    "title": "Math operations",
     "common": {
       "generate": "Generate new digits",
       "check": "Check",
@@ -166,19 +129,18 @@
       "more": "Play more?",
       "again": "Try again?",
       "choose": "Choose a number:",
-      "saveScore": "Save today score",
       "getHint": "Get a hint"
     },
-    "score": "Your score:",
-    "diff": "Calculate difference",
-    "summ": "Calculate summ",
+    "diff": "Difference",
+    "summ": "Summ",
     "multiplication": "Multiplication",
     "multTable": "Multiplication table",
     "multBy": "Multiplication by",
     "multCheck": "Check mutiplication knowledge",
     "multNulls": "Multiplication of numbers with nulls",
-    "equationsWithX": "Equations with one unknown",
-    "equationsWithXY": "Equations with two unknown"
+    "equations": "Equations",
+    "equationsWithX": "Equations with 1 unknown",
+    "equationsWithXY": "Equations with 2 unknown"
   },
   "profile": {
     "changePassword": {
@@ -206,5 +168,8 @@
       "youAre": "You are ",
       "fromRickMorty": " from Rick and Morty"
     }
+  },
+  "yourScore": {
+    "total": "Your total score"
   }
 }

@@ -6,14 +6,14 @@ import { SelectLang } from '../selectLang/SelectLang'
 export const AppLayout = ({ children }: Props) => {
 
   return (
-    <>
+    <div className={styles.appWrapper}>
       <SelectLang />
       <div className={styles.app}>
         <Nav />
-        <div className={styles.appContent + ' ' + styles.app}>
+        <div className={styles.appContent}>
           { children }
         </div>
       </div>
-    </>
+    </div>
   )
 }

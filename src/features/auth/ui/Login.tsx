@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux"
 import { setUserInfo } from "../auth.slice"
 import { useTranslation } from "react-i18next"
 import styles from "./../Auth.module.sass"
+import { Header } from "../../../common/components/header/Header"
 
 export const Login = () => {
   const [login, { isLoading }] = useLoginMutation()
@@ -82,6 +83,7 @@ export const Login = () => {
       } 
       <GoTo address="/" name={t('links.back')} />
       <FormContainer serverError={serverError}>
+        <Header title={t('screens.login')} />
         <form 
           style={serverError ? { marginTop: '-13px', width: '200px' } : {width: '200px'}}
           onSubmit={handleSubmit(onSubmit)}
@@ -134,13 +136,13 @@ export const Login = () => {
         </form>
 
         <a href="/forgot-password">
-          <Note text={t('auth.links.forgotPassword')} />
+          <Note text={t('screens.forgotPassword')} />
         </a>
 
         <GoTo
           text={t('auth.login.note')}
           address={"/register"}
-          name={t('auth.links.register')}
+          name={t('screens.register')}
         />
       </FormContainer> 
     </>

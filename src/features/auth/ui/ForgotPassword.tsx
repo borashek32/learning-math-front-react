@@ -14,6 +14,7 @@ import { Modal } from "../../../common/components/modal/Modal"
 import { GoTo } from "../../../common/components/goTo/GoTo"
 import { useTranslation } from "react-i18next"
 import styles from "./../Auth.module.sass"
+import { Header } from "../../../common/components/header/Header"
 
 const formSchema = yup.object().shape({
   email: yup.string()
@@ -75,8 +76,9 @@ export const ForgotPassword = () => {
           buttonBack={true}
         />
       }
-      <GoTo address="/login" name="Back to Login" />
+      <GoTo address="/login" name={t('links.back')} />
       <FormContainer serverError={serverError}>
+        <Header title={t('screens.forgotPassword')} />
         <form 
           style={serverError ? { marginTop: '-13px', width: '200px' } : {width: '200px'}}
           onSubmit={handleSubmit(onSubmit)}

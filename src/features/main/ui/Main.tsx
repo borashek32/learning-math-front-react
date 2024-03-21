@@ -3,7 +3,7 @@ import styles from '../../../common/styles/App.module.sass'
 import { useTranslation } from 'react-i18next'
 
 export const Main = () => {
-  const { t } = useTranslation('translation', { keyPrefix: 'auth.links' })
+  const { t } = useTranslation('translation', { keyPrefix: 'screens' })
 
   return (
     <>

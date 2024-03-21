@@ -5,6 +5,7 @@ import { Header } from '../../../common/components/header/Header'
 import { useTranslation } from 'react-i18next'
 import { DefaultButton } from '../../../common/components/buttons/DefaultButton'
 import { useState } from 'react'
+import { DivideLine } from '../../../common/components/divideLine/DevideLine'
 
 export const Profile = () => {
   const [active, setActive] = useState(false)
@@ -13,17 +14,22 @@ export const Profile = () => {
   return (
     <>  
       <GoTo address="/home" name={t('links.back')} />
-      <Header title={t('nav.items.profile')} />
+      <Header title={t('screens.profile')} />
 
       <ul className={styles.listItems}> 
         <li>
           <Link className={styles.itemLink} to="/home/profile/your-score">
-            {t('profile.yourScore')}
+            {t('screens.yourScore')}
           </Link>
         </li> 
 
-        <div className={styles.footerDevideLine}></div>
+        <DivideLine />
 
+        <li>
+          <Link className={styles.itemLink} to="/home/profile/choose-avatar">
+            {t('screens.changeAvatar')}
+          </Link>
+        </li> 
         <li>
           <Link className={styles.itemLink} to="/home/profile/change-email">
             {t('screens.changeEmail')}

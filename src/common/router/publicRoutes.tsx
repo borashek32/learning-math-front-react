@@ -42,5 +42,4 @@ export const publicRoutes: RouteObject[] = [
 export function PublicRoutes() {
 
   return <BaseLayout><Outlet /></BaseLayout>
-  // return <Outlet />
 }

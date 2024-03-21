@@ -2,10 +2,12 @@ $bg-color: #01143d
   
 .app 
   text-align: center
+  width: 100vw
+  height: 100vh
 
 .appContent 
   background-color: $bg-color
-  height: 100vh
+  height: 100%
   width: 100%
   display: flex
   flex-direction: column
@@ -27,6 +29,9 @@ $bg-color: #01143d
 
 .buttonsWrapper
   margin-top: 20px
+  display: flex
+  flex-direction: column
+  gap: 16px
 
 .container 
   flex: 1
@@ -61,3 +66,25 @@ $bg-color: #01143d
   justify-content: center
   align-items: center
   gap: 4px
+
+.numbersWrapper 
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+
+
+//   background-color: $bg-color
+//   height: 100vh
+//   width: 100%
+  // display: flex
+  // flex-direction: column
+  // align-items: center
+  // justify-content: center
+  // font-size: calc(10px + 2vmin)
+
+.avatarContent
+  width: 100%
+  background-color: $bg-color
+  display: flex
+  flex-direction: column
+  align-items: center

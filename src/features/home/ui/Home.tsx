@@ -17,13 +17,26 @@ export const Home = () => {
       
       <ul className={styles.listItems}>
         <li className={styles.item}>
-          <Link className={styles.itemLink} to="/home/math-operations">{t('nav.items.mathOperations')}</Link>
+          <Link 
+            className={styles.itemLink} 
+            to="/home/math-operations"
+          >
+            {t('screens.math')}
+          </Link>
         </li>
         <li className={styles.item}>
-          <Link className={styles.itemLink} to="/home/profile">{t('nav.items.profile')}</Link>
+          <Link 
+            className={styles.itemLink} 
+            to="/home/profile"
+          >
+            {t('screens.profile')}
+          </Link>
         </li>
         <li className={styles.item}>
-          <Link className={styles.itemLink} to="/logout">
+          <Link 
+            className={styles.itemLink} 
+            to="/logout"
+          >
             <DefaultButton type='button' name={t('buttons.logout')} />
           </Link>
         </li>

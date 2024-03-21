@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Modal } from "../../../common/components/modal/Modal"
 import { useTranslation } from "react-i18next"
 import styles from "./../Auth.module.sass"
+import { Header } from "../../../common/components/header/Header"
 
 interface IFormProps {
   password: string
@@ -107,6 +108,7 @@ export const CreateNewPassword = () => {
         />
       }
       <FormContainer serverError={serverError}>
+        <Header title={t('screens.createNewPassword')} />
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
             control={control}

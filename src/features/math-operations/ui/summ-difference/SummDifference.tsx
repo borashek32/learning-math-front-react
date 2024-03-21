@@ -31,8 +31,8 @@ export const SummDifference = () => {
 
   const [firstNumber, setFirstNumber] = useState<number>(generateRandomNumber(10, 20))
   const [secondNumber, setSecondNumber] = useState<number>(generateRandomNumber(1, 10))
-  const [thirdNumber, setThirdNumber] = useState<number>()
-  const [fourthNumber, setFourthNumber] = useState<number>()
+  const [thirdNumber, setThirdNumber] = useState<number | null>(null)
+  const [fourthNumber, setFourthNumber] = useState<number | null>(null)
   const [score, setScore] = useState(0)
 
   const [answer, setAnswer] = useState<string>('')
@@ -52,13 +52,18 @@ export const SummDifference = () => {
       if (score <= 5) {
         setFirstNumber(generateRandomNumber(10, 100))
         setSecondNumber(generateRandomNumber(1, 10))
+        setThirdNumber(null)
+        setFourthNumber(null)
       }
       if (score > 5) {
         setFirstNumber(generateRandomNumber(30, 60))
+        setSecondNumber(generateRandomNumber(1, 10))
         setThirdNumber(generateRandomNumber(1, 10))
+        setFourthNumber(null)
       }
       if (score > 10) {
         setFirstNumber(generateRandomNumber(30, 80))
+        setSecondNumber(generateRandomNumber(1, 10))
         setThirdNumber(generateRandomNumber(1, 10))
         setFourthNumber(generateRandomNumber(1, 10))
       }

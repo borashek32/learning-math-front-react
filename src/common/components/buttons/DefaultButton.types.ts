@@ -7,4 +7,8 @@ export type Props = {
   onClick?: () => void
   path?: string
   outlined?: boolean
+  source?: string | undefined
+  avatarName?: string
+  onPress?: () => void
+  onPressWithValue?: (value: string | undefined, avatarName: string | undefined) => void
 }

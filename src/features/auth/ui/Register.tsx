@@ -15,6 +15,7 @@ import { Modal } from "../../../common/components/modal/Modal"
 import { useNavigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import styles from "./../Auth.module.sass"
+import { Header } from "../../../common/components/header/Header"
 
 interface IFormProps {
   email: string
@@ -78,8 +79,6 @@ export const Register = () => {
         reset()
       })
       .catch(e => {
-        console.log(e)
-        // setServerError(e.data.message)
         const serverE = t('errors.serverError')
         if (e.status === 'FETCH_ERROR') setServerError(serverE)
         const error400 = t('errors.error400')
@@ -108,6 +107,7 @@ export const Register = () => {
         />
       }
       <FormContainer serverError={serverError}>
+        <Header title={t('screens.register')} />
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
             control={control}
@@ -115,7 +115,7 @@ export const Register = () => {
             render={({ field: { ref, value, onChange } }) => (
               <Input 
                 type={InputType.TEXT}
-                label={t('auth.register.inputs.email.label')}
+                label={t('auth.login.inputs.email.label')}
                 error={errors.email?.message}
                 placeholder={t('auth.register.inputs.email.placeholder')}
                 ref={ref}
@@ -135,7 +135,7 @@ export const Register = () => {
             render={({ field: { ref, value, onChange } }) => (
               <Input 
                 type={InputType.PASSWORD}
-                label={t('auth.register.inputs.password.label')}
+                label={t('auth.login.inputs.password.label')}
                 error={errors.password?.message}
                 placeholder={t('auth.register.inputs.password.placeholder')}
                 ref={ref}

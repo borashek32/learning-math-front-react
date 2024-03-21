@@ -11,6 +11,7 @@ import {
   LogoutType,
 } from './auth.api.types'
 import { algByDecodingToken } from '../../common/utils/string/algByDecodingToken'
+import { removeUserInfo } from './auth.slice'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
@@ -22,7 +23,7 @@ const baseQuery = fetchBaseQuery({
   },
   prepareHeaders: headers => {
     const token = localStorage.getItem('accessToken')
-
+    
     if (token) {
       headers.set('Authorization', `Bearer ${token}`)
       algByDecodingToken(token)
@@ -32,7 +33,7 @@ const baseQuery = fetchBaseQuery({
   },
 })
 
-const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
+export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
   args,
   api,
   extraOptions
@@ -41,15 +42,9 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 
   if (token) {
     const { isExpirationTimeLongerThanCurrent } = algByDecodingToken(token)
-
+    // токен
     if (!isExpirationTimeLongerThanCurrent) {
-      const refreshResult = await baseQuery({ 
-        method: 'GET', 
-        url: `${baseURL}refresh`,
-      }, 
-      api, 
-      extraOptions)
-
+      const refreshResult = await baseQuery({ method: 'GET', url: `${baseURL}refresh` }, api, extraOptions)
       if (
         refreshResult.data &&
         typeof refreshResult.data === 'object' &&
@@ -57,13 +52,8 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
         'refreshToken' in refreshResult.data
       ) {
         localStorage.setItem('accessToken', refreshResult.data.accessToken as string)
-        document.cookie = `
-          refreshToken=${refreshResult.data.refreshToken};
-          Secure;
-          SameSite=None;
-          Max-Age='30d';
-          Path=/;
-        `
+        const refreshToken = refreshResult.data.refreshToken
+        document.cookie = `refreshToken=${refreshToken}; Max-Age=2592000; Path=/; SameSite=None; Secure`;
       }
     }
   }
@@ -79,11 +69,9 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   ) {
     localStorage.setItem('accessToken', result.data.accessToken as string)
     document.cookie = `
-      refreshToken=${result.data.refreshToken} 
-      Secure 
-      SameSite=None 
-      Max-Age='30d' 
-      Path=/
+      refreshToken=${result.data.refreshToken};
+      Max-Age=2592000;
+      Path=/;
     `
   }
 

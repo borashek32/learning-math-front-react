@@ -5,12 +5,6 @@
     "home": "Главная",
     "instructions": "Инструкции",
     "math": "Математические операции",
-    "summ": "Сумма",
-    "diff": "Разница",
-    "mult": "Умножение",
-    "multDigit": "Умножение на",
-    "multCheck": "Проверка знаний умножения",
-    "multNulls": "Умножение чисел с нулями",
     "login": "Вход",
     "register": "Регистрация",
     "verify": "Верификация",
@@ -21,25 +15,13 @@
     "changePassword": "Изменить пароль",
     "changeAvatar": "Выбрать аватар",
     "profile": "Профайл",
-    "yourScore": "Ваш счет",
-    "equations": "Уравнения",
-    "equationsWithX": "Уравнения с одним неизвестным",
-    "equationsWithXY": "Уравнения с двумя неизвестными"
+    "yourScore": "Ваш счет"
   },
-  "nav": {
-    "select": {
-      "changeLang": "Выбор языка",
-      "options": {
-        "en": "Английский",
-        "ru": "Русский"
-      }
-    },
-    "items": {
-      "home": "Домой",
-      "mathOperations": "Математические операции",
-      "instructions": "Инструкции",
-      "profile": "Профайл",
-      "score": "Ваш счет"
+  "changeLang": {
+    "select": "Выбор языка",
+    "options": {
+      "en": "Английский",
+      "ru": "Русский"
     }
   },
   "buttons": {
@@ -49,7 +31,7 @@
     "register": "Регистрация"
   },
   "modal": {
-    "registrationSuccess": "Регистрация прошла успешно",
+    "registrationSuccess": "Регистрация прошла успешно, проверьте вашу почту для ее подтвержедения",
     "changePasswordSuccess": "Вы успешно поменяли пароль",
     "fail": "Что-то пошло не так. Пожалуйста, попробуйту позже",
     "linkSent": "Пожалуйста, проверьте вашу почту",
@@ -77,12 +59,6 @@
     "logout": "Вы не авторизованы, залогиньтесь, тогда вы сможете выйти"
   },
   "auth": {
-    "links": {
-      "register": "Регистрация",
-      "login": "Вход",
-      "forgotPassword": "Забыли пароль",
-      "instructions": "Инструкции"
-    },
     "changePassword": {
       "inputs": {
         "password": {
@@ -123,26 +99,15 @@
     },
     "register": {
       "inputs": {
-        "email": {
-          "label": "Электронная почта",
-          "placeholder": "Введите ваш email"
-        },
-        "password": {
-          "label": "Пароль",
-          "placeholder": "Введите ваш пароль"
-        },
         "passwordConfirmation": {
           "label": "Подтверждение пароля",
           "placeholder": "Подтвердите ваш пароль"
         }
       },
-      "note": "Если у вас уже есть аккаунт, пройдите на страницу входа",
-      "alerts": {
-        "success": "Регистрация прошла успешно. Проверьте свою почту для подтверждения адреса"
-      }
+      "note": "Если у вас уже есть аккаунт, пройдите на страницу входа"
     },
     "logout": {
-      "sure": "Вы уверены"
+      "sure": "Вы уверены?"
     },
     "verify": {
       "success": "Ваш email подтвержден успешно",
@@ -156,7 +121,6 @@
     "hello": "Привет"
   },
   "mathOperations": {
-    "title": "Математические операции",
     "common": {
       "generate": "Сгенерировать новые числа",
       "check": "Проверить",
@@ -165,19 +129,18 @@
       "more": "Играть еще?",
       "again": "Попробовать еще раз?",
       "choose": "Выбери число:",
-      "saveScore": "Сохранить сегодняшний счет",
       "getHint": "Подсказка"
     },
-    "score": "Ваш счет:",
-    "diff": "Рассчитать разность",
-    "summ": "Рассчитать сумму",
-    "multiplication": "Умножение",
+    "diff": "Разность/Вычитание",
+    "summ": "Сумма/Сложение",
+    "multiplication": "Произведение/Умножение",
     "multTable": "Таблица умножения",
     "multBy": "Умножение на",
     "multCheck": "Проверить знание таблицы умножения",
     "multNulls": "Умножение чисел с нулями",
-    "equationsWithX": "Уравнения с одним неизвестным",
-    "equationsWithXY": "Уравнения с двумя неизвестными"
+    "equations": "Уравнения",
+    "equationsWithX": "Уравнения с 1 неизвестным",
+    "equationsWithXY": "Уравнения с 2 неизвестными"
   },
   "profile": {
     "changePassword": {
@@ -187,15 +150,6 @@
         }
       }
     },
-    "changeEmail": {
-      "title": "Изменить email",
-      "inputs": {
-        "oldPassword": {
-          "placeholder": "Введите ваш новый email"
-        }
-      }
-    },
-    "yourScore": "Общий счет",
     "changeAvatar": {
       "title": "Кто ты из Rick & Morty?",
       "button": "Выбрать",
@@ -207,5 +161,8 @@
       "youAre": "Вы ",
       "fromRickMorty": " из Рика и Морти"
     }
+  },
+  "yourScore": {
+    "total": "Your total score"
   }
 }

@@ -17,6 +17,7 @@ import { selectUserId } from "../auth.selectors"
 import { GoTo } from "../../../common/components/goTo/GoTo"
 import { useTranslation } from "react-i18next"
 import styles from "./../Auth.module.sass"
+import { Header } from "../../../common/components/header/Header"
 
 interface IFormProps {
   password: string
@@ -119,6 +120,7 @@ export const ChangePassword = () => {
       }
       <GoTo address="/home/profile" name={t('links.back')} />
       <FormContainer serverError={serverError}>
+        <Header title={t('screens.changePassword')} />
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
             control={control}

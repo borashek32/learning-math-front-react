@@ -1,92 +1,42 @@
-import { useEffect, useState } from "react"
-import { GoTo } from "../../../../common/components/goTo/GoTo"
-import { Header } from "../../../../common/components/header/Header"
-import styles from './../../MathOperations.module.sass'
-import { DefaultDigit } from "../../../../common/components/digits/DefaultDigit"
-import { MathOperation } from "../../../../common/components/mathOpertion/mathOperation"
-import { ResultInput } from "../../../../common/components/input/resultInput/ResultInput"
-import { useTranslation } from "react-i18next"
-import { MathOperationsFooter } from "../mathOperationsFooter/MathOperationsFooter"
+import { PATHS } from '../../../../common/constants/paths'
+import { useTranslation } from 'react-i18next'
+import { ButtonsLayout } from '../../../../common/components/layouts/ButtonsLayout'
+import { BlueButton } from '../../../../common/components/buttons/BlueButton'
+import { Header } from '../../../../common/components/header/Header'
+import { MathExampleLayout } from '../../../../common/components/layouts/MathExamlpeLayout'
+import { GoTo } from '../../../../common/components/goTo/GoTo'
+import { AppText } from '../../../../common/components/text/AppText'
 
-export const Mult = () => {
-  const [firstDigit, setFirstDigit] = useState<number | null>(null)
-  const [secondDigit, setSecondDigit] = useState<number | null>(null)
-  const [answer, setAnswer] = useState<string>('')
+export const Multiplication = () => {
+  const { t } = useTranslation('translation')
 
-  const { t } = useTranslation()
-
-  const onGenerateNewDigits = () => {
-    setFirstDigit(Math.floor(Math.random() * 21) + 1)
-    setSecondDigit(Math.floor(Math.random() * 11) + 1)
-    setAnswer('')
-    setRight(false)
-    setWrong(false)
-  }
-
-  const onChangeHandler = (answer: string) => {
-    setAnswer(answer)
-  }
-
-  const [right, setRight] = useState(false)
-  const [wrong, setWrong] = useState(false)
-  const [score, setScore] = useState(0)
-
-  const onCheck = () => {
-    const answerToNumber = Number(answer)
-    if (firstDigit && secondDigit) {
-      if (firstDigit * secondDigit === answerToNumber) {
-        setRight(true)
-        setScore(score + 1)
-      } else {
-        setWrong(true)
-        setScore(score - 1)
-      }
-    }
-  }
-
-  const onPressPlayMore = () => {
-    setRight(false)
-    setAnswer('')
-    setFirstDigit(Math.floor(Math.random() * 21) + 1)
-    setSecondDigit(Math.floor(Math.random() * 11) + 1)
-  }
-
-  const onPressTryAgain = () => {
-    setWrong(false)
-    setAnswer('')
-  }
-
-  useEffect(() => {
-    setFirstDigit(Math.floor(Math.random() * 21) + 1)
-    setSecondDigit(Math.floor(Math.random() * 11) + 1)
-  }, [])
+  const digits: Array<number> = [2, 3, 4, 5, 6, 7, 8, 9]
 
   return (
     <>
       <GoTo address='/home/math-operations' name={t('links.back')} />
-      <Header title={t('mathOperations.multiplication')} />
+      <Header title={t('mathOperations.multTable')} />
 
-      <div className={styles.containerMathOperation}>
-        <DefaultDigit title={firstDigit} />
-        <MathOperation title='*' />
-        <DefaultDigit title={secondDigit} />
-        <MathOperation title='=' />
-
-        <ResultInput
-          value={answer} 
-          onChange={onChangeHandler}
+      <ButtonsLayout>
+        <BlueButton
+          name={t('mathOperations.multCheck')}
+          path={'/home/math-operations/multiplication/check-knowledge'}
         />
-      </div>
-
-      <MathOperationsFooter
-        onCheck={onCheck}
-        onGenerateNewDigits={onGenerateNewDigits}
-        right={right}
-        wrong={wrong}
-        score={score}
-        onPressPlayMore={onPressPlayMore}
-        onPressTryAgain={onPressTryAgain}
-      />
+        <BlueButton
+          name={t('mathOperations.multNulls')}
+          path={'/home/math-operations/multiplication/multiplication-table/numbers-with-nulls'}
+        />
+        <AppText desc={t('mathOperations.common.choose')} link={false} />
+        <MathExampleLayout>
+          {digits.map(digit => (
+            <BlueButton 
+              key={digit}
+              name={digit.toString()}
+              path={`/home/math-operations/multiplication/multiplication-table/${digit}`}
+            />
+          ))}
+        </MathExampleLayout>
+      </ButtonsLayout>
     </>
   )
 }

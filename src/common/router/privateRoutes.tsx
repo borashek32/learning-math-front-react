@@ -1,4 +1,4 @@
-import { Navigate, Outlet, RouteObject } from "react-router-dom"
+import { redirect, Outlet, RouteObject, Route } from "react-router-dom"
 import { Home } from '../../features/home/ui/Home'
 import { MathOperations } from '../../features/math-operations/MathOperations'
 import { Users } from '../../features/test/Users'
@@ -10,14 +10,28 @@ import { Profile } from "../../features/profile/ui/Profile"
 import { useMeQuery } from "../../features/auth/auth.api"
 import { AppLayout } from "../components/layouts/AppLayout"
 import { YourScore } from "../../features/profile/ui/YourScore"
-import { MultiplicationTable } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationTable"
+// import { MultiplicationTable } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationTable"
 import { MultiplicationNumber } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationNumber"
-import { Mult } from "../../features/math-operations/ui/multiplication/Multiplication"
+import { Multiplication } from "../../features/math-operations/ui/multiplication/Multiplication"
 import { ChangeEmail } from "../../features/auth/ui/ChangeEmail"
 import { useDispatch } from "react-redux"
-import { useEffect } from "react"
+import { ReactNode, useEffect } from "react"
 import { removeUserInfo, setUserInfo } from "../../features/auth/auth.slice"
 import { SummDifference } from "../../features/math-operations/ui/summ-difference/SummDifference"
+import { MultiplicationCheck } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationCheck"
+import { BaseLayout } from "../components/layouts/BaseLayout"
+import { Login } from "../../features/auth/ui/Login"
+import { useGetTotalUserScoreQuery } from "../../features/profile/profile.api"
+import { setTotalUserScore } from "../../features/profile/profile.slice"
+import { MultiplicationNulls } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationNulls"
+import { Equations } from "../../features/math-operations/ui/equations/Equations"
+import { EquationsWithX } from "../../features/math-operations/ui/equations/withX/EquationsWithX"
+import { ChangeAvatar } from "../../features/profile/ui/ChangeAvatar"
+import { AvatarLayout } from "../components/layouts/AvatarLayout"
+
+const renderChangeAvatar = (): React.ReactNode => {
+  return <AvatarLayout><ChangeAvatar /></AvatarLayout>;
+}
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -45,6 +59,11 @@ export const privateRoutes: RouteObject[] = [
     element: <ChangeEmail />
   },
   {
+    path: "/home/profile/choose-avatar",
+    // element: <ChangeAvatar />
+    element: renderChangeAvatar()
+  },
+  {
     path: "/home/math-operations",
     element: <MathOperations />
   },
@@ -53,18 +72,33 @@ export const privateRoutes: RouteObject[] = [
     element: <SummDifference />
   },
   {
-    path: "/home/math-operations/mult",
-    element: <Mult />
+    path: "/home/math-operations/multiplication",
+    element: <Multiplication />
   },
   {
-    path: "/home/math-operations/multiplication-table",
-    element: <MultiplicationTable />
-  },
-  {
-    path: "/home/math-operations/multiplication-table/:digit",
+    path: "/home/math-operations/multiplication/multiplication-table/:digit",
     element: <MultiplicationNumber />
   },
-
+  {
+    path: "/home/math-operations/multiplication/multiplication-table/numbers-with-nulls",
+    element: <MultiplicationNulls />
+  },
+  {
+    path: "/home/math-operations/multiplication/check-knowledge",
+    element: <MultiplicationCheck />
+  },
+  {
+    path: "/home/math-operations/equations",
+    element: <Equations />
+  },
+  {
+    path: "/home/math-operations/equations/with-one-unknown",
+    element: <EquationsWithX />
+  },
+  // {
+  //   path: "/home/math-operations/equations/with-two-unknown",
+  //   element: <EquationsWithX />
+  // },
   {
     path: "users",
     element: <Users />
@@ -73,23 +107,39 @@ export const privateRoutes: RouteObject[] = [
 
 export function PrivateRoutes() {
   const { data, isLoading } = useMeQuery()
+  const { data: scoreData } = useGetTotalUserScoreQuery(data?._id)
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (!isLoading && data) {
       dispatch(setUserInfo(data))
+      if (scoreData && scoreData.score !== undefined) {
+        dispatch(setTotalUserScore(scoreData.score))
+      }
     } else if (!isLoading && !data) {
       dispatch(removeUserInfo())
     }
-  }, [data, isLoading, dispatch])
+  }, [data, isLoading, dispatch, scoreData])
 
   if (isLoading) {
     return <AppLayout><Loader /></AppLayout>
   }
 
   if (!data) {
-    return <Navigate to="/login" />
+    return <BaseLayout><Login /></BaseLayout>
   } 
 
-  return <AppLayout><Outlet /></AppLayout>
+  const isChooseAvatarRoute = window.location.pathname === "/home/profile/choose-avatar"
+  
+  return (
+    <>
+      {isChooseAvatarRoute ? (
+        <AvatarLayout><ChangeAvatar /></AvatarLayout>
+      ) : (
+        <AppLayout><Outlet /></AppLayout>
+      )}
+    </>
+  )
+
+  // return <AppLayout><Outlet /></AppLayout>
 }

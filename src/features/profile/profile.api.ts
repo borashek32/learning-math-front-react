@@ -1,32 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { baseURL } from '../../common/baseUrl/baseUrl'
-import { algByDecodingToken } from '../../common/utils/string/algByDecodingToken'
 import { AvatarType, ScoreType } from './profile.api.types'
 import { UserType } from '../auth/auth.api.types'
-
-const baseQuery = fetchBaseQuery({
-  baseUrl: baseURL,
-  method: 'POST',
-  credentials: 'include',
-  headers: {
-    'Content-Type': 'application/json',
-    Cookie: document.cookie,
-  },
-  prepareHeaders: headers => {
-    const token = localStorage.getItem('accessToken')
-
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`)
-      algByDecodingToken(token)
-    }
-
-    return headers
-  },
-})
+import { baseQueryWithReauth } from '../auth/auth.api'
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
-  baseQuery: baseQuery,
+  baseQuery: baseQueryWithReauth,
   tagTypes: [],
   endpoints: build => {
     return {
@@ -43,8 +22,8 @@ export const profileApi = createApi({
           }
         },
       }),
-      getTotalUserScore: build.query<ScoreType, string>({
-        query: (userId: string) => {
+      getTotalUserScore: build.query<ScoreType, string | undefined>({
+        query: (userId) => {
           return {
             method: 'GET',
             url: `get-total-user-score/${userId}`,
