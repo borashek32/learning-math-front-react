@@ -9,13 +9,9 @@ export const Avatar = ({
   status, 
   species, 
   location, 
-  onPress 
+  onPress,
 }: Props) => {
   const { t } = useTranslation()
-
-  const onPressWithValue = () => {
-    console.log()
-  }
 
   return (
     <>
@@ -55,10 +51,7 @@ export const Avatar = ({
               name={t('profile.changeAvatar.button')}
               source={source}
               avatarName={name}
-              // onPressWithValue={
-              //   (source: string | undefined, name: string | undefined) => onPress(source, name)
-              // }
-              onPressWithValue={onPressWithValue}
+              onPressWithValue={() => onPress(source, name)}
             />
           </div>
         }

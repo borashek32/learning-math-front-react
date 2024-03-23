@@ -7,8 +7,8 @@ export type Props = {
   onClick?: () => void
   path?: string
   outlined?: boolean
-  source?: string | undefined
+  source?: string
   avatarName?: string
   onPress?: () => void
-  onPressWithValue?: (value: string | undefined, avatarName: string | undefined) => void
+  onPressWithValue?: (source: string | undefined, avatarName: string | undefined) => void
 }

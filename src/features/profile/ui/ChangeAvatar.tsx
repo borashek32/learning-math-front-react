@@ -41,6 +41,7 @@ export const ChangeAvatar = () => {
   })
 
   const getAvatarData = (avatarPath: string, avatarName: string) => {
+    console.log(avatarPath, avatarName)
     onSubmit({ userId: user?._id, avatarPath, avatarName })
   }
 
@@ -90,7 +91,7 @@ export const ChangeAvatar = () => {
               source={user.avatarPath} 
               name={user.avatarName}
             />
-          : <AppText desc={t('profile.changeAvatar')} link={false} />
+          : <AppText desc={t('profile.changeAvatar.title')} link={false} />
         }
         <DivideLine />
         <>

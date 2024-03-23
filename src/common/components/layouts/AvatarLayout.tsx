@@ -9,7 +9,7 @@ export const AvatarLayout = ({ children }: Props) => {
     <div className={styles.avatarContent}>
       <SelectLang />
       <Nav />
-      <div>
+      <div className={styles.avatar}>
         { children }
       </div>
     </div>
