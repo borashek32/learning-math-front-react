@@ -13,7 +13,6 @@ export const rickMortyApi = createApi({
     return {
       getAvatars: build.query<RickMortyDataType, number>({
         query: (page) => {
-          console.log(page)
           return {
             method: 'GET',
             url: `character/?page=${page}`
