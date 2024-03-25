@@ -79,6 +79,7 @@ export const Nav = () => {
               <Link 
                 className={styles.itemLink} 
                 to="/home/profile/your-score"
+                onClick={() => setActive(false)}
               >
                 {t('screens.yourScore')}
               </Link>

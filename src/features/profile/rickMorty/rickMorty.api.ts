@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { CharacterType } from './rickMorty.types'
+import { RickMortyDataType } from './rickMorty.types'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://rickandmortyapi.com/api',
@@ -11,8 +11,14 @@ export const rickMortyApi = createApi({
   tagTypes: [],
   endpoints: build => {
     return {
-      getAvatars: build.query<{ results: CharacterType[] }, void>({
-        query: () => "character"
+      getAvatars: build.query<RickMortyDataType, number>({
+        query: (page) => {
+          console.log(page)
+          return {
+            method: 'GET',
+            url: `character/?page=${page}`
+          }
+        }
       })
     }
   },

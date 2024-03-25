@@ -1,5 +1,5 @@
 import styles from './Modal.module.sass'
-import { Props } from './Modal.type'
+import { Props } from './Modal.types'
 import { DefaultButton } from '../buttons/DefaultButton'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Close } from '../close/Close'

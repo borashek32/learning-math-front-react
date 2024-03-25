@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Loader } from '../../../common/components/loaders/CircularLoader'
 import { CharacterType } from '../rickMorty/rickMorty.types'
@@ -18,17 +18,18 @@ import { DivideLine } from '../../../common/components/divideLine/DevideLine'
 import { GoTo } from '../../../common/components/goTo/GoTo'
 import { Header } from '../../../common/components/header/Header'
 import { UserAvatar } from '../../../common/components/avatar/UserAvatar'
-import styles from './ChangeAvatar.module.sass'
+import { Pagination } from '../../../common/components/pagination/Pagination'
 
 export const ChangeAvatar = () => {
   const [open, setOpen] = useState(false)
   const [serverError, setServerError] = useState('')
   const { t } = useTranslation()
-  const { data, isLoading } = useGetAvatarsQuery()
+  const [currentPage, setCurrentPage] = useState(1)
+  const { data, isLoading, error } = useGetAvatarsQuery(currentPage)
   const dispatch = useDispatch()
   const [updateAvatar, { isLoading: isLoadingUpdateAvatar, isError }] = useUpdateAvatarMutation()
-
   const user = useAppSelector(selectUser)
+
   const {
     reset,
   } = useForm<AvatarType>({
@@ -41,12 +42,14 @@ export const ChangeAvatar = () => {
   })
 
   const getAvatarData = (avatarPath: string, avatarName: string) => {
-    console.log(avatarPath, avatarName)
     onSubmit({ userId: user?._id, avatarPath, avatarName })
   }
 
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber)
+  }
+
   const onSubmit: SubmitHandler<AvatarType> = (data: AvatarType) => { 
-    console.log(data)
     if (!data) {
       setServerError('Some error occured')
     } else {
@@ -82,6 +85,15 @@ export const ChangeAvatar = () => {
           buttonCallback={modalCallback}
         />
       }
+      {error && (
+        <Modal
+          text={t('modal.fail')}
+          open={open}
+          outlinedButton={false}
+          buttonBack={true}
+          color={'red'}
+        />
+      )}
       <>
         <GoTo address="/home/profile" name={t('links.back')} />
         <Header title={t('screens.changeAvatar')} />
@@ -89,7 +101,7 @@ export const ChangeAvatar = () => {
         {user?.avatarPath
           ? <UserAvatar
               source={user.avatarPath} 
-              name={user.avatarName}
+              avatarName={user.avatarName}
             />
           : <AppText desc={t('profile.changeAvatar.title')} link={false} />
         }
@@ -107,6 +119,12 @@ export const ChangeAvatar = () => {
             />
           ))}
         </>
+        {data && <Pagination 
+          pages={data.info.pages} 
+          next={data.info.next}
+          prev={data.info.prev}
+          onPageChange={handlePageChange}
+        />}
       </>
     </>
   )

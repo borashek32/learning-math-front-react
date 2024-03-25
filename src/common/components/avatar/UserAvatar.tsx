@@ -2,7 +2,7 @@ import { UserAvatarProps } from './Avatar.types'
 import { useTranslation } from "react-i18next"
 import styles from './Avatar.module.sass'
 
-export const UserAvatar = ({ source, name, small }: UserAvatarProps) => {
+export const UserAvatar = ({ source, avatarName, small }: UserAvatarProps) => {
   const { t } = useTranslation()
 
   return (
@@ -14,10 +14,10 @@ export const UserAvatar = ({ source, name, small }: UserAvatarProps) => {
           alt="Character Image"
         />
       )}
-      {name && <div className={styles.textWrapper}>
+      {avatarName && <div className={styles.textWrapper}>
         <p className={styles.descText}>
           {t('profile.changeAvatar.youAre')} 
-          {name} 
+          {avatarName} 
           {t('profile.changeAvatar.fromRickMorty')}
         </p>
       </div>}

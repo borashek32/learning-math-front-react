@@ -1,4 +1,4 @@
-import { redirect, Outlet, RouteObject, Route } from "react-router-dom"
+import { useLocation, Outlet, RouteObject, Route } from "react-router-dom"
 import { Home } from '../../features/home/ui/Home'
 import { MathOperations } from '../../features/math-operations/MathOperations'
 import { Users } from '../../features/test/Users'
@@ -106,6 +106,7 @@ export const privateRoutes: RouteObject[] = [
 ]
 
 export function PrivateRoutes() {
+  const location = useLocation()
   const { data, isLoading } = useMeQuery()
   const { data: scoreData } = useGetTotalUserScoreQuery(data?._id)
   const dispatch = useDispatch()
@@ -129,17 +130,10 @@ export function PrivateRoutes() {
     return <BaseLayout><Login /></BaseLayout>
   } 
 
-  const isChooseAvatarRoute = window.location.pathname === "/home/profile/choose-avatar"
+  const isChooseAvatarRoute = location.pathname === "/home/profile/choose-avatar"
+  if (isChooseAvatarRoute) {
+    return  <AvatarLayout><ChangeAvatar /></AvatarLayout>
+  }
   
-  return (
-    <>
-      {isChooseAvatarRoute ? (
-        <AvatarLayout><ChangeAvatar /></AvatarLayout>
-      ) : (
-        <AppLayout><Outlet /></AppLayout>
-      )}
-    </>
-  )
-
-  // return <AppLayout><Outlet /></AppLayout>
+  return <AppLayout><Outlet /></AppLayout>
 }
