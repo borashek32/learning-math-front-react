@@ -2,7 +2,6 @@ import { useLocation, Outlet, RouteObject, Route } from "react-router-dom"
 import { Home } from '../../features/home/ui/Home'
 import { MathOperations } from '../../features/math-operations/MathOperations'
 import { Users } from '../../features/test/Users'
-import { Docs } from '../../features/main/ui/docs/Docs'
 import { Logout } from '../../features/auth/ui/Logout'
 import { Loader } from "../components/loaders/CircularLoader"
 import { ChangePassword } from "../../features/auth/ui/ChangePassword"
@@ -28,6 +27,7 @@ import { Equations } from "../../features/math-operations/ui/equations/Equations
 import { EquationsWithX } from "../../features/math-operations/ui/equations/withX/EquationsWithX"
 import { ChangeAvatar } from "../../features/profile/ui/ChangeAvatar"
 import { AvatarLayout } from "../components/layouts/AvatarLayout"
+import { Instructions } from "../../features/profile/ui/Instructions"
 
 const renderChangeAvatar = (): React.ReactNode => {
   return <AvatarLayout><ChangeAvatar /></AvatarLayout>;
@@ -47,6 +47,10 @@ export const privateRoutes: RouteObject[] = [
     element: <Profile />
   },
   {
+    path: "/home/math-operations/docs",
+    element: <Instructions />
+  },
+  {
     path: "/home/profile/your-score",
     element: <YourScore />
   },
@@ -60,7 +64,6 @@ export const privateRoutes: RouteObject[] = [
   },
   {
     path: "/home/profile/choose-avatar",
-    // element: <ChangeAvatar />
     element: renderChangeAvatar()
   },
   {
@@ -129,6 +132,14 @@ export function PrivateRoutes() {
   if (!data) {
     return <BaseLayout><Login /></BaseLayout>
   } 
+
+  if (
+    (data && location.pathname === "/") || 
+    (data && location.pathname === "/login") ||
+    (data && location.pathname === "/register")
+  ) {
+    return <AppLayout><Home /></AppLayout>
+  }
 
   const isChooseAvatarRoute = location.pathname === "/home/profile/choose-avatar"
   if (isChooseAvatarRoute) {

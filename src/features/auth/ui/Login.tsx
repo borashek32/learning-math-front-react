@@ -67,7 +67,7 @@ export const Login = () => {
         }
       })
       .catch((e: any) => {
-        console.log(e)
+        console.log('error', e)
         if (e.status === 'FETCH_ERROR') setServerError(t('errors.serverError'))
         if (e.data.message === 'User password not correct') setServerError(t('errors.error400login'))
         if (e.data.message === 'User not found') setServerError(t('errors.error401login'))

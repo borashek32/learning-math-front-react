@@ -14,7 +14,6 @@ export const Pagination = ({
 }: Props) => {
   const [startPage, setStartPage] = useState(1)
   const [endPage, setEndPage] = useState(5)
-  const [currentPage, setCurrentPage] = useState(1)
 
   const handlePageClick = (pageNumber: number) => {
     onPageChange(pageNumber)
@@ -36,7 +35,6 @@ export const Pagination = ({
     
     return pageNumber
   }
-  console.log(startPage)
 
   return (
     <div className={styles.paginationWrapper}>

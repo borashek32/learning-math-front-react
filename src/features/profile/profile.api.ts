@@ -1,7 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { AvatarType, ScoreType } from './profile.api.types'
 import { UserType } from '../auth/auth.api.types'
+import { baseURL } from '../../common/baseUrl/baseUrl'
 import { baseQueryWithReauth } from '../auth/auth.api'
+
+const baseQuery = fetchBaseQuery({ baseUrl: baseURL })
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',

@@ -15,8 +15,9 @@ import { removeUserInfo } from './auth.slice'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
+  mode: 'no-cors',
   method: 'POST',
-  credentials: 'include',
+  // credentials: 'include',
   headers: {
     'Content-Type': 'application/json',
     Cookie: document.cookie,
@@ -48,12 +49,9 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
       if (
         refreshResult.data &&
         typeof refreshResult.data === 'object' &&
-        'accessToken' in refreshResult.data &&
-        'refreshToken' in refreshResult.data
+        'accessToken' in refreshResult.data
       ) {
         localStorage.setItem('accessToken', refreshResult.data.accessToken as string)
-        const refreshToken = refreshResult.data.refreshToken
-        document.cookie = `refreshToken=${refreshToken}; Max-Age=2592000; Path=/; SameSite=None; Secure`;
       }
     }
   }
@@ -64,15 +62,9 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
     (api.endpoint === 'login' || api.endpoint === 'refresh') &&
     result.data &&
     typeof result.data === 'object' &&
-    'accessToken' in result.data &&
-    'refreshToken' in result.data
+    'accessToken' in result.data
   ) {
     localStorage.setItem('accessToken', result.data.accessToken as string)
-    document.cookie = `
-      refreshToken=${result.data.refreshToken};
-      Max-Age=2592000;
-      Path=/;
-    `
   }
 
   if (
