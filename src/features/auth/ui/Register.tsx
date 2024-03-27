@@ -117,7 +117,7 @@ export const Register = () => {
                 type={InputType.TEXT}
                 label={t('auth.login.inputs.email.label')}
                 error={errors.email?.message}
-                placeholder={t('auth.register.inputs.email.placeholder')}
+                placeholder={t('auth.login.inputs.email.placeholder')}
                 ref={ref}
                 value={value}
                 onFocus={() => {
@@ -137,7 +137,7 @@ export const Register = () => {
                 type={InputType.PASSWORD}
                 label={t('auth.login.inputs.password.label')}
                 error={errors.password?.message}
-                placeholder={t('auth.register.inputs.password.placeholder')}
+                placeholder={t('auth.login.inputs.password.placeholder')}
                 ref={ref}
                 value={value}
                 onFocus={() => {
