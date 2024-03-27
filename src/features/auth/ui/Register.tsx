@@ -81,7 +81,7 @@ export const Register = () => {
       .catch(e => {
         const serverE = t('errors.serverError')
         if (e.status === 'FETCH_ERROR') setServerError(serverE)
-        const error400 = t('errors.error400')
+        const error400 = t('errors.error400register')
         if (e.status === 400) setServerError(error400)
         if (e.status === 401) setServerError(error400)
       })

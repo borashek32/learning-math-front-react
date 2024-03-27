@@ -15,9 +15,8 @@ import { removeUserInfo } from './auth.slice'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
-  mode: 'no-cors',
   method: 'POST',
-  // credentials: 'include',
+  credentials: 'include',
   headers: {
     'Content-Type': 'application/json',
     Cookie: document.cookie,
