@@ -30,6 +30,7 @@ import { Error } from '../../../../../common/components/error/Error'
 export const EquationsWithX = () => {
   const [firstNumber, setFirstNumber] = useState<number>(generateRandomNumber(1, 10))
   const [secondNumber, setSecondNumber] = useState<number>(generateRandomNumber(10, 100))
+  const [randomOperation, setRandomOperation] = useState<string>('')
   const [hint, setHint] = useState(false)
   const [hintIsUsed, setHintIsUsed] = useState(false)
   const [score, setScore] = useState(0) 
@@ -43,7 +44,15 @@ export const EquationsWithX = () => {
   const { t } = useTranslation('translation')
   const formSchema = useFormSchema()
 
-  const randomOperation = useMemo(() => getRandomMathOperation(), [])
+  useEffect(() => {
+    const newOperation = getRandomMathOperation([
+      MathOperationsConstants.SUMM, 
+      MathOperationsConstants.DIFF, 
+      // MathOperationsConstants.MULTIPLY
+    ])
+    setRandomOperation(newOperation)
+  }, [])
+  
   const checkRandomOperation = useMemo(() => getCheckMathOperation(randomOperation), [randomOperation])
 
   const generateNewNumbers = () => {
@@ -55,24 +64,30 @@ export const EquationsWithX = () => {
     setAnswer('')
     setOpen(false)
     generateNewNumbers()
+    const newOperation = getRandomMathOperation([
+      MathOperationsConstants.SUMM, 
+      MathOperationsConstants.DIFF, 
+      // MathOperationsConstants.MULTIPLY
+    ])
+    setRandomOperation(newOperation)
   }
 
   const onChangeHandler = (answer: string) => {
     setAnswer(answer)
   }
 
-  const {
-    handleSubmit,
-    reset,
-  } = useForm<ScoreType>({
-    defaultValues: {
-      score: score,
-      userId: useAppSelector(selectUserId), 
-      date: new Date()
-    },
-    mode: 'onChange',
-    resolver: yupResolver(formSchema) as Resolver<ScoreType>,
-  })
+  // const {
+  //   handleSubmit,
+  //   reset,
+  // } = useForm<ScoreType>({
+  //   defaultValues: {
+  //     score: score,
+  //     userId: useAppSelector(selectUserId), 
+  //     date: new Date()
+  //   },
+  //   mode: 'onChange',
+  //   resolver: yupResolver(formSchema) as Resolver<ScoreType>,
+  // })
 
   useEffect(() => {
     if (hint) {
@@ -80,41 +95,55 @@ export const EquationsWithX = () => {
     }
   }, [hint])
 
-  const onSubmit: SubmitHandler<ScoreType> = (data: ScoreType) => {
+  // const onSubmit: SubmitHandler<ScoreType> = (data: ScoreType) => {
+  //   setHint(false)
+  //   setHintIsUsed(false)
+  //   setServerError('')
+
+  //   if (
+  //     MathOperationsConstants.SUMM && secondNumber - firstNumber === Number(answer) ||
+  //     MathOperationsConstants.DIFF && secondNumber + firstNumber === Number(answer)
+  //   ) {
+  //     setScore(hintIsUsed ? (score + 1) : (score + 2))
+  //     setRightWrong('right')
+  //     data = { ...data, score: 2 }
+  //   } else {
+  //     setScore(score - 1)
+  //     setRightWrong('wrong')
+  //     data = { ...data, score: -1 }
+  //   }
+    
+  //   updateScore(data)
+  //     .unwrap()
+  //     .then(response => {
+  //       reset()
+  //       setOpen(true)
+  //       dispatch(setTotalUserScore(response.data.score))
+  //     })
+  //     .catch((e: any) => {
+  //       if (e.status === 'FETCH_ERROR') setServerError(t('errors.serverError'))
+  //     })
+  // }
+
+  const check = () => {
+    setOpen(true)
     setHint(false)
     setHintIsUsed(false)
     setServerError('')
-
     if (
       MathOperationsConstants.SUMM && secondNumber - firstNumber === Number(answer) ||
-      MathOperationsConstants.DIFF && secondNumber + firstNumber === Number(answer)
+      MathOperationsConstants.DIFF && secondNumber + firstNumber === Number(answer) ||
+      MathOperationsConstants.MULTIPLY && secondNumber * firstNumber === Number(answer) 
     ) {
       setScore(hintIsUsed ? (score + 1) : (score + 2))
       setRightWrong('right')
-      data = { ...data, score: 2 }
     } else {
       setScore(score - 1)
       setRightWrong('wrong')
-      data = { ...data, score: -1 }
     }
-    
-    updateScore(data)
-      .unwrap()
-      .then(response => {
-        reset()
-        setOpen(true)
-        dispatch(setTotalUserScore(response.data.score))
-      })
-      .catch((e: any) => {
-        if (e.status === 'FETCH_ERROR') setServerError(t('errors.serverError'))
-      })
   }
 
-  const onPressPlayMore = () => {
-    setOpen(false)
-    generateNewNumbers()
-    setAnswer('')
-  }
+  const onPressPlayMore = () => onGenerateNewNumbers()
 
   const onPressTryAgain = () => {
     setOpen(false)
@@ -180,7 +209,8 @@ export const EquationsWithX = () => {
           name={t('mathOperations.common.generate')}
         />
         <MathOperationButton
-          onClick={handleSubmit(onSubmit)}
+          // onClick={handleSubmit(onSubmit)}
+          onClick={check}
           name={t('mathOperations.common.check')}
         />
       </ButtonsLayout>

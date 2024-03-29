@@ -80,22 +80,64 @@ export const SummDifference = () => {
     setAnswer(answer)
   }
 
-  const {
-    handleSubmit,
-    reset,
-  } = useForm<ScoreType>({
-    defaultValues: {
-      score: score,
-      userId: useAppSelector(selectUserId), 
-      date: new Date()
-    },
-    mode: 'onChange',
-    resolver: yupResolver(formSchema) as Resolver<ScoreType>,
-  })
+  // const {
+  //   handleSubmit,
+  //   reset,
+  // } = useForm<ScoreType>({
+  //   defaultValues: {
+  //     score: score,
+  //     userId: useAppSelector(selectUserId), 
+  //     date: new Date()
+  //   },
+  //   mode: 'onChange',
+  //   resolver: yupResolver(formSchema) as Resolver<ScoreType>,
+  // })
   
-  const onSubmit: SubmitHandler<ScoreType> = (data: ScoreType) => {
-    setServerError('')
+  // const onSubmit: SubmitHandler<ScoreType> = (data: ScoreType) => {
+  //   setServerError('')
 
+  //   if (( checkMathOperation({
+  //     answer: Number(answer),
+  //     operation: MathOperationsConstants.SUMM, 
+  //     firstOperand: firstNumber, 
+  //     secondOperand: secondNumber,
+  //     thirdOperand: thirdNumber ? thirdNumber : 0,
+  //     fourthOperand: fourthNumber ? fourthNumber : 0,
+  //   }) === true ) ||
+  //   ( checkMathOperation({
+  //     answer: Number(answer),
+  //     operation: MathOperationsConstants.DIFF, 
+  //     firstOperand: firstNumber, 
+  //     secondOperand: secondNumber,
+  //     thirdOperand: thirdNumber ? thirdNumber : 0,
+  //     fourthOperand: fourthNumber ? fourthNumber : 0,
+  //   }) === true )) {
+
+  //     setScore(score + 1)
+  //     setRightWrong('right')
+  //     data = { ...data, score: 1 }
+
+  //   } else {
+  //     setScore(score - 1)
+  //     setRightWrong('wrong')
+  //     data = { ...data, score: -1 }
+  //   }
+    
+  //   updateScore(data)
+  //     .unwrap()
+  //     .then(response => {
+  //       reset()
+  //       setOpen(true)
+  //       dispatch(setTotalUserScore(response.data.score))
+  //     })
+  //     .catch((e: any) => {
+  //       if (e.status === 'FETCH_ERROR') setServerError(t('errors.serverError'))
+  //     })
+  // }
+
+  
+  const check = () => {
+    setOpen(true)
     if (( checkMathOperation({
       answer: Number(answer),
       operation: MathOperationsConstants.SUMM, 
@@ -112,27 +154,12 @@ export const SummDifference = () => {
       thirdOperand: thirdNumber ? thirdNumber : 0,
       fourthOperand: fourthNumber ? fourthNumber : 0,
     }) === true )) {
-
-      setScore(score + 1)
       setRightWrong('right')
-      data = { ...data, score: 1 }
-
+      setScore(score + 1)
     } else {
-      setScore(score - 1)
       setRightWrong('wrong')
-      data = { ...data, score: -1 }
+      setScore(score - 1)
     }
-    
-    updateScore(data)
-      .unwrap()
-      .then(response => {
-        reset()
-        setOpen(true)
-        dispatch(setTotalUserScore(response.data.score))
-      })
-      .catch((e: any) => {
-        if (e.status === 'FETCH_ERROR') setServerError(t('errors.serverError'))
-      })
   }
 
   const onPressPlayMore = () => {
@@ -202,7 +229,8 @@ export const SummDifference = () => {
           name={t('mathOperations.common.generate')}
         />
         <MathOperationButton
-          onClick={handleSubmit(onSubmit)}
+          // onClick={handleSubmit(onSubmit)}
+          onClick={check}
           name={t('mathOperations.common.check')}
         />
       </ButtonsLayout>

@@ -50,9 +50,9 @@ export const Logo = () => {
         }
         {toggleFlag && 
           <div className={styles.learnMathComWrapper}>
-            <p className={styles.learn}>Learn</p>
-            <p className={styles.mathCom}>-math</p>
-            <p className={styles.mathCom}>.com</p>
+            <p className={styles.learn}>Free</p>
+            <p className={styles.mathCom}>math</p>
+            <p className={styles.mathCom}>trainer</p>
           </div>
         }
       </div>

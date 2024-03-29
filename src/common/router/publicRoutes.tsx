@@ -4,9 +4,19 @@ import { Login } from '../../features/auth/ui/Login'
 import { Verify } from '../../features/auth/ui/Verify'
 import { ForgotPassword } from '../../features/auth/ui/ForgotPassword'
 import { CreateNewPassword } from '../../features/auth/ui/CreateNewPassword'
-import { Outlet, RouteObject } from 'react-router-dom'
+import { Outlet, RouteObject, useLocation } from 'react-router-dom'
 import { BaseLayout } from '../components/layouts/BaseLayout'
 import { Docs } from '../../features/main/ui/docs/Docs'
+import { MathOperations } from '../../features/math-operations/MathOperations'
+import { MultiplicationNumber } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationNumber"
+import { Multiplication } from "../../features/math-operations/ui/multiplication/Multiplication"
+import { SummDifference } from "../../features/math-operations/ui/summ-difference/SummDifference"
+import { MultiplicationCheck } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationCheck"
+import { MultiplicationNulls } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationNulls"
+import { Equations } from "../../features/math-operations/ui/equations/Equations"
+import { EquationsWithX } from "../../features/math-operations/ui/equations/withX/EquationsWithX"
+import { AppLayout } from '../components/layouts/AppLayout'
+
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -37,9 +47,49 @@ export const publicRoutes: RouteObject[] = [
     path: "/create-new-password/:passwordRecoveryCode/:email",
     element: <CreateNewPassword />
   },
+
+  // private routes
+  {
+    path: "/home/math-operations",
+    element: <MathOperations />
+  },
+  {
+    path: `/home/math-operations/:mathOperation`,
+    element: <SummDifference />
+  },
+  {
+    path: "/home/math-operations/multiplication",
+    element: <Multiplication />
+  },
+  {
+    path: "/home/math-operations/multiplication/multiplication-table/:digit",
+    element: <MultiplicationNumber />
+  },
+  {
+    path: "/home/math-operations/multiplication/multiplication-table/numbers-with-nulls",
+    element: <MultiplicationNulls />
+  },
+  {
+    path: "/home/math-operations/multiplication/check-knowledge",
+    element: <MultiplicationCheck />
+  },
+  {
+    path: "/home/math-operations/equations",
+    element: <Equations />
+  },
+  {
+    path: "/home/math-operations/equations/with-one-unknown",
+    element: <EquationsWithX />
+  },
 ]
 
 export function PublicRoutes() {
+  const location = useLocation()
+  
+  const main = location.pathname === "/"
+  if (main) {
+    return  <BaseLayout><Main /></BaseLayout>
+  }
 
-  return <BaseLayout><Outlet /></BaseLayout>
+  return <AppLayout><Outlet /></AppLayout>
 }

@@ -7,9 +7,11 @@ export const Main = () => {
 
   return (
     <>
-      <Link to="/register" className={styles.labelClass}>{t('register')}</Link>
+      {/* <Link to="/register" className={styles.labelClass}>{t('register')}</Link>
       <br />
       <Link to="/login" className={styles.labelClass}>{t('login')}</Link>
+      <br /> */}
+      <Link className={styles.labelClass} to="/home/math-operations">{t('math')}</Link>
       <br />
       <Link to="/instructions" className={styles.labelClass}>{t('instructions')}</Link>
     </>

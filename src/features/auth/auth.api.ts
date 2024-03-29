@@ -11,7 +11,6 @@ import {
   LogoutType,
 } from './auth.api.types'
 import { algByDecodingToken } from '../../common/utils/string/algByDecodingToken'
-import { removeUserInfo } from './auth.slice'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,

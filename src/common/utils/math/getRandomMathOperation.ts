@@ -1,9 +1,5 @@
-import { MathOperationsConstants } from "../../constants/MathConstants"
-
-export const getRandomMathOperation = () => {
-  const operations = Object.keys(MathOperationsConstants)
+export const getRandomMathOperation = (operations: string[]) => {
   const randomIndex = Math.floor(Math.random() * operations.length)
-  const randomOperationKey = operations[randomIndex] as keyof typeof MathOperationsConstants
-  
-  return MathOperationsConstants[randomOperationKey]
+
+  return operations[randomIndex]
 }

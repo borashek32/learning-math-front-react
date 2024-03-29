@@ -66,38 +66,38 @@ export const privateRoutes: RouteObject[] = [
     path: "/home/profile/choose-avatar",
     element: renderChangeAvatar()
   },
-  {
-    path: "/home/math-operations",
-    element: <MathOperations />
-  },
-  {
-    path: `/home/math-operations/:mathOperation`,
-    element: <SummDifference />
-  },
-  {
-    path: "/home/math-operations/multiplication",
-    element: <Multiplication />
-  },
-  {
-    path: "/home/math-operations/multiplication/multiplication-table/:digit",
-    element: <MultiplicationNumber />
-  },
-  {
-    path: "/home/math-operations/multiplication/multiplication-table/numbers-with-nulls",
-    element: <MultiplicationNulls />
-  },
-  {
-    path: "/home/math-operations/multiplication/check-knowledge",
-    element: <MultiplicationCheck />
-  },
-  {
-    path: "/home/math-operations/equations",
-    element: <Equations />
-  },
-  {
-    path: "/home/math-operations/equations/with-one-unknown",
-    element: <EquationsWithX />
-  },
+  // {
+  //   path: "/home/math-operations",
+  //   element: <MathOperations />
+  // },
+  // {
+  //   path: `/home/math-operations/:mathOperation`,
+  //   element: <SummDifference />
+  // },
+  // {
+  //   path: "/home/math-operations/multiplication",
+  //   element: <Multiplication />
+  // },
+  // {
+  //   path: "/home/math-operations/multiplication/multiplication-table/:digit",
+  //   element: <MultiplicationNumber />
+  // },
+  // {
+  //   path: "/home/math-operations/multiplication/multiplication-table/numbers-with-nulls",
+  //   element: <MultiplicationNulls />
+  // },
+  // {
+  //   path: "/home/math-operations/multiplication/check-knowledge",
+  //   element: <MultiplicationCheck />
+  // },
+  // {
+  //   path: "/home/math-operations/equations",
+  //   element: <Equations />
+  // },
+  // {
+  //   path: "/home/math-operations/equations/with-one-unknown",
+  //   element: <EquationsWithX />
+  // },
   // {
   //   path: "/home/math-operations/equations/with-two-unknown",
   //   element: <EquationsWithX />

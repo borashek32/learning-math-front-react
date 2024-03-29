@@ -28,7 +28,7 @@ export const Nav = () => {
       <header className={styles.header}>
         <LogoSmall path={PATHS.HOME} />
         <div className={styles.headerWithUser}>
-          <Link to="/home/profile"
+          {/* <Link to="/home/profile"
             onClick={() => setActive(false)}
           >
             <p className={styles.userEmail}>{userEmail && userEmail}</p> 
@@ -36,7 +36,7 @@ export const Nav = () => {
               <p className={styles.scoreText}>{t('yourScore.total')}</p>
               <p className={styles.titleScore}>{totalUserScore && totalUserScore} XP</p>
             </div> 
-          </Link>
+          </Link> */}
 
           <div className={menu} onClick={onClick}>
             <span className={styles.line}></span>
@@ -46,7 +46,7 @@ export const Nav = () => {
       {active &&
         <div className={styles.navigation}>
           <ul className={styles.menuItems}>
-            <li className={styles.item}>
+            {/* <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
                 to="/home"
@@ -54,7 +54,7 @@ export const Nav = () => {
               >
                 {t('screens.home')}
               </Link>
-            </li>
+            </li> */}
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
@@ -67,15 +67,42 @@ export const Nav = () => {
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
-                to="/home/math-operations/docs"
+                to="/home/math-operations/summ"
                 onClick={() => setActive(false)}
               >
-                {t('screens.instructions')}
+                {t('mathOperations.summ')}
+              </Link>
+            </li>
+            <li className={styles.item}>
+              <Link 
+                className={styles.itemLink}
+                to="/home/math-operations/diff"
+                onClick={() => setActive(false)}
+              >
+                {t('mathOperations.diff')}
+              </Link>
+            </li>
+            <li className={styles.item}>
+              <Link 
+                className={styles.itemLink}
+                to="/home/math-operations/multiplication"
+                onClick={() => setActive(false)}
+              >
+                {t('mathOperations.multiplication')}
+              </Link>
+            </li>
+            <li className={styles.item}>
+              <Link 
+                className={styles.itemLink}
+                to="/home/math-operations/equations"
+                onClick={() => setActive(false)}
+              >
+                {t('mathOperations.equations')}
               </Link>
             </li>
             
             <div className={styles.footerDevideLine}></div>
-            <li className={styles.item}>
+            {/* <li className={styles.item}>
               <Link 
                 className={styles.itemLink} 
                 to="/home/profile/your-score"
@@ -101,7 +128,7 @@ export const Nav = () => {
               >
                 <DefaultButton type='button' name={t('buttons.logout')} />
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       }
