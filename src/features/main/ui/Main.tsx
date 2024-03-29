@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import styles from '../../../common/styles/App.module.sass'
 import { useTranslation } from 'react-i18next'
+import { AppText } from '../../../common/components/text/AppText'
 
 export const Main = () => {
-  const { t } = useTranslation('translation', { keyPrefix: 'screens' })
+  const { t } = useTranslation('translation')
 
   return (
     <>
@@ -11,9 +12,11 @@ export const Main = () => {
       <br />
       <Link to="/login" className={styles.labelClass}>{t('login')}</Link>
       <br /> */}
-      <Link className={styles.labelClass} to="/home/math-operations">{t('math')}</Link>
+      <AppText desc={t('main.desc')}/>
       <br />
-      <Link to="/instructions" className={styles.labelClass}>{t('instructions')}</Link>
+      <Link className={styles.labelClass} to="/home/math-operations">{t('screens.math')}</Link>
+      <br />
+      <Link to="/instructions" className={styles.labelClass}>{t('screens.instructions')}</Link>
     </>
   )
 }

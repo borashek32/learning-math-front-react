@@ -17,6 +17,9 @@
     "profile": "Profile",
     "yourScore": "Your score"
   },
+  "main": {
+    "desc": "This is a web version of mobile app. It is in development mode"
+  },
   "changeLang": {
     "select": "Change language",
     "options": {
