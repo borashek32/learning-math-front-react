@@ -80,21 +80,26 @@ $color-bg: #01143d
   display: flex
   justify-content: center
   align-items: center
+  flex-direction: column
 
 .menuItems
-  width: 200px
-  height: 300px
+  width: 360px
+  height: 160px
   display: flex
-  justify-content: space-between
   align-items: center
   flex-direction: column
   position: relative
+  justify-content: center
+  gap: 20px
 
 .item
+  color: $color-white
 
 .itemLink
   color: $color-white
   text-decoration: none
+  display: flex
+  justify-content: center
 
   &:hover
     color: $color-hover

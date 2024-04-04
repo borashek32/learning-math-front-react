@@ -1,9 +1,9 @@
-import { GoTo } from '../../common/components/goTo/GoTo'
-import { Header } from '../../common/components/header/Header'
-import styles from './../../common/styles/App.module.sass'
+import { GoTo } from '../../../common/components/goTo/GoTo'
+import { Header } from '../../../common/components/header/Header'
+import styles from './../MathOperations.module.sass'
 import { useTranslation } from 'react-i18next'
-import { BlueButton } from '../../common/components/buttons/BlueButton'
-import { MathOperationsConstants } from '../../common/constants/MathConstants'
+import { BlueButton } from '../../../common/components/buttons/BlueButton'
+import { MathOperationsConstants } from '../../../common/constants/MathConstants'
 
 export const MathOperations = () => {
   const { t } = useTranslation()

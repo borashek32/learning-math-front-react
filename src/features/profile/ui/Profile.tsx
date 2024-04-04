@@ -5,7 +5,7 @@ import { Header } from '../../../common/components/header/Header'
 import { useTranslation } from 'react-i18next'
 import { DefaultButton } from '../../../common/components/buttons/DefaultButton'
 import { useState } from 'react'
-import { DivideLine } from '../../../common/components/divideLine/DevideLine'
+import { DevideLine } from '../../../common/components/devideLine/DevideLine'
 
 export const Profile = () => {
   const [active, setActive] = useState(false)
@@ -23,7 +23,7 @@ export const Profile = () => {
           </Link>
         </li> 
 
-        <DivideLine />
+        <DevideLine />
 
         <li>
           <Link className={styles.itemLink} to="/home/profile/choose-avatar">

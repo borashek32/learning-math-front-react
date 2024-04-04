@@ -14,6 +14,8 @@ export const Main = () => {
       <br /> */}
       <AppText desc={t('main.desc')}/>
       <br />
+      <Link className={styles.labelClass} to="/home/school-program">{t('screens.schoolProgram')}</Link>
+      <br />
       <Link className={styles.labelClass} to="/home/math-operations">{t('screens.math')}</Link>
       <br />
       <Link to="/instructions" className={styles.labelClass}>{t('screens.instructions')}</Link>

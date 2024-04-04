@@ -8,6 +8,7 @@ import { useAppSelector } from "../../hooks/useAppSelector"
 import { selectUserEmail } from "../../../features/auth/auth.selectors"
 import { PATHS } from "../../constants/paths"
 import { selectTotalUserScore } from "../../../features/profile/profile.selectors"
+import { DevideLine } from "../devideLine/DevideLine"
 
 export const Nav = () => {
   const [active, setActive] = useState(false)
@@ -100,36 +101,85 @@ export const Nav = () => {
                 {t('mathOperations.equations')}
               </Link>
             </li>
-            
-            <div className={styles.footerDevideLine}></div>
-            {/* <li className={styles.item}>
-              <Link 
-                className={styles.itemLink} 
-                to="/home/profile/your-score"
-                onClick={() => setActive(false)}
-              >
-                {t('screens.yourScore')}
-              </Link>
-            </li> 
+          </ul>
+          <DevideLine />
+          <ul className={styles.menuItems}>
             <li className={styles.item}>
               <Link 
-                className={styles.itemLink} 
-                to="/home/profile"
+                className={styles.itemLink}
+                to="/home/school-program"
                 onClick={() => setActive(false)}
               >
-                {t('screens.profile')}
+                {t('screens.schoolProgram')}
               </Link>
             </li>
             <li className={styles.item}>
               <Link 
-                className={styles.itemLink} 
-                to="/logout"
+                className={styles.itemLink}
+                to="/home/school-program/first-grade"
                 onClick={() => setActive(false)}
               >
-                <DefaultButton type='button' name={t('buttons.logout')} />
+                {t('schoolProgram.firstGrade')}
               </Link>
-            </li> */}
+            </li>
+            <li className={styles.item}>
+              <Link 
+                className={styles.itemLink}
+                to="/home/school-program/second-grade"
+                onClick={() => setActive(false)}
+              >
+                {t('schoolProgram.secondGrade')}
+              </Link>
+            </li>
+            <li className={styles.item}>
+              <Link 
+                className={styles.itemLink}
+                to="/home/school-program/third-grade"
+                onClick={() => setActive(false)}
+              >
+                {t('schoolProgram.thirdGrade')}
+              </Link>
+            </li>
           </ul>
+          <ul className={styles.menuItems}>
+            <DevideLine />
+            <li className={styles.item}>
+              <Link 
+                className={styles.itemLink}
+                to="/instructions"
+                onClick={() => setActive(false)}
+              >
+                {t('screens.instructions')}
+              </Link>
+            </li>
+          </ul>
+          {/* <li className={styles.item}>
+            <Link 
+              className={styles.itemLink} 
+              to="/home/profile/your-score"
+              onClick={() => setActive(false)}
+            >
+              {t('screens.yourScore')}
+            </Link>
+          </li> 
+          <li className={styles.item}>
+            <Link 
+              className={styles.itemLink} 
+              to="/home/profile"
+              onClick={() => setActive(false)}
+            >
+              {t('screens.profile')}
+            </Link>
+          </li>
+          <li className={styles.item}>
+            <Link 
+              className={styles.itemLink} 
+              to="/logout"
+              onClick={() => setActive(false)}
+            >
+              <DefaultButton type='button' name={t('buttons.logout')} />
+            </Link>
+          </li> */}
         </div>
       }
     </>

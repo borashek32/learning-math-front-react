@@ -1,6 +1,6 @@
 import { useLocation, Outlet, RouteObject, Route } from "react-router-dom"
 import { Home } from '../../features/home/ui/Home'
-import { MathOperations } from '../../features/math-operations/MathOperations'
+import { MathOperations } from '../../features/math-operations/ui/MathOperations'
 import { Users } from '../../features/test/Users'
 import { Logout } from '../../features/auth/ui/Logout'
 import { Loader } from "../components/loaders/CircularLoader"

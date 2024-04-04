@@ -7,7 +7,7 @@ import { CreateNewPassword } from '../../features/auth/ui/CreateNewPassword'
 import { Outlet, RouteObject, useLocation } from 'react-router-dom'
 import { BaseLayout } from '../components/layouts/BaseLayout'
 import { Docs } from '../../features/main/ui/docs/Docs'
-import { MathOperations } from '../../features/math-operations/MathOperations'
+import { MathOperations } from '../../features/math-operations/ui/MathOperations'
 import { MultiplicationNumber } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationNumber"
 import { Multiplication } from "../../features/math-operations/ui/multiplication/Multiplication"
 import { SummDifference } from "../../features/math-operations/ui/summ-difference/SummDifference"
@@ -16,6 +16,11 @@ import { MultiplicationNulls } from "../../features/math-operations/ui/multiplic
 import { Equations } from "../../features/math-operations/ui/equations/Equations"
 import { EquationsWithX } from "../../features/math-operations/ui/equations/withX/EquationsWithX"
 import { AppLayout } from '../components/layouts/AppLayout'
+import { SchoolProgramm } from '../../features/school-programm/ui/SchoolProgram'
+import { FirstGrade } from '../../features/school-programm/ui/first-grade/FirstGrade'
+import { SecondGrade } from '../../features/school-programm/ui/second-grade/SecondGrade'
+import { ThirdGrade } from '../../features/school-programm/ui/third-grade/ThirdGrade'
+import { AvatarLayout } from '../components/layouts/AvatarLayout'
 
 
 export const publicRoutes: RouteObject[] = [
@@ -54,6 +59,22 @@ export const publicRoutes: RouteObject[] = [
     element: <MathOperations />
   },
   {
+    path: "/home/school-program",
+    element: <SchoolProgramm />
+  },
+  {
+    path: "/home/school-program/first-grade",
+    element: <FirstGrade />
+  },
+  {
+    path: "/home/school-program/second-grade",
+    element: <SecondGrade />
+  },
+  {
+    path: "/home/school-program/third-grade",
+    element: <ThirdGrade />
+  },
+  {
     path: `/home/math-operations/:mathOperation`,
     element: <SummDifference />
   },
@@ -89,6 +110,10 @@ export function PublicRoutes() {
   const main = location.pathname === "/"
   if (main) {
     return  <BaseLayout><Main /></BaseLayout>
+  }
+  const instructions = location.pathname === "/instructions"
+  if (instructions) {
+    return <AvatarLayout><Docs /></AvatarLayout>
   }
 
   return <AppLayout><Outlet /></AppLayout>
