@@ -19,7 +19,6 @@ const appSlice = createSlice({
       state.appLang = action.payload.appLang
     },
     setAppLang(state, action: PayloadAction<string>) {
-      console.log(action.payload)
       state.appLang = action.payload
     }
   },
