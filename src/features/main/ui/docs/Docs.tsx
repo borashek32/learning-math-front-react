@@ -3,14 +3,10 @@ import { Header } from '../../../../common/components/header/Header'
 import { useTranslation } from 'react-i18next'
 import styles from './Docs.module.sass'
 import { DevideLine } from '../../../../common/components/devideLine/DevideLine'
-import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
+import { Link } from 'react-scroll'
 
 export const Docs = () => {
   const { t } = useTranslation()
-
-  const handleSetActive = (to: string) => {
-    console.log(to)
-  }
 
   return (
     <div className={styles.docsWrapper}>
