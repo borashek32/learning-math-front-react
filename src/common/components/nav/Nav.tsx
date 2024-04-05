@@ -9,11 +9,13 @@ import { selectUserEmail } from "../../../features/auth/auth.selectors"
 import { PATHS } from "../../constants/paths"
 import { selectTotalUserScore } from "../../../features/profile/profile.selectors"
 import { DevideLine } from "../devideLine/DevideLine"
+import { MathOperationsConstants } from "../../constants/MathConstants"
 
 export const Nav = () => {
   const [active, setActive] = useState(false)
   const userEmail = useAppSelector(selectUserEmail)
   const totalUserScore = useAppSelector(selectTotalUserScore)
+  const mathOperation: Array<string> = [MathOperationsConstants.SUMM, MathOperationsConstants.DIFF]
 
   const { t } = useTranslation()
 
@@ -68,7 +70,7 @@ export const Nav = () => {
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
-                to="/home/math-operations/summ"
+                to='/home/math-operations/+'
                 onClick={() => setActive(false)}
               >
                 {t('mathOperations.summ')}
@@ -77,7 +79,7 @@ export const Nav = () => {
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
-                to="/home/math-operations/diff"
+                to='/home/math-operations/-'
                 onClick={() => setActive(false)}
               >
                 {t('mathOperations.diff')}
