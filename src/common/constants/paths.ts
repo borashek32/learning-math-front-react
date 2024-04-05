@@ -1,6 +1,6 @@
 export const enum PATHS {
   MAIN = "main",
-  HOME = "home",
+  HOME = "/",
   INSTRUCTIONS = "instructions",
   PROFILE = "profile",
   YOUR_SCORE = "score",
