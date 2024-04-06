@@ -67,7 +67,7 @@ export const Nav = () => {
                 {t('screens.math')}
               </Link>
             </li>
-            <li className={styles.item}>
+            {/* <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
                 to='/home/math-operations/+'
@@ -102,10 +102,22 @@ export const Nav = () => {
               >
                 {t('mathOperations.equations')}
               </Link>
+            </li> */}
+            <li className={styles.item}>
+              <DevideLine />
             </li>
-          </ul>
-          <DevideLine />
-          <ul className={styles.menuItems}>
+            <li className={styles.item}>
+              <Link 
+                className={styles.itemLink}
+                to="/home/pre-school"
+                onClick={() => setActive(false)}
+              >
+                {t('screens.preSchool')}
+              </Link>
+            </li>
+            <li className={styles.item}>
+              <DevideLine />
+            </li>
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
@@ -115,7 +127,7 @@ export const Nav = () => {
                 {t('screens.schoolProgram')}
               </Link>
             </li>
-            <li className={styles.item}>
+            {/* <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
                 to="/home/school-program/first-grade"
@@ -141,10 +153,10 @@ export const Nav = () => {
               >
                 {t('schoolProgram.thirdGrade')}
               </Link>
+            </li> */}
+            <li className={styles.item}>
+              <DevideLine />
             </li>
-          </ul>
-          <ul className={styles.menuItems}>
-            <DevideLine />
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}

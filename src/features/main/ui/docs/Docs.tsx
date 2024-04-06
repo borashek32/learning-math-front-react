@@ -92,6 +92,18 @@ export const Docs = () => {
             offset={-100}
             duration={500}
             className={styles.itemLink}
+            to="preSchool"
+          >
+            {t('instructions.preSchool.title')}
+          </Link>
+        </li>
+        <li className={styles.item}>
+          <Link
+            spy={true}
+            smooth={true}
+            offset={-100}
+            duration={500}
+            className={styles.itemLink}
             to="parentalControl"
           >
             {t('instructions.parentalControl.title')}
@@ -384,6 +396,14 @@ export const Docs = () => {
         </h2>
         <p className={styles.itemDesc}>
           {t('instructions.schoolProgram.desc')}
+        </p>
+      </div>
+      <div className={styles.descWrapper} id="preSchool">
+        <h2 className={styles.itemLink}>
+          {t('instructions.preSchool.title')}
+        </h2>
+        <p className={styles.itemDesc}>
+          {t('instructions.preSchool.desc')}
         </p>
       </div>
       <div className={styles.descWrapper} id="parentalControl">

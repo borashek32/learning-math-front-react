@@ -5,6 +5,7 @@
     "home": "Home",
     "instructions": "Instructions",
     "math": "Math Examples",
+    "preSchool": "Pre-school",
     "schoolProgram": "School program 1-3 grades",
     "login": "Login",
     "register": "Registration",
@@ -145,6 +146,9 @@
     "equations": "Equations",
     "equationsWithX": "Equations with 1 unknown",
     "equationsWithXY": "Equations with 2 unknown"
+  },
+  "preSchool": {
+    "numbers": "Numbers"
   },
   "schoolProgram": {
     "firstGrade": "First grade",
@@ -350,6 +354,10 @@
           }
         }
       }
+    },
+    "preSchool": {
+      "title": "Pre-school",
+      "desc": "Welcome to the preparation for school module! This module is designed to help your child master the basics of mathematics before entering school. In this module, your child will be able to independently solve various tasks, learning numbers and developing counting skills. Before starting to use the module, make sure that your child is registered in our application. Registration will allow to save progress and earn experience points (XP) for completing tasks. After successful registration and login to the application, your child will be able to access the preparation for school module. In this module, your child will learn numbers by solving various simple tasks. Tasks will include counting, comparing numbers, as well as basic arithmetic operations. Each completed task will earn your child experience points (XP). The more tasks your child completes, the more XP he or she will earn. Your child will be able to track progress in the module and see achievements. We will also celebrate his or her successes and encourage overcoming new mathematical challenges! We hope that your child will enjoy learning mathematics with the help of our preparation for school module! If you have any questions or comments, feel free to contact us."
     },
     "schoolProgram": {
       "title": "School program",

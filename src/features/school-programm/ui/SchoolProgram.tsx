@@ -1,6 +1,6 @@
 import { GoTo } from '../../../common/components/goTo/GoTo'
 import { Header } from '../../../common/components/header/Header'
-import styles from './../../math-operations/MathOperations.module.sass'
+import styles from './../../math-examples/MathOperations.module.sass'
 import { useTranslation } from 'react-i18next'
 import { BlueButton } from '../../../common/components/buttons/BlueButton'
 

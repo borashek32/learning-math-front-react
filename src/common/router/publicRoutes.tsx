@@ -7,20 +7,22 @@ import { CreateNewPassword } from '../../features/auth/ui/CreateNewPassword'
 import { Outlet, RouteObject, useLocation } from 'react-router-dom'
 import { BaseLayout } from '../components/layouts/BaseLayout'
 import { Docs } from '../../features/main/ui/docs/Docs'
-import { MathOperations } from '../../features/math-operations/ui/MathOperations'
-import { MultiplicationNumber } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationNumber"
-import { Multiplication } from "../../features/math-operations/ui/multiplication/Multiplication"
-import { SummDifference } from "../../features/math-operations/ui/summ-difference/SummDifference"
-import { MultiplicationCheck } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationCheck"
-import { MultiplicationNulls } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationNulls"
-import { Equations } from "../../features/math-operations/ui/equations/Equations"
-import { EquationsWithX } from "../../features/math-operations/ui/equations/withX/EquationsWithX"
+import { MathOperations } from '../../features/math-examples/ui/MathOperations'
+import { MultiplicationNumber } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNumber"
+import { Multiplication } from "../../features/math-examples/ui/multiplication/Multiplication"
+import { SummDifference } from "../../features/math-examples/ui/summ-difference/SummDifference"
+import { MultiplicationCheck } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationCheck"
+import { MultiplicationNulls } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNulls"
+import { Equations } from "../../features/math-examples/ui/equations/Equations"
+import { EquationsWithX } from "../../features/math-examples/ui/equations/withX/EquationsWithX"
 import { AppLayout } from '../components/layouts/AppLayout'
 import { SchoolProgramm } from '../../features/school-programm/ui/SchoolProgram'
 import { FirstGrade } from '../../features/school-programm/ui/first-grade/FirstGrade'
 import { SecondGrade } from '../../features/school-programm/ui/second-grade/SecondGrade'
 import { ThirdGrade } from '../../features/school-programm/ui/third-grade/ThirdGrade'
 import { AvatarLayout } from '../components/layouts/AvatarLayout'
+import { PreSchool } from '../../features/pre-school/ui/PreSchool'
+import { Numbers } from '../../features/pre-school/ui/numbers/Numbers'
 
 
 export const publicRoutes: RouteObject[] = [
@@ -73,6 +75,14 @@ export const publicRoutes: RouteObject[] = [
   {
     path: "/home/school-program/third-grade",
     element: <ThirdGrade />
+  },
+  {
+    path: "/home/pre-school",
+    element: <PreSchool />
+  },
+  {
+    path: "/home/pre-school/numbers",
+    element: <Numbers />
   },
   {
     path: `/home/math-operations/:mathOperation`,

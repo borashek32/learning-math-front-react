@@ -18,6 +18,8 @@ export const Main = () => {
       <br />
       <Link className={styles.labelClass} to="/home/math-operations">{t('screens.math')}</Link>
       <br />
+      <Link className={styles.labelClass} to="/home/pre-school">{t('screens.preSchool')}</Link>
+      <br />
       <Link to="/instructions" className={styles.labelClass}>{t('screens.instructions')}</Link>
     </>
   )
