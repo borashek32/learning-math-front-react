@@ -148,7 +148,10 @@
     "equationsWithXY": "Equations with 2 unknown"
   },
   "preSchool": {
-    "numbers": "Numbers"
+    "numbers": {
+      "title": "Numbers",
+      "desc": "Count cats"
+    }
   },
   "schoolProgram": {
     "firstGrade": "First grade",

@@ -15,7 +15,7 @@ export const PreSchool = () => {
       <ul className={styles.listItems}>
         <li className={styles.item}>
           <BlueButton 
-            name={t('preSchool.numbers')} 
+            name={t('preSchool.numbers.title')} 
             type={'button'} 
             path={'/home/pre-school/numbers'} 
           />

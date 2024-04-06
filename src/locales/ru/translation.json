@@ -148,7 +148,10 @@
     "equationsWithXY": "Уравнения с 2 неизвестными"
   },
   "preSchool": {
-    "numbers": "Числа"
+    "numbers": {
+      "title": "Числа",
+      "desc": "Сосчитай кошек"
+    }
   },
   "schoolProgram": {
     "firstGrade": "Первый класс",

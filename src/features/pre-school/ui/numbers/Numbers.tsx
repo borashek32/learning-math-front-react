@@ -18,6 +18,7 @@ import cat from './../../../../common/assets/icons/cat.svg'
 import { MathOperation } from "../../../../common/components/mathOpertion/mathOperation"
 import { MathSignsConstants } from "../../../../common/constants/MathConstants"
 import { ImgLayout } from "../../../../common/components/layouts/ImgLayout"
+import { AppText } from "../../../../common/components/text/AppText"
 
 export const Numbers = () => {
   const [score, setScore] = useState(0)
@@ -90,7 +91,9 @@ export const Numbers = () => {
       )}
       {/* <GoTo address='/home' name={t('links.back')} /> */}
       <GoTo address='/home/pre-school' name={t('links.back')} />
-      <Header title={t('preSchool.numbers')}  />
+      <Header title={t('preSchool.numbers.title')}  />
+
+      <AppText desc={t('preSchool.numbers.desc')} />
     
       <MathExampleLayout>
         <ImgLayout>
