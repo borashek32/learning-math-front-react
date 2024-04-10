@@ -28,6 +28,12 @@ import { EquationsWithX } from "../../features/math-examples/ui/equations/withX/
 import { ChangeAvatar } from "../../features/profile/ui/ChangeAvatar"
 import { AvatarLayout } from "../components/layouts/AvatarLayout"
 import { Instructions } from "../../features/profile/ui/Instructions"
+import { SchoolProgram } from "../../features/school-program/ui/SchoolProgram"
+import { FirstGrade } from "../../features/school-program/ui/first-grade/FirstGrade"
+import { SecondGrade } from "../../features/school-program/ui/second-grade/SecondGrade"
+import { ThirdGrade } from "../../features/school-program/ui/third-grade/ThirdGrade"
+import { PreSchool } from "../../features/pre-school/ui/PreSchool"
+import { Numbers } from "../../features/pre-school/ui/numbers/Numbers"
 
 const renderChangeAvatar = (): React.ReactNode => {
   return <AvatarLayout><ChangeAvatar /></AvatarLayout>;
@@ -66,42 +72,30 @@ export const privateRoutes: RouteObject[] = [
     path: "/home/profile/choose-avatar",
     element: renderChangeAvatar()
   },
-  // {
-  //   path: "/home/math-operations",
-  //   element: <MathOperations />
-  // },
-  // {
-  //   path: `/home/math-operations/:mathOperation`,
-  //   element: <SummDifference />
-  // },
-  // {
-  //   path: "/home/math-operations/multiplication",
-  //   element: <Multiplication />
-  // },
-  // {
-  //   path: "/home/math-operations/multiplication/multiplication-table/:digit",
-  //   element: <MultiplicationNumber />
-  // },
-  // {
-  //   path: "/home/math-operations/multiplication/multiplication-table/numbers-with-nulls",
-  //   element: <MultiplicationNulls />
-  // },
-  // {
-  //   path: "/home/math-operations/multiplication/check-knowledge",
-  //   element: <MultiplicationCheck />
-  // },
-  // {
-  //   path: "/home/math-operations/equations",
-  //   element: <Equations />
-  // },
-  // {
-  //   path: "/home/math-operations/equations/with-one-unknown",
-  //   element: <EquationsWithX />
-  // },
-  // {
-  //   path: "/home/math-operations/equations/with-two-unknown",
-  //   element: <EquationsWithX />
-  // },
+  {
+    path: "/home/school-program",
+    element: <SchoolProgram />
+  },
+  {
+    path: "/home/school-program/first-grade",
+    element: <FirstGrade />
+  },
+  {
+    path: "/home/school-program/second-grade",
+    element: <SecondGrade />
+  },
+  {
+    path: "/home/school-program/third-grade",
+    element: <ThirdGrade />
+  },
+  {
+    path: "/home/pre-school",
+    element: <PreSchool />
+  },
+  {
+    path: "/home/pre-school/numbers",
+    element: <Numbers />
+  },
   {
     path: "users",
     element: <Users />

@@ -5,6 +5,7 @@ import styles from './../../../common/styles/App.module.sass'
 import { Link } from 'react-router-dom'
 import { useAppSelector } from '../../../common/hooks/useAppSelector'
 import { selectUserEmail } from '../../auth/auth.selectors'
+import { DevideLine } from '../../../common/components/devideLine/DevideLine'
 
 export const Home = () => {
   const userEmail = useAppSelector(selectUserEmail)
@@ -24,6 +25,25 @@ export const Home = () => {
             {t('screens.math')}
           </Link>
         </li>
+        <li>
+          <Link 
+            className={styles.labelClass} 
+            to="/home/school-program"
+          >
+              {t('screens.schoolProgram')}
+          </Link>
+        </li>
+        <li>
+          <Link 
+            className={styles.labelClass} 
+            to="/home/pre-school"
+          >
+              {t('screens.preSchool')}
+          </Link>
+        </li>
+
+        <DevideLine />
+        
         <li className={styles.item}>
           <Link 
             className={styles.itemLink} 

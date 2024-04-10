@@ -16,13 +16,7 @@ import { MultiplicationNulls } from "../../features/math-examples/ui/multiplicat
 import { Equations } from "../../features/math-examples/ui/equations/Equations"
 import { EquationsWithX } from "../../features/math-examples/ui/equations/withX/EquationsWithX"
 import { AppLayout } from '../components/layouts/AppLayout'
-import { SchoolProgramm } from '../../features/school-programm/ui/SchoolProgram'
-import { FirstGrade } from '../../features/school-programm/ui/first-grade/FirstGrade'
-import { SecondGrade } from '../../features/school-programm/ui/second-grade/SecondGrade'
-import { ThirdGrade } from '../../features/school-programm/ui/third-grade/ThirdGrade'
 import { AvatarLayout } from '../components/layouts/AvatarLayout'
-import { PreSchool } from '../../features/pre-school/ui/PreSchool'
-import { Numbers } from '../../features/pre-school/ui/numbers/Numbers'
 
 
 export const publicRoutes: RouteObject[] = [
@@ -42,47 +36,22 @@ export const publicRoutes: RouteObject[] = [
     path: "/login",
     element: <Login />,
   },
-  {
-    path: "/verify/:verificationLink",
-    element: <Verify />,
-  },
-  {
-    path: "/forgot-password",
-    element: <ForgotPassword />
-  },
-  {
-    path: "/create-new-password/:passwordRecoveryCode/:email",
-    element: <CreateNewPassword />
-  },
+  // {
+  //   path: "/verify/:verificationLink",
+  //   element: <Verify />,
+  // },
+  // {
+  //   path: "/forgot-password",
+  //   element: <ForgotPassword />
+  // },
+  // {
+  //   path: "/create-new-password/:passwordRecoveryCode/:email",
+  //   element: <CreateNewPassword />
+  // },
 
-  // private routes
   {
     path: "/home/math-operations",
     element: <MathOperations />
-  },
-  {
-    path: "/home/school-program",
-    element: <SchoolProgramm />
-  },
-  {
-    path: "/home/school-program/first-grade",
-    element: <FirstGrade />
-  },
-  {
-    path: "/home/school-program/second-grade",
-    element: <SecondGrade />
-  },
-  {
-    path: "/home/school-program/third-grade",
-    element: <ThirdGrade />
-  },
-  {
-    path: "/home/pre-school",
-    element: <PreSchool />
-  },
-  {
-    path: "/home/pre-school/numbers",
-    element: <Numbers />
   },
   {
     path: `/home/math-operations/:mathOperation`,
@@ -121,6 +90,17 @@ export function PublicRoutes() {
   if (main) {
     return  <BaseLayout><Main /></BaseLayout>
   }
+
+  const register = location.pathname === "/register"
+  if (register) {
+    return <BaseLayout><Register /></BaseLayout>
+  }
+  
+  const login = location.pathname === "/login"
+  if (login) {
+    return <BaseLayout><Login /></BaseLayout>
+  }
+
   const instructions = location.pathname === "/instructions"
   if (instructions) {
     return <AvatarLayout><Docs /></AvatarLayout>

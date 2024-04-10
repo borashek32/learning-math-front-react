@@ -99,7 +99,8 @@ export const Register = () => {
         <Modal
           open={open}
           setOpen={handleOpenModal}
-          text={t('modal.linkSent')}
+          // text={t('modal.linkSent')}
+          text={t('modal.registrationSuccess')}
           buttonName='Ok'
           buttonCallback={back}
           outlinedButton={true}

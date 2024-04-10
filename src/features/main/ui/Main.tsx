@@ -8,19 +8,15 @@ export const Main = () => {
 
   return (
     <>
-      {/* <Link to="/register" className={styles.labelClass}>{t('register')}</Link>
-      <br />
-      <Link to="/login" className={styles.labelClass}>{t('login')}</Link>
-      <br /> */}
       <AppText desc={t('main.desc')}/>
+      <br/>
+      <Link to="/register" className={styles.labelClass}>{t('screens.register')}</Link>
       <br />
-      <Link className={styles.labelClass} to="/home/school-program">{t('screens.schoolProgram')}</Link>
+      <Link to="/login" className={styles.labelClass}>{t('screens.login')}</Link>
       <br />
       <Link className={styles.labelClass} to="/home/math-operations">{t('screens.math')}</Link>
-      <br />
-      <Link className={styles.labelClass} to="/home/pre-school">{t('screens.preSchool')}</Link>
       <br />
       <Link to="/instructions" className={styles.labelClass}>{t('screens.instructions')}</Link>
     </>
   )
-}
+}  

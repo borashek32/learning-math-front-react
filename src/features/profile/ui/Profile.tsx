@@ -30,7 +30,7 @@ export const Profile = () => {
             {t('screens.changeAvatar')}
           </Link>
         </li> 
-        <li>
+        {/* <li>
           <Link className={styles.itemLink} to="/home/profile/change-email">
             {t('screens.changeEmail')}
           </Link>
@@ -39,7 +39,7 @@ export const Profile = () => {
           <Link className={styles.itemLink} to="/home/profile/change-password">
             {t('screens.changePassword')}
           </Link>
-        </li>
+        </li> */}
         <li className={styles.item}>
           <Link 
             className={styles.itemLink} 

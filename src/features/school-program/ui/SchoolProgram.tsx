@@ -4,7 +4,7 @@ import styles from './../../math-examples/MathOperations.module.sass'
 import { useTranslation } from 'react-i18next'
 import { BlueButton } from '../../../common/components/buttons/BlueButton'
 
-export const SchoolProgramm = () => {
+export const SchoolProgram = () => {
   const { t } = useTranslation()
 
   return (

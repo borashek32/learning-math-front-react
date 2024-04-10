@@ -136,9 +136,9 @@ export const Login = () => {
           />
         </form>
 
-        <a href="/forgot-password">
+        {/* <a href="/forgot-password">
           <Note text={t('screens.forgotPassword')} />
-        </a>
+        </a> */}
 
         <GoTo
           text={t('auth.login.note')}
