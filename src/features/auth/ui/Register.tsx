@@ -108,6 +108,7 @@ export const Register = () => {
         />
       }
       <FormContainer serverError={serverError}>
+        <GoTo address="/" name={t('links.back')} />
         <Header title={t('screens.register')} />
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller

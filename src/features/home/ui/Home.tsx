@@ -20,7 +20,7 @@ export const Home = () => {
         <li className={styles.item}>
           <Link 
             className={styles.itemLink} 
-            to="/home/math-operations"
+            to="/math-operations"
           >
             {t('screens.math')}
           </Link>

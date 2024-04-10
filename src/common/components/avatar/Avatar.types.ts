@@ -8,7 +8,7 @@ export type Props = {
 }
 
 export type UserAvatarProps = {
-  source: string
+  source?: string
   avatarName?: string
   small?: boolean
 }

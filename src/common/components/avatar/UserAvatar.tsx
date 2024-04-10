@@ -14,13 +14,15 @@ export const UserAvatar = ({ source, avatarName, small }: UserAvatarProps) => {
           alt="Character Image"
         />
       )}
-      {avatarName && <div className={styles.textWrapper}>
-        <p className={styles.descText}>
-          {t('profile.changeAvatar.youAre')} 
-          {avatarName} 
-          {t('profile.changeAvatar.fromRickMorty')}
-        </p>
-      </div>}
+      {avatarName && 
+        <div className={styles.textWrapper}>
+          <p className={styles.descText}>
+            {t('profile.changeAvatar.youAre')} 
+            {avatarName} 
+            {t('profile.changeAvatar.fromRickMorty')}
+          </p>
+        </div>
+      }
     </div>
   )
 }

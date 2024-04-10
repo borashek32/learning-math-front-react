@@ -17,6 +17,8 @@ import { Equations } from "../../features/math-examples/ui/equations/Equations"
 import { EquationsWithX } from "../../features/math-examples/ui/equations/withX/EquationsWithX"
 import { AppLayout } from '../components/layouts/AppLayout'
 import { AvatarLayout } from '../components/layouts/AvatarLayout'
+import { useAppSelector } from '../hooks/useAppSelector'
+import { selectUser } from '../../features/auth/auth.selectors'
 
 
 export const publicRoutes: RouteObject[] = [
@@ -50,56 +52,58 @@ export const publicRoutes: RouteObject[] = [
   // },
 
   {
-    path: "/home/math-operations",
+    path: "/math-operations",
     element: <MathOperations />
   },
   {
-    path: `/home/math-operations/:mathOperation`,
+    path: `/math-operations/:mathOperation`,
     element: <SummDifference />
   },
   {
-    path: "/home/math-operations/multiplication",
+    path: "/math-operations/multiplication",
     element: <Multiplication />
   },
   {
-    path: "/home/math-operations/multiplication/multiplication-table/:digit",
+    path: "/math-operations/multiplication/multiplication-table/:digit",
     element: <MultiplicationNumber />
   },
   {
-    path: "/home/math-operations/multiplication/multiplication-table/numbers-with-nulls",
+    path: "/math-operations/multiplication/multiplication-table/numbers-with-nulls",
     element: <MultiplicationNulls />
   },
   {
-    path: "/home/math-operations/multiplication/check-knowledge",
+    path: "/math-operations/multiplication/check-knowledge",
     element: <MultiplicationCheck />
   },
   {
-    path: "/home/math-operations/equations",
+    path: "/math-operations/equations",
     element: <Equations />
   },
   {
-    path: "/home/math-operations/equations/with-one-unknown",
+    path: "/math-operations/equations/with-one-unknown",
     element: <EquationsWithX />
   },
 ]
 
 export function PublicRoutes() {
   const location = useLocation()
+  // const user = useAppSelector(selectUser)
+  // console.log(user)
   
-  const main = location.pathname === "/"
-  if (main) {
-    return  <BaseLayout><Main /></BaseLayout>
-  }
+  // const main = location.pathname === "/"
+  // if (main) {
+  //   return  <BaseLayout><Main /></BaseLayout>
+  // }
 
-  const register = location.pathname === "/register"
-  if (register) {
-    return <BaseLayout><Register /></BaseLayout>
-  }
+  // const register = location.pathname === "/register"
+  // if (register) {
+  //   return <BaseLayout><Register /></BaseLayout>
+  // }
   
-  const login = location.pathname === "/login"
-  if (login) {
-    return <BaseLayout><Login /></BaseLayout>
-  }
+  // const login = location.pathname === "/login"
+  // if (login) {
+  //   return <BaseLayout><Login /></BaseLayout>
+  // }
 
   const instructions = location.pathname === "/instructions"
   if (instructions) {

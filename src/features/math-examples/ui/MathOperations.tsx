@@ -11,8 +11,7 @@ export const MathOperations = () => {
 
   return (
     <>
-      {/* <GoTo address='/home' name={t('links.back')} /> */}
-      <GoTo address='/' name={t('links.back')} />
+      <GoTo address='/home' name={t('links.back')} />
       <Header title={t('screens.math')}  />
     
       <ul className={styles.listItems}>
@@ -20,28 +19,28 @@ export const MathOperations = () => {
           <BlueButton 
             name={t('mathOperations.summ')} 
             type={'button'} 
-            path={`/home/math-operations/${mathOperation[0]}`} 
+            path={`/math-operations/${mathOperation[0]}`} 
           />
         </li>
         <li className={styles.item}>
           <BlueButton 
             name={t('mathOperations.diff')} 
             type={'button'} 
-            path={`/home/math-operations/${mathOperation[1]}`} 
+            path={`/math-operations/${mathOperation[1]}`} 
           />
         </li>
         <li className={styles.item}>
           <BlueButton 
             name={t('mathOperations.multiplication')} 
             type={'button'} 
-            path={"/home/math-operations/multiplication"} 
+            path={"/math-operations/multiplication"} 
           />
         </li>
         <li className={styles.item}>
           <BlueButton
             name={t('mathOperations.equations')}
             type={'button'}
-            path={'/home/math-operations/equations'}
+            path={'/math-operations/equations'}
           />
         </li>
       </ul>

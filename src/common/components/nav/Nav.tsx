@@ -10,14 +10,13 @@ import { PATHS } from "../../constants/paths"
 import { selectTotalUserScore } from "../../../features/profile/profile.selectors"
 import { DevideLine } from "../devideLine/DevideLine"
 import { MathOperationsConstants } from "../../constants/MathConstants"
+import { SelectLang } from "../selectLang/SelectLang"
 
 export const Nav = () => {
   const [active, setActive] = useState(false)
   const userEmail = useAppSelector(selectUserEmail)
   const totalUserScore = useAppSelector(selectTotalUserScore)
-  const mathOperation: Array<string> = [MathOperationsConstants.SUMM, MathOperationsConstants.DIFF]
 
-  console.log(userEmail)
   const { t } = useTranslation()
 
   const onClick = () => {
@@ -32,15 +31,16 @@ export const Nav = () => {
       <header className={styles.header}>
         <LogoSmall path={PATHS.HOME} />
         <div className={styles.headerWithUser}>
-          <Link to="/home/profile"
-            onClick={() => setActive(false)}
-          >
-            <p className={styles.userEmail}>{userEmail && userEmail}</p> 
-            <div className={styles.yourScore}>
-              <p className={styles.scoreText}>{t('yourScore.total')}</p>
-              <p className={styles.titleScore}>{totalUserScore && totalUserScore} XP</p>
-            </div> 
-          </Link>
+          {userEmail &&
+            <Link to="/home/profile"
+              onClick={() => setActive(false)}
+            >
+              <p className={styles.userEmail}>{userEmail}</p> 
+              <div className={styles.yourScore}>
+                <p className={styles.scoreText}>{t('yourScore.total')}</p>
+                <p className={styles.titleScore}>{totalUserScore && totalUserScore} XP</p>
+              </div> 
+            </Link>}
 
           <div className={menu} onClick={onClick}>
             <span className={styles.line}></span>
@@ -62,11 +62,13 @@ export const Nav = () => {
                 {t('screens.home')}
               </Link>
             </li>
-            <DevideLine />
+            <li className={styles.item}>
+              <DevideLine />
+            </li>
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
-                to="/home/math-operations"
+                to="/math-operations"
                 onClick={() => setActive(false)}
               >
                 {t('screens.math')}
@@ -77,7 +79,7 @@ export const Nav = () => {
                 <li className={styles.subMenuItem}>
                   <Link 
                     className={styles.subMenuItemLink}
-                    to='/home/math-operations/+'
+                    to='/math-operations/+'
                     onClick={() => setActive(false)}
                   >
                     {t('mathOperations.summ')}
@@ -86,7 +88,7 @@ export const Nav = () => {
                 <li className={styles.subMenuItem}>
                   <Link 
                     className={styles.subMenuItemLink}
-                    to='/home/math-operations/-'
+                    to='/math-operations/-'
                     onClick={() => setActive(false)}
                   >
                     {t('mathOperations.diff')}
@@ -95,7 +97,7 @@ export const Nav = () => {
                 <li className={styles.subMenuItem}>
                   <Link 
                     className={styles.subMenuItemLink}
-                    to="/home/math-operations/multiplication"
+                    to="/math-operations/multiplication"
                     onClick={() => setActive(false)}
                   >
                     {t('mathOperations.multiplication')}
@@ -104,7 +106,7 @@ export const Nav = () => {
                 <li className={styles.subMenuItem}>
                   <Link 
                     className={styles.subMenuItemLink}
-                    to="/home/math-operations/equations"
+                    to="/math-operations/equations"
                     onClick={() => setActive(false)}
                   >
                     {t('mathOperations.equations')}
@@ -115,75 +117,96 @@ export const Nav = () => {
             <li className={styles.item}>
               <DevideLine />
             </li>
-            <li className={styles.item}>
-              <Link 
-                className={styles.itemLink}
-                to="/home/pre-school"
-                onClick={() => setActive(false)}
-              >
-                {t('screens.preSchool')}
-              </Link>
-            </li>
-            <li>
-              <ul className={styles.subMenu}>
-                <li className={styles.subMenuItem}>
+            {userEmail && 
+              <>
+                <li className={styles.item}>
                   <Link 
-                    className={styles.subMenuItemLink}
-                    to='/home/pre-school/numbers'
+                    className={styles.itemLink}
+                    to="/home/pre-school"
                     onClick={() => setActive(false)}
                   >
-                    {t('preSchool.numbers.title')}
+                    {t('screens.preSchool')}
                   </Link>
                 </li>
-              </ul>
-            </li>
-            <li className={styles.item}>
-              <DevideLine />
-            </li>
-            <li className={styles.item}>
-              <Link 
-                className={styles.itemLink}
-                to="/home/school-program"
-                onClick={() => setActive(false)}
-              >
-                {t('screens.schoolProgram')}
-              </Link>
-            </li>
-            <li>
-              <ul className={styles.subMenu}>
-                <li className={styles.subMenuItem}>
+                <li>
+                  <ul className={styles.subMenu}>
+                    <li className={styles.subMenuItem}>
+                      <Link 
+                        className={styles.subMenuItemLink}
+                        to='/home/pre-school/numbers'
+                        onClick={() => setActive(false)}
+                      >
+                        {t('preSchool.numbers.title')}
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li className={styles.item}>
+                  <DevideLine />
+                </li>
+                <li className={styles.item}>
                   <Link 
-                    className={styles.subMenuItemLink}
-                    to="/home/school-program/first-grade"
+                    className={styles.itemLink}
+                    to="/home/school-program"
                     onClick={() => setActive(false)}
                   >
-                    {t('schoolProgram.firstGrade')}
+                    {t('screens.schoolProgram')}
                   </Link>
                 </li>
-                <li className={styles.subMenuItem}>
+                <li>
+                  <ul className={styles.subMenu}>
+                    <li className={styles.subMenuItem}>
+                      <Link 
+                        className={styles.subMenuItemLink}
+                        to="/home/school-program/first-grade"
+                        onClick={() => setActive(false)}
+                      >
+                        {t('schoolProgram.firstGrade')}
+                      </Link>
+                    </li>
+                    <li className={styles.subMenuItem}>
+                      <Link 
+                        className={styles.subMenuItemLink}
+                        to="/home/school-program/second-grade"
+                        onClick={() => setActive(false)}
+                      >
+                        {t('schoolProgram.secondGrade')}
+                      </Link>
+                    </li>
+                    <li className={styles.subMenuItem}>
+                      <Link 
+                        className={styles.subMenuItemLink}
+                        to="/home/school-program/third-grade"
+                        onClick={() => setActive(false)}
+                          >
+                            {t('schoolProgram.thirdGrade')}
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li className={styles.item}>
+                  <DevideLine />
+                </li>
+                <li className={styles.item}>
                   <Link 
-                    className={styles.subMenuItemLink}
-                    to="/home/school-program/second-grade"
+                    className={styles.itemLink} 
+                    to="/home/profile"
                     onClick={() => setActive(false)}
                   >
-                    {t('schoolProgram.secondGrade')}
+                    {t('screens.profile')}
                   </Link>
                 </li>
-                <li className={styles.subMenuItem}>
+                <li className={styles.item}>
                   <Link 
-                    className={styles.subMenuItemLink}
-                    to="/home/school-program/third-grade"
+                    className={styles.itemLink} 
+                    to="/logout"
                     onClick={() => setActive(false)}
                   >
-                    {t('schoolProgram.thirdGrade')}
+                    <DefaultButton type='button' name={t('buttons.logout')} />
                   </Link>
                 </li>
-              </ul>
-            </li>
-            
-            <li className={styles.item}>
-              <DevideLine />
-            </li>
+              </>
+            }
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
@@ -193,25 +216,9 @@ export const Nav = () => {
                 {t('screens.instructions')}
               </Link>
             </li>
-            
             <li className={styles.item}>
-              <Link 
-                className={styles.itemLink} 
-                to="/home/profile"
-                onClick={() => setActive(false)}
-              >
-                {t('screens.profile')}
-              </Link>
-            </li>
-            <li className={styles.item}>
-              <Link 
-                className={styles.itemLink} 
-                to="/logout"
-                onClick={() => setActive(false)}
-              >
-                <DefaultButton type='button' name={t('buttons.logout')} />
-              </Link>
-            </li>
+              <SelectLang />  
+            </li> 
           </ul>
         </div>
       }

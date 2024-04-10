@@ -34,10 +34,11 @@ import { SecondGrade } from "../../features/school-program/ui/second-grade/Secon
 import { ThirdGrade } from "../../features/school-program/ui/third-grade/ThirdGrade"
 import { PreSchool } from "../../features/pre-school/ui/PreSchool"
 import { Numbers } from "../../features/pre-school/ui/numbers/Numbers"
+import { Main } from "../../features/main/ui/Main"
 
-const renderChangeAvatar = (): React.ReactNode => {
-  return <AvatarLayout><ChangeAvatar /></AvatarLayout>;
-}
+// const renderChangeAvatar = (): React.ReactNode => {
+//   return <AvatarLayout><ChangeAvatar /></AvatarLayout>;
+// }
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -70,7 +71,7 @@ export const privateRoutes: RouteObject[] = [
   },
   {
     path: "/home/profile/choose-avatar",
-    element: renderChangeAvatar()
+    element: <ChangeAvatar />
   },
   {
     path: "/home/school-program",
@@ -119,13 +120,13 @@ export function PrivateRoutes() {
     }
   }, [data, isLoading, dispatch, scoreData])
 
-  if (isLoading) {
-    return <AppLayout><Loader /></AppLayout>
-  }
+  // if (isLoading) {
+  //   return <AppLayout><Loader /></AppLayout>
+  // }
 
-  if (!data) {
-    return <BaseLayout><Login /></BaseLayout>
-  } 
+  // if (!data) {
+  //   return <BaseLayout><Login /></BaseLayout>
+  // } 
 
   if (
     (data && location.pathname === "/") || 
@@ -140,5 +141,9 @@ export function PrivateRoutes() {
     return  <AvatarLayout><ChangeAvatar /></AvatarLayout>
   }
   
-  return <AppLayout><Outlet /></AppLayout>
+  if (data) {
+    return <AppLayout><Outlet /></AppLayout>
+  }
+
+  return <BaseLayout><Main /></BaseLayout>
 }
