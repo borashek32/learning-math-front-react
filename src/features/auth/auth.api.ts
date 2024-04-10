@@ -11,6 +11,7 @@ import {
   LogoutType,
 } from './auth.api.types'
 import { algByDecodingToken } from '../../common/utils/string/algByDecodingToken'
+import { setUserInfo } from './auth.slice'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
@@ -37,24 +38,33 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
   api,
   extraOptions
 ) => {
-  const token = localStorage.getItem('accessToken')
+  // const token = localStorage.getItem('accessToken')
 
-  if (token) {
-    const { isExpirationTimeLongerThanCurrent } = algByDecodingToken(token)
-    // токен
-    if (!isExpirationTimeLongerThanCurrent) {
-      const refreshResult = await baseQuery({ method: 'GET', url: `${baseURL}refresh` }, api, extraOptions)
-      if (
-        refreshResult.data &&
-        typeof refreshResult.data === 'object' &&
-        'accessToken' in refreshResult.data
-      ) {
-        localStorage.setItem('accessToken', refreshResult.data.accessToken as string)
-      }
-    }
-  }
+  // if (token) {
+  //   const { isExpirationTimeLongerThanCurrent } = algByDecodingToken(token)
+  //   // токен
+  //   if (!isExpirationTimeLongerThanCurrent) {
+  //     const refreshResult = await baseQuery({ method: 'GET', url: `${baseURL}refresh` }, api, extraOptions)
+  //     if (
+  //       refreshResult.data &&
+  //       typeof refreshResult.data === 'object' &&
+  //       'accessToken' in refreshResult.data
+  //     ) {
+  //       localStorage.setItem('accessToken', refreshResult.data.accessToken as string)
+  //     }
+  //   }
+  // }
 
   let result = await baseQuery(args, api, extraOptions)
+  // if (result.error && result.error.status === 401) {
+  //   const refreshResult = await baseQuery({ method: 'GET', url: `${baseURL}refresh` }, api, extraOptions)
+  //   if (refreshResult.data) {
+  //     console.log(refreshResult)
+  //     result = await baseQuery(args, api, extraOptions)
+  //   } else {
+      
+  //   }
+  // }
 
   if (
     (api.endpoint === 'login' || api.endpoint === 'refresh') &&
@@ -83,7 +93,7 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: baseQuery,
+  baseQuery: baseQueryWithReauth,
   tagTypes: ['me'],
   endpoints: build => {
     return {
@@ -155,6 +165,7 @@ export const authApi = createApi({
       }),
       me: build.query<UserType | null, void>({
         query: () => {
+          console.log('me')
           return {
             method: 'GET',
             url: 'me',

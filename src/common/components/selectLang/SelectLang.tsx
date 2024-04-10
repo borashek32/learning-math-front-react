@@ -8,22 +8,16 @@ import { selectAppLang } from '../../../app/app.selectors'
 
 export const SelectLang = () => {
   const { t, i18n } = useTranslation('translation')
-  const [lang, setLang] = useState<string>('en')
   const appLang = useAppSelector(selectAppLang)
   const dispatch = useDispatch()
 
   const changeLang = (lang: string) => {
-    console.log(lang)
-    i18n.changeLanguage(lang)
-    // setLang(lang)
     dispatch(setAppLang(lang))
   }
-  console.log(lang, appLang)
 
-  // useEffect(() => {
-  //   console.log('useEff')
-  //   dispatch(setAppLang(lang))
-  // }, [lang])
+  useEffect(() => {
+    i18n.changeLanguage(appLang)
+  }, [appLang])
 
   return (
     <div className={styles.selectWrapper}>
@@ -31,7 +25,7 @@ export const SelectLang = () => {
         <p className={styles.change}>{t("changeLang.select")}</p>
         <select 
           className={styles.select} 
-          value={appLang} 
+          value={appLang}
           onChange={(e) => changeLang(e.target.value)}
         >
           <option value='en'>

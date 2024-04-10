@@ -94,44 +94,44 @@ export const privateRoutes: RouteObject[] = [
 ]
 
 export function PrivateRoutes() {
-  const location = useLocation()
-  const { data, isLoading } = useMeQuery()
-  const { data: scoreData } = useGetTotalUserScoreQuery(data?._id)
-  const dispatch = useDispatch()
-
-  console.log(data)
+  const location = useLocation();
+  const { data, isLoading } = useMeQuery();
+  const { data: scoreData } = useGetTotalUserScoreQuery(data?._id);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isLoading && data) {
-      dispatch(setUserInfo(data))
+    if (data) {
+      dispatch(setUserInfo(data));
       if (scoreData && scoreData.score !== undefined) {
-        dispatch(setTotalUserScore(scoreData.score))
+        dispatch(setTotalUserScore(scoreData.score));
       }
-    } else if (!isLoading && !data) {
-      dispatch(removeUserInfo())
     }
-  }, [data, isLoading, dispatch, scoreData])
+  }, [data, scoreData, dispatch]);
 
   if (isLoading) {
-    return <AppLayout><Loader /></AppLayout>
+    return <AppLayout><Loader /></AppLayout>;
   }
 
   if (!data) {
-    return <BaseLayout><Main /></BaseLayout>
-  } 
+    return <BaseLayout><Main /></BaseLayout>;
+  }
 
   if (
-    (data && location.pathname === "/") || 
+    (data && location.pathname === "/") ||
     (data && location.pathname === "/login") ||
     (data && location.pathname === "/register")
   ) {
-    return <AppLayout><Home /></AppLayout>
+    return <AppLayout><Home /></AppLayout>;
   }
 
-  const isChooseAvatarRoute = location.pathname === "/home/profile/choose-avatar"
+  const isChooseAvatarRoute = location.pathname === "/home/profile/choose-avatar";
   if (isChooseAvatarRoute) {
-    return  <AvatarLayout><ChangeAvatar /></AvatarLayout>
+    return <AvatarLayout><ChangeAvatar /></AvatarLayout>;
   }
-  
-  return <AppLayout><Outlet /></AppLayout>
+
+  return (
+    <AppLayout key={location.pathname}>
+      <Outlet />
+    </AppLayout>
+  );
 }

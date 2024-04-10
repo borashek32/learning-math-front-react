@@ -8,8 +8,7 @@ export const PreSchool = () => {
   const { t } = useTranslation()
   return (
     <>
-      {/* <GoTo address='/home' name={t('links.back')} /> */}
-      <GoTo address='/' name={t('links.back')} />
+      <GoTo address='/home' name={t('links.back')} />
       <Header title={t('screens.preSchool')}  />
     
       <ul className={styles.listItems}>
