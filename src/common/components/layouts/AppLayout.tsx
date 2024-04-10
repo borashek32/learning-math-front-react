@@ -11,6 +11,7 @@ export const AppLayout = ({ children }: Props) => {
       <div className={styles.app}>
         <Nav />
         <div className={styles.appContent}>
+          {/* <Logo /> */}
           { children }
         </div>
       </div>

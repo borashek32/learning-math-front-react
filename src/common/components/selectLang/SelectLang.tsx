@@ -13,13 +13,17 @@ export const SelectLang = () => {
   const dispatch = useDispatch()
 
   const changeLang = (lang: string) => {
+    console.log(lang)
     i18n.changeLanguage(lang)
-    setLang(lang)
-  }
-
-  useEffect(() => {
+    // setLang(lang)
     dispatch(setAppLang(lang))
-  }, [lang])
+  }
+  console.log(lang, appLang)
+
+  // useEffect(() => {
+  //   console.log('useEff')
+  //   dispatch(setAppLang(lang))
+  // }, [lang])
 
   return (
     <div className={styles.selectWrapper}>

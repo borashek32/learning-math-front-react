@@ -1,6 +1,5 @@
-import { useLocation, Outlet, RouteObject, Route } from "react-router-dom"
+import { useLocation, Outlet, RouteObject } from "react-router-dom"
 import { Home } from '../../features/home/ui/Home'
-import { MathOperations } from '../../features/math-examples/ui/MathOperations'
 import { Users } from '../../features/test/Users'
 import { Logout } from '../../features/auth/ui/Logout'
 import { Loader } from "../components/loaders/CircularLoader"
@@ -9,22 +8,12 @@ import { Profile } from "../../features/profile/ui/Profile"
 import { useMeQuery } from "../../features/auth/auth.api"
 import { AppLayout } from "../components/layouts/AppLayout"
 import { YourScore } from "../../features/profile/ui/YourScore"
-// import { MultiplicationTable } from "../../features/math-operations/ui/multiplication/multiplication-table/MultiplicationTable"
-import { MultiplicationNumber } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNumber"
-import { Multiplication } from "../../features/math-examples/ui/multiplication/Multiplication"
 import { ChangeEmail } from "../../features/auth/ui/ChangeEmail"
 import { useDispatch } from "react-redux"
-import { ReactNode, useEffect } from "react"
+import { useEffect } from "react"
 import { removeUserInfo, setUserInfo } from "../../features/auth/auth.slice"
-import { SummDifference } from "../../features/math-examples/ui/summ-difference/SummDifference"
-import { MultiplicationCheck } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationCheck"
-import { BaseLayout } from "../components/layouts/BaseLayout"
-import { Login } from "../../features/auth/ui/Login"
 import { useGetTotalUserScoreQuery } from "../../features/profile/profile.api"
 import { setTotalUserScore } from "../../features/profile/profile.slice"
-import { MultiplicationNulls } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNulls"
-import { Equations } from "../../features/math-examples/ui/equations/Equations"
-import { EquationsWithX } from "../../features/math-examples/ui/equations/withX/EquationsWithX"
 import { ChangeAvatar } from "../../features/profile/ui/ChangeAvatar"
 import { AvatarLayout } from "../components/layouts/AvatarLayout"
 import { Instructions } from "../../features/profile/ui/Instructions"
@@ -35,6 +24,7 @@ import { ThirdGrade } from "../../features/school-program/ui/third-grade/ThirdGr
 import { PreSchool } from "../../features/pre-school/ui/PreSchool"
 import { Numbers } from "../../features/pre-school/ui/numbers/Numbers"
 import { Main } from "../../features/main/ui/Main"
+import { BaseLayout } from "../components/layouts/BaseLayout"
 
 // const renderChangeAvatar = (): React.ReactNode => {
 //   return <AvatarLayout><ChangeAvatar /></AvatarLayout>;
@@ -109,6 +99,8 @@ export function PrivateRoutes() {
   const { data: scoreData } = useGetTotalUserScoreQuery(data?._id)
   const dispatch = useDispatch()
 
+  console.log(data)
+
   useEffect(() => {
     if (!isLoading && data) {
       dispatch(setUserInfo(data))
@@ -120,13 +112,13 @@ export function PrivateRoutes() {
     }
   }, [data, isLoading, dispatch, scoreData])
 
-  // if (isLoading) {
-  //   return <AppLayout><Loader /></AppLayout>
-  // }
+  if (isLoading) {
+    return <AppLayout><Loader /></AppLayout>
+  }
 
-  // if (!data) {
-  //   return <BaseLayout><Login /></BaseLayout>
-  // } 
+  if (!data) {
+    return <BaseLayout><Main /></BaseLayout>
+  } 
 
   if (
     (data && location.pathname === "/") || 
@@ -141,9 +133,5 @@ export function PrivateRoutes() {
     return  <AvatarLayout><ChangeAvatar /></AvatarLayout>
   }
   
-  if (data) {
-    return <AppLayout><Outlet /></AppLayout>
-  }
-
-  return <BaseLayout><Main /></BaseLayout>
+  return <AppLayout><Outlet /></AppLayout>
 }

@@ -14,7 +14,7 @@ export const Main = () => {
       <br />
       <Link to="/login" className={styles.labelClass}>{t('screens.login')}</Link>
       <br />
-      <Link className={styles.labelClass} to="/home/math-operations">{t('screens.math')}</Link>
+      <Link className={styles.labelClass} to="/math-operations">{t('screens.math')}</Link>
       <br />
       <Link to="/instructions" className={styles.labelClass}>{t('screens.instructions')}</Link>
     </>

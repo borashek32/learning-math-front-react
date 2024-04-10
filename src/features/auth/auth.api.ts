@@ -89,6 +89,7 @@ export const authApi = createApi({
     return {
       login: build.mutation<RegistedUserType, RegisterType>({
         query: ({ email, password, rememberMe }: RegisterType) => {
+          console.log(email, password)
           return {
             method: 'POST',
             url: 'login',

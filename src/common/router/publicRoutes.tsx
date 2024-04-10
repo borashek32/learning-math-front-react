@@ -5,7 +5,6 @@ import { Verify } from '../../features/auth/ui/Verify'
 import { ForgotPassword } from '../../features/auth/ui/ForgotPassword'
 import { CreateNewPassword } from '../../features/auth/ui/CreateNewPassword'
 import { Outlet, RouteObject, useLocation } from 'react-router-dom'
-import { BaseLayout } from '../components/layouts/BaseLayout'
 import { Docs } from '../../features/main/ui/docs/Docs'
 import { MathOperations } from '../../features/math-examples/ui/MathOperations'
 import { MultiplicationNumber } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNumber"
@@ -19,6 +18,7 @@ import { AppLayout } from '../components/layouts/AppLayout'
 import { AvatarLayout } from '../components/layouts/AvatarLayout'
 import { useAppSelector } from '../hooks/useAppSelector'
 import { selectUser } from '../../features/auth/auth.selectors'
+import { BaseLayout } from '../components/layouts/BaseLayout'
 
 
 export const publicRoutes: RouteObject[] = [
@@ -90,10 +90,10 @@ export function PublicRoutes() {
   // const user = useAppSelector(selectUser)
   // console.log(user)
   
-  // const main = location.pathname === "/"
-  // if (main) {
-  //   return  <BaseLayout><Main /></BaseLayout>
-  // }
+  const main = location.pathname === "/"
+  if (main) {
+    return  <BaseLayout><Main /></BaseLayout>
+  }
 
   // const register = location.pathname === "/register"
   // if (register) {
