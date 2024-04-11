@@ -45,5 +45,4 @@ export type NewEmailType = {
 
 export type LogoutType = {
   accessToken: string | null
-  refreshToken: string | null
 }
