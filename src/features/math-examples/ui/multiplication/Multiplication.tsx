@@ -14,17 +14,17 @@ export const Multiplication = () => {
 
   return (
     <>
-      <GoTo address='/home/math-operations' name={t('links.back')} />
+      <GoTo address='/math-operations' name={t('links.back')} />
       <Header title={t('mathOperations.multTable')} />
 
       <ButtonsLayout>
         <BlueButton
           name={t('mathOperations.multCheck')}
-          path={'/home/math-operations/multiplication/check-knowledge'}
+          path={'/math-operations/multiplication/check-knowledge'}
         />
         <BlueButton
           name={t('mathOperations.multNulls')}
-          path={'/home/math-operations/multiplication/multiplication-table/numbers-with-nulls'}
+          path={'/math-operations/multiplication/multiplication-table/numbers-with-nulls'}
         />
         <AppText desc={t('mathOperations.common.choose')} link={false} />
         <MathExampleLayout>
@@ -32,7 +32,7 @@ export const Multiplication = () => {
             <BlueButton 
               key={digit}
               name={digit.toString()}
-              path={`/home/math-operations/multiplication/multiplication-table/${digit}`}
+              path={`/math-operations/multiplication/multiplication-table/${digit}`}
             />
           ))}
         </MathExampleLayout>

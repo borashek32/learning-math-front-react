@@ -95,7 +95,7 @@ export const privateRoutes: RouteObject[] = [
 
 export function PrivateRoutes() {
   const location = useLocation();
-  const { data, isLoading } = useMeQuery();
+  const { data, isLoading, error } = useMeQuery();
   const { data: scoreData } = useGetTotalUserScoreQuery(data?._id);
   const dispatch = useDispatch()
 
@@ -112,7 +112,7 @@ export function PrivateRoutes() {
     return <AppLayout><Loader /></AppLayout>;
   }
 
-  if (!data) {
+  if (error) {
     return <BaseLayout><Main /></BaseLayout>;
   }
 
