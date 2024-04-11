@@ -4,14 +4,17 @@ import styles from './../MathOperations.module.sass'
 import { useTranslation } from 'react-i18next'
 import { BlueButton } from '../../../common/components/buttons/BlueButton'
 import { MathOperationsConstants } from '../../../common/constants/MathConstants'
+import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { selectUserId } from '../../auth/auth.selectors'
 
 export const MathOperations = () => {
   const { t } = useTranslation()
   const mathOperation: Array<string> = [MathOperationsConstants.SUMM, MathOperationsConstants.DIFF]
+  const userId = useAppSelector(selectUserId)
 
   return (
     <>
-      <GoTo address='/home' name={t('links.back')} />
+      <GoTo address={userId ? '/home' : '/'} name={t('links.back')} />
       <Header title={t('screens.math')}  />
     
       <ul className={styles.listItems}>
