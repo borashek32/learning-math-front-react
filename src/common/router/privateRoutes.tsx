@@ -25,6 +25,8 @@ import { PreSchool } from "../../features/pre-school/ui/PreSchool"
 import { Numbers } from "../../features/pre-school/ui/numbers/Numbers"
 import { Main } from "../../features/main/ui/Main"
 import { BaseLayout } from "../components/layouts/BaseLayout"
+import { useAppSelector } from "../hooks/useAppSelector"
+import { selectUser } from "../../features/auth/auth.selectors"
 
 // const renderChangeAvatar = (): React.ReactNode => {
 //   return <AvatarLayout><ChangeAvatar /></AvatarLayout>;
@@ -99,6 +101,8 @@ export function PrivateRoutes() {
   const { data: scoreData } = useGetTotalUserScoreQuery(data?._id);
   const dispatch = useDispatch()
 
+  const user = useAppSelector(selectUser)
+
   useEffect(() => {
     if (data) {
       dispatch(setUserInfo(data));
@@ -112,7 +116,7 @@ export function PrivateRoutes() {
     return <AppLayout><Loader /></AppLayout>;
   }
 
-  if (error) {
+  if (!user) {
     return <BaseLayout><Main /></BaseLayout>;
   }
 

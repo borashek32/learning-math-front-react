@@ -12,6 +12,7 @@ import {
 } from './auth.api.types'
 import { algByDecodingToken } from '../../common/utils/string/algByDecodingToken'
 import { removeUserInfo, setUserInfo } from './auth.slice'
+import { useNavigate } from 'react-router-dom'
 
 type RefreshDataType = {
   refreshToken: string
