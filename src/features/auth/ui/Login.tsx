@@ -63,7 +63,6 @@ export const Login = () => {
         reset()
         if (response.user) {
           dispatch(setUserInfo(response.user))
-          console.log(response.user)
           navigate('/home')
         }
       })
