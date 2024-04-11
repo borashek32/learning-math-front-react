@@ -9,12 +9,12 @@ export const Equations = () => {
 
   return (
       <>
-      <GoTo address='/home/math-operations' name={t('links.back')} />
+      <GoTo address='/math-operations' name={t('links.back')} />
       <Header title={t('mathOperations.equations')} />
         <BlueButton
           type={'button'}
           name={t('mathOperations.equationsWithX')}
-          path={"/home/math-operations/equations/with-one-unknown"}
+          path={"/math-operations/equations/with-one-unknown"}
         />
         <BlueButton
           type={'button'}
