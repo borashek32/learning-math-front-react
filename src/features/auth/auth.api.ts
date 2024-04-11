@@ -11,7 +11,13 @@ import {
   LogoutType,
 } from './auth.api.types'
 import { algByDecodingToken } from '../../common/utils/string/algByDecodingToken'
-import { setUserInfo } from './auth.slice'
+import { removeUserInfo, setUserInfo } from './auth.slice'
+
+type RefreshDataType = {
+  refreshToken: string
+  accessToken: string
+  user: UserType
+}
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
@@ -38,50 +44,45 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
   api,
   extraOptions
 ) => {
-  // const token = localStorage.getItem('accessToken')
-
-  // if (token) {
-  //   const { isExpirationTimeLongerThanCurrent } = algByDecodingToken(token)
-  //   // токен
-  //   if (!isExpirationTimeLongerThanCurrent) {
-  //     const refreshResult = await baseQuery({ method: 'GET', url: `${baseURL}refresh` }, api, extraOptions)
-  //     if (
-  //       refreshResult.data &&
-  //       typeof refreshResult.data === 'object' &&
-  //       'accessToken' in refreshResult.data
-  //     ) {
-  //       localStorage.setItem('accessToken', refreshResult.data.accessToken as string)
-  //     }
-  //   }
-  // }
-
   let result = await baseQuery(args, api, extraOptions)
-  // if (result.error && result.error.status === 401) {
-  //   const refreshResult = await baseQuery({ method: 'GET', url: `${baseURL}refresh` }, api, extraOptions)
-  //   if (refreshResult.data) {
-  //     console.log(refreshResult)
-  //     result = await baseQuery(args, api, extraOptions)
-  //   } else {
+
+  if (result.error && result.error.status === 401) {
+    const accessToken = localStorage.getItem('accessToken')
+    
+    if (!accessToken) {
+      throw new Error('Token not found')
+    }
+
+    const { isExpirationTimeLongerThanCurrent } = algByDecodingToken(accessToken)
+
+    if (!isExpirationTimeLongerThanCurrent) {
+      const refreshResult = await baseQuery({ 
+        method: 'GET', 
+        url: `${baseURL}refresh` 
+      }, api, extraOptions)
       
-  //   }
-  // }
+      if (
+        refreshResult.data &&
+        typeof refreshResult.data === 'object' &&
+        'accessToken' in refreshResult.data
+      ) {
+        let refreshData = refreshResult.data as RefreshDataType
+        api.dispatch(setUserInfo(refreshData.user))
+        localStorage.setItem('accessToken', refreshResult.data.accessToken as string)
+        result = await baseQuery(args, api, extraOptions)
+      } else {
+        api.dispatch(removeUserInfo())
+      }
+    }
+  }
 
   if (
-    (api.endpoint === 'login' || api.endpoint === 'refresh') &&
+    api.endpoint === 'login' &&
     result.data &&
     typeof result.data === 'object' &&
     'accessToken' in result.data
   ) {
     localStorage.setItem('accessToken', result.data.accessToken as string)
-  }
-
-  if (
-    api.endpoint === 'me' && 
-    result.data &&
-    typeof result.data === 'object' &&
-    'accessToken' in result.data
-  ) {
-    localStorage.getItem('accessToken')
   }
 
   if (api.endpoint === 'logout') {
@@ -133,7 +134,6 @@ export const authApi = createApi({
             method: 'POST',
             url: 'logout',
             body: {
-              refreshToken: data.refreshToken,
               accessToken: data.accessToken
             }
           }
@@ -150,7 +150,7 @@ export const authApi = createApi({
             },
           }
         },
-      }),
+      }),      
       saveNewPassword: build.mutation<any, PasswordRecoveryType>({
         query: ({ email, password }: PasswordRecoveryType) => {
           return {
@@ -165,7 +165,6 @@ export const authApi = createApi({
       }),
       me: build.query<UserType | null, void>({
         query: () => {
-          console.log('me')
           return {
             method: 'GET',
             url: 'me',

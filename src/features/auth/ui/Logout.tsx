@@ -21,10 +21,9 @@ export const Logout = () => {
   const handleOpenModalWithError = () => setModalWithErrorOpen(false)
 
   const logoutHandler = async () => {
-    const refreshToken = await localStorage.getItem('refreshToken')
     const accessToken = await localStorage.getItem('accessToken')
     
-    logout({ refreshToken, accessToken })
+    logout({ accessToken })
       .unwrap()
       .then(() => {
         navigate('/login')

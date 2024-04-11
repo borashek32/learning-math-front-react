@@ -97,7 +97,7 @@ export function PrivateRoutes() {
   const location = useLocation();
   const { data, isLoading } = useMeQuery();
   const { data: scoreData } = useGetTotalUserScoreQuery(data?._id);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (data) {
