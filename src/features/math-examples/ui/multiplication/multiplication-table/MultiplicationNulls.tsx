@@ -135,7 +135,7 @@ export const MultiplicationNulls = () => {
         />
       )}
 
-      <GoTo address='/home/math-operations/multiplication' name={t('links.back')} />
+      <GoTo address='/math-operations/multiplication' name={t('links.back')} />
       <Header title={t('mathOperations.multNulls')} />
       {/* {serverError && <Error error={serverError} />} */}
       <MathExampleLayout>
