@@ -1,5 +1,5 @@
 export const MathOperationsConstants = {
-  SUMM: '+',
+  SUM: '+',
   DIFF: '-',
   MULTIPLY: '*',
   DIVIDE: ':'

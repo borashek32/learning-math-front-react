@@ -78,9 +78,7 @@ export const Login = () => {
     <>
       {isLoading && <Loader />}
       {serverError && 
-        <div className={styles.errorWrapper}>
-          <Error error={serverError} />
-        </div>
+        <Error error={serverError} />
       } 
       <GoTo address="/" name={t('links.back')} />
       <FormContainer serverError={serverError}>

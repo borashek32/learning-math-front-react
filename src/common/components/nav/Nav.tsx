@@ -8,7 +8,7 @@ import { useAppSelector } from "../../hooks/useAppSelector"
 import { selectUserEmail } from "../../../features/auth/auth.selectors"
 import { PATHS } from "../../constants/paths"
 import { selectTotalUserScore } from "../../../features/profile/profile.selectors"
-import { DevideLine } from "../devideLine/DevideLine"
+import { DivideLine } from "../divideLine/DivideLine"
 import { MathOperationsConstants } from "../../constants/MathConstants"
 import { SelectLang } from "../selectLang/SelectLang"
 
@@ -40,7 +40,8 @@ export const Nav = () => {
                 <p className={styles.scoreText}>{t('yourScore.total')}</p>
                 <p className={styles.titleScore}>{totalUserScore && totalUserScore} XP</p>
               </div> 
-            </Link>}
+            </Link>
+          }
 
           <div className={menu} onClick={onClick}>
             <span className={styles.line}></span>
@@ -63,7 +64,7 @@ export const Nav = () => {
               </Link>
             </li>
             <li className={styles.item}>
-              <DevideLine />
+              <DivideLine />
             </li>
             <li className={styles.item}>
               <Link 
@@ -82,10 +83,10 @@ export const Nav = () => {
                     to='/math-operations/+'
                     onClick={() => setActive(false)}
                   >
-                    {t('mathOperations.summ')}
+                    {t('mathOperations.sum')}
                   </Link>
                 </li>
-                <li className={styles.subMenuItem}>
+                {/* <li className={styles.subMenuItem}>
                   <Link 
                     className={styles.subMenuItemLink}
                     to='/math-operations/-'
@@ -111,13 +112,13 @@ export const Nav = () => {
                   >
                     {t('mathOperations.equations')}
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </li>
             <li className={styles.item}>
-              <DevideLine />
+              <DivideLine />
             </li>
-            {userEmail && 
+            {/* {userEmail && 
               <>
                 <li className={styles.item}>
                   <Link 
@@ -142,7 +143,7 @@ export const Nav = () => {
                   </ul>
                 </li>
                 <li className={styles.item}>
-                  <DevideLine />
+                  <DivideLine />
                 </li>
                 <li className={styles.item}>
                   <Link 
@@ -185,7 +186,7 @@ export const Nav = () => {
                   </ul>
                 </li>
                 <li className={styles.item}>
-                  <DevideLine />
+                  <DivideLine />
                 </li>
                 <li className={styles.item}>
                   <Link 
@@ -206,7 +207,7 @@ export const Nav = () => {
                   </Link>
                 </li>
               </>
-            }
+            } */}
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}

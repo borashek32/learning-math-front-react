@@ -4,10 +4,10 @@ export const getCheckMathOperation = (mathOperation: string) => {
   let checkMathOperation: string
 
   if (mathOperation === MathOperationsConstants.DIFF) {
-    checkMathOperation = MathOperationsConstants.SUMM
+    checkMathOperation = MathOperationsConstants.SUM
 
     return checkMathOperation
-  } else if (mathOperation === MathOperationsConstants.SUMM) {
+  } else if (mathOperation === MathOperationsConstants.SUM) {
     checkMathOperation = MathOperationsConstants.DIFF
 
     return checkMathOperation

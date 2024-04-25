@@ -25,10 +25,8 @@ import { PreSchool } from "../../features/pre-school/ui/PreSchool"
 import { Numbers } from "../../features/pre-school/ui/numbers/Numbers"
 import { Main } from "../../features/main/ui/Main"
 import { BaseLayout } from "../components/layouts/BaseLayout"
-
-// const renderChangeAvatar = (): React.ReactNode => {
-//   return <AvatarLayout><ChangeAvatar /></AvatarLayout>;
-// }
+import { MathOperations } from "../../features/math-examples/ui/MathOperations"
+import { SumDifference } from "../../features/math-examples/ui/sum-difference/SumDifference"
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -90,30 +88,43 @@ export const privateRoutes: RouteObject[] = [
   {
     path: "users",
     element: <Users />
-  }
+  },
+
+
+  {
+    path: "/home/math-operations",
+    element: <MathOperations />
+  },
+  {
+    path: `/home/math-operations/:mathOperation`,
+    element: <SumDifference />
+  },
 ]
 
 export function PrivateRoutes() {
-  const location = useLocation();
-  const { data, isLoading } = useMeQuery();
-  const { data: scoreData } = useGetTotalUserScoreQuery(data?._id);
+  const location = useLocation()
+  const { data, isLoading } = useMeQuery()
+  const { data: scoreData } = useGetTotalUserScoreQuery(data?._id)
   const dispatch = useDispatch()
+
+  console.log('private', data)
 
   useEffect(() => {
     if (data) {
-      dispatch(setUserInfo(data));
+      dispatch(setUserInfo(data))
       if (scoreData && scoreData.score !== undefined) {
-        dispatch(setTotalUserScore(scoreData.score));
+        console.log('score private')
+        dispatch(setTotalUserScore(scoreData.score))
       }
     }
-  }, [data, scoreData, dispatch]);
+  }, [data, scoreData, dispatch])
 
   if (isLoading) {
-    return <AppLayout><Loader /></AppLayout>;
+    return <AppLayout><Loader /></AppLayout>
   }
 
   if (!data) {
-    return <BaseLayout><Main /></BaseLayout>;
+    return <BaseLayout><Main /></BaseLayout>
   }
 
   if (
@@ -121,17 +132,16 @@ export function PrivateRoutes() {
     (data && location.pathname === "/login") ||
     (data && location.pathname === "/register")
   ) {
-    return <AppLayout><Home /></AppLayout>;
+    return <AppLayout><Home /></AppLayout>
   }
 
-  const isChooseAvatarRoute = location.pathname === "/home/profile/choose-avatar";
-  if (isChooseAvatarRoute) {
-    return <AvatarLayout><ChangeAvatar /></AvatarLayout>;
+  if (location.pathname === "/home/profile/choose-avatar") {
+    return <AvatarLayout><ChangeAvatar /></AvatarLayout>
   }
 
   return (
-    <AppLayout key={location.pathname}>
+    <AppLayout user={data} key={location.pathname}>
       <Outlet />
     </AppLayout>
-  );
+  )
 }

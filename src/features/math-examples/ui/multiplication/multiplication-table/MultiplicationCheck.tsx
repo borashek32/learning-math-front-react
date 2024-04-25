@@ -30,7 +30,7 @@ export const MultiplicationCheck = () => {
   const [score, setScore] = useState(0)
   const [answer, setAnswer] = useState<string>('')
   const [serverError, setServerError] = useState('')
-  const [rightWrong, setRightWrong] = useState<AnswerType>(null)
+  const [rightWrong, setRightWrong] = useState<AnswerType>(1)
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
 
@@ -72,11 +72,11 @@ export const MultiplicationCheck = () => {
 
     if (answerToNumber === secondMultiplier) {
       setScore(score + 1)
-      setRightWrong('right')
+      setRightWrong(1)
       data = { ...data, score: 1 }
     } else {
       setScore(score - 1)
-      setRightWrong('wrong')
+      setRightWrong(-1)
       data = { ...data, score: -1 }
     }
 
@@ -97,10 +97,10 @@ export const MultiplicationCheck = () => {
     setOpen(true)
     if (answerToNumber === secondMultiplier) {
       setScore(score + 1)
-      setRightWrong('right')
+      setRightWrong(1)
     } else {
       setScore(score - 1)
-      setRightWrong('wrong')
+      setRightWrong(-1)
     }
   }
 
@@ -125,15 +125,15 @@ export const MultiplicationCheck = () => {
       {open && (
         <Modal
           text={
-            rightWrong === 'right' 
+            rightWrong === 1
               ? t('modal.checkMathOperationSuccess') 
               : t('modal.checkMathOperationFail')
             }
           open={open}
           outlinedButton={false}
           buttonName={t('modal.button')}
-          buttonCallback={rightWrong === 'right' ? onPressPlayMore : onPressTryAgain}
-          color={rightWrong === 'right' ? 'blue' : 'red'}
+          buttonCallback={rightWrong === 1 ? onPressPlayMore : onPressTryAgain}
+          color={rightWrong === 1 ? 'blue' : 'red'}
         />
       )}
 

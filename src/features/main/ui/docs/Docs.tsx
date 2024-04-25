@@ -2,7 +2,7 @@ import { GoTo } from '../../../../common/components/goTo/GoTo'
 import { Header } from '../../../../common/components/header/Header'
 import { useTranslation } from 'react-i18next'
 import styles from './Docs.module.sass'
-import { DevideLine } from '../../../../common/components/devideLine/DevideLine'
+import { DivideLine } from '../../../../common/components/divideLine/DivideLine'
 import { Link } from 'react-scroll'
 
 export const Docs = () => {
@@ -110,7 +110,7 @@ export const Docs = () => {
           </Link>
         </li>
       </ul>
-      <DevideLine />
+      <DivideLine />
       <div className={styles.descWrapper} id="withoutRegister">
         <h2 className={styles.itemLink}>
           {t('instructions.withoutRegister.title')}

@@ -20,7 +20,7 @@ export const checkMathOperation = ({
 }: Props): boolean => {
 
   switch (operation) {
-    case MathOperationsConstants.SUMM:
+    case MathOperationsConstants.SUM:
       if (
         ((firstOperand && secondOperand) && 
         (firstOperand + secondOperand === answer)) ||

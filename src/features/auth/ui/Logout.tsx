@@ -26,9 +26,10 @@ export const Logout = () => {
     logout({ accessToken })
       .unwrap()
       .then(() => {
-        navigate('/login')
         setOpen(false)
+        console.log('logout')
         dispatch(removeUserInfo())
+        navigate('/')
       })
       .catch(e => {
         if (e) {

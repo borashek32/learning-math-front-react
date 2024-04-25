@@ -8,10 +8,7 @@ interface UserInfoState {
 
 const userInfoSlice = createSlice({
   name: 'userInfo',
-  initialState: <UserInfoState>{ 
-    user: null,
-    isLoggedIn: false
-   },
+  initialState: {} as UserInfoState,
   reducers: {
     setUserInfo(state, action: PayloadAction<UserType>) {
       state.user = action.payload
@@ -20,6 +17,7 @@ const userInfoSlice = createSlice({
     removeUserInfo(state) {
       state.user = null
       state.isLoggedIn = false
+      console.log(state.user)
     }
   },
 })
