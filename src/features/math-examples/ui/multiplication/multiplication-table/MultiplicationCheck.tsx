@@ -137,7 +137,7 @@ export const MultiplicationCheck = () => {
         />
       )}
 
-      <GoTo address='/home/math-operations/multiplication' name={t('links.back')} />
+      <GoTo address='/math-operations/multiplication' name={t('links.back')} />
       <Header title={t('mathOperations.multCheck')} />
 
       {serverError && <Error error={serverError} />}

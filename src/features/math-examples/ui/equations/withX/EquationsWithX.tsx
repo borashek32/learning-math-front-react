@@ -168,7 +168,7 @@ export const EquationsWithX = () => {
           buttonBack={false}
         />
       )}
-      <GoTo address='/home/math-operations/equations' name={t('links.back')} />
+      <GoTo address='/math-operations/equations' name={t('links.back')} />
       <Header title={t('mathOperations.equationsWithX')} />
       {serverError && <Error error={serverError} />}
       <MathExampleLayout>

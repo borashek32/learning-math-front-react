@@ -139,7 +139,7 @@ export const MultiplicationNumber = () => {
         />
       )}
       
-      <GoTo address='/home/math-operations/multiplication' name={t('links.back')} />
+      <GoTo address='/math-operations/multiplication' name={t('links.back')} />
       <Header title={t('mathOperations.multBy') + ' ' + digit} />
 
       <div className={styles.containerMathOperation}>

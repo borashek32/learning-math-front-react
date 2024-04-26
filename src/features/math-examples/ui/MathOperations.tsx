@@ -12,10 +12,10 @@ export const MathOperations = () => {
   const mathOperation: Array<string> = [MathOperationsConstants.SUM, MathOperationsConstants.DIFF]
 
   const { t } = useTranslation()
-
+  
   return (
     <>
-      <GoTo address='/home' name={t('links.back')} />
+      <GoTo address={userId ? '/home' : '/'} name={t('links.back')} />
       <Header title={t('screens.math')}  />
     
       <ul className={styles.listItems}>
