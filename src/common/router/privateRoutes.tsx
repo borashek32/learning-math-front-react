@@ -27,6 +27,14 @@ import { Main } from "../../features/main/ui/Main"
 import { BaseLayout } from "../components/layouts/BaseLayout"
 import { MathOperations } from "../../features/math-examples/ui/MathOperations"
 import { SumDifference } from "../../features/math-examples/ui/sum-difference/SumDifference"
+import { Multiplication } from "../../features/math-examples/ui/multiplication/Multiplication"
+import { MultiplicationNumber } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNumber"
+import { MultiplicationNulls } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNulls"
+import { MultiplicationCheck } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationCheck"
+import { Equations } from "../../features/math-examples/ui/equations/Equations"
+import { EquationsWithX } from "../../features/math-examples/ui/equations/withX/EquationsWithX"
+import { Docs } from "../../features/main/ui/docs/Docs"
+import { DocsLayout } from "../components/layouts/DocsLayout"
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -92,12 +100,40 @@ export const privateRoutes: RouteObject[] = [
 
 
   {
+    path: "/home/instructions",
+    element: <Docs />
+  },
+  {
     path: "/home/math-operations",
     element: <MathOperations />
   },
   {
     path: `/home/math-operations/:mathOperation`,
     element: <SumDifference />
+  },
+  {
+    path: "/home/math-operations/multiplication",
+    element: <Multiplication />
+  },
+  {
+    path: "/home/math-operations/multiplication/multiplication-table/:digit",
+    element: <MultiplicationNumber />
+  },
+  {
+    path: "/home/math-operations/multiplication/multiplication-table/numbers-with-nulls",
+    element: <MultiplicationNulls />
+  },
+  {
+    path: "/home/math-operations/multiplication/check-knowledge",
+    element: <MultiplicationCheck />
+  },
+  {
+    path: "/home/math-operations/equations",
+    element: <Equations />
+  },
+  {
+    path: "/home/math-operations/equations/with-one-unknown",
+    element: <EquationsWithX />
   },
 ]
 
@@ -107,13 +143,10 @@ export function PrivateRoutes() {
   const { data: scoreData } = useGetTotalUserScoreQuery(data?._id)
   const dispatch = useDispatch()
 
-  console.log('private', data)
-
   useEffect(() => {
     if (data) {
       dispatch(setUserInfo(data))
       if (scoreData && scoreData.score !== undefined) {
-        console.log('score private')
         dispatch(setTotalUserScore(scoreData.score))
       }
     }
@@ -137,6 +170,10 @@ export function PrivateRoutes() {
 
   if (location.pathname === "/home/profile/choose-avatar") {
     return <AvatarLayout><ChangeAvatar /></AvatarLayout>
+  }
+
+  if (location.pathname === '/home/instructions') {
+    return <DocsLayout><Docs /></DocsLayout>
   }
 
   return (

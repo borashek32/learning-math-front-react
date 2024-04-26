@@ -27,7 +27,6 @@ export const Logout = () => {
       .unwrap()
       .then(() => {
         setOpen(false)
-        console.log('logout')
         dispatch(removeUserInfo())
         navigate('/')
       })
