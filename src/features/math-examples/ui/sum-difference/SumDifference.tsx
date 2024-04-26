@@ -11,7 +11,7 @@ import { MathOperationsConstants, MathSignsConstants } from "../../../../common/
 import { ScoreType } from "../../../profile/profile.api.types"
 import { Resolver, SubmitHandler, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useAppSelector } from "../../../../common/hooks/useAppSelector"
+import { useAppSelector } from "../../../../common/hooks/useAppSelector/useAppSelector"
 import { selectIsLoggedIn, selectUserId } from "../../../auth/auth.selectors"
 import { useDispatch } from "react-redux"
 import { AnswerType } from "../../MathOperations.types"

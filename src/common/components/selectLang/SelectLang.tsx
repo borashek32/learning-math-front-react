@@ -3,7 +3,7 @@ import styles from './SelectLang.module.sass'
 import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { setAppLang } from '../../../app/app.slice'
-import { useAppSelector } from '../../hooks/useAppSelector'
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector'
 import { selectAppLang } from '../../../app/app.selectors'
 
 export const SelectLang = () => {

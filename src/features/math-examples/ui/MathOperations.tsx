@@ -4,7 +4,7 @@ import styles from './../MathOperations.module.sass'
 import { useTranslation } from 'react-i18next'
 import { BlueButton } from '../../../common/components/buttons/BlueButton'
 import { MathOperationsConstants } from '../../../common/constants/MathConstants'
-import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { useAppSelector } from '../../../common/hooks/useAppSelector/useAppSelector'
 import { selectIsLoggedIn } from '../../auth/auth.selectors'
 
 export const MathOperations = () => {

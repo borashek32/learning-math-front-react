@@ -2,7 +2,7 @@ import { Props } from './Score.types'
 import styles from './Score.module.sass'
 import { useTranslation } from 'react-i18next'
 import { UserAvatar } from '../avatar/UserAvatar'
-import { useAppSelector } from '../../hooks/useAppSelector'
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector'
 import { selectUserAvatarPath } from '../../../features/auth/auth.selectors'
 
 export const Score = ({ score }: Props) => {

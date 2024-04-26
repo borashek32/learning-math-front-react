@@ -4,7 +4,7 @@ import { LogoSmall } from '../logo/LogoSmall'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { DefaultButton } from '../buttons/DefaultButton'
-import { useAppSelector } from "../../hooks/useAppSelector"
+import { useAppSelector } from "../../hooks/useAppSelector/useAppSelector"
 import { selectUserEmail } from "../../../features/auth/auth.selectors"
 import { PATHS } from "../../constants/paths"
 import { selectTotalUserScore } from "../../../features/profile/profile.selectors"

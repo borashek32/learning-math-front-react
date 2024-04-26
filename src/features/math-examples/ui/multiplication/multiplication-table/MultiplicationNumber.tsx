@@ -15,7 +15,7 @@ import { useFormSchema } from '../../../../../common/utils/math/validationShemaM
 import { useUpdateScoreMutation } from '../../../../profile/profile.api'
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form'
 import { ScoreType } from '../../../../profile/profile.api.types'
-import { useAppSelector } from '../../../../../common/hooks/useAppSelector'
+import { useAppSelector } from '../../../../../common/hooks/useAppSelector/useAppSelector'
 import { selectUserId } from '../../../../auth/auth.selectors'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { ButtonsLayout } from '../../../../../common/components/layouts/ButtonsLayout'

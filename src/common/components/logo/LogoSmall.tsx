@@ -1,5 +1,5 @@
 import { selectIsLoggedIn } from '../../../features/auth/auth.selectors'
-import { useAppSelector } from '../../hooks/useAppSelector'
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector'
 import styles from './Logo.module.sass'
 import { Props } from './Logo.types'
 
