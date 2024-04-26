@@ -1,10 +1,13 @@
+import { selectIsLoggedIn } from '../../../features/auth/auth.selectors'
+import { useAppSelector } from '../../hooks/useAppSelector/useAppSelector'
 import styles from './Logo.module.sass'
 import { Props } from './Logo.types'
 
-export const LogoSmall = ({ path }: Props) => {
+export const LogoSmall = ({}: Props) => {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   return (
-    <a href={path} className={styles.logoLink}>
+    <a href={isLoggedIn ? '/home' : '/'} className={styles.logoLink}>
       <div className={styles.logoWrapperSmall}>
         <div className={styles.learnMathComWrapperSmall}>
           <p className={styles.learnSmall}>Free</p>

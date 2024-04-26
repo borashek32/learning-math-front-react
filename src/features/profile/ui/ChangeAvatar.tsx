@@ -5,7 +5,7 @@ import { CharacterType } from '../rickMorty/rickMorty.types'
 import { useGetAvatarsQuery } from '../rickMorty/rickMorty.api'
 import { Avatar } from '../../../common/components/avatar/Avatar'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { useAppSelector } from '../../../common/hooks/useAppSelector/useAppSelector'
 import { selectUser, selectUserId } from '../../auth/auth.selectors'
 import { AvatarType } from '../profile.api.types'
 import { Modal } from '../../../common/components/modal/Modal'
@@ -14,7 +14,7 @@ import { useUpdateAvatarMutation } from '../profile.api'
 import { useDispatch } from 'react-redux'
 import { setUserInfo } from '../../auth/auth.slice'
 import { AppText } from '../../../common/components/text/AppText'
-import { DevideLine } from '../../../common/components/devideLine/DevideLine'
+import { DivideLine } from '../../../common/components/divideLine/DivideLine'
 import { GoTo } from '../../../common/components/goTo/GoTo'
 import { Header } from '../../../common/components/header/Header'
 import { UserAvatar } from '../../../common/components/avatar/UserAvatar'
@@ -105,7 +105,7 @@ export const ChangeAvatar = () => {
             />
           : <AppText desc={t('profile.changeAvatar.title')} link={false} />
         }
-        <DevideLine />
+        <DivideLine />
         <>
           {(serverError || isError) && <Error error={serverError} />}
           {data && data.results.map((item: CharacterType) => (

@@ -4,14 +4,15 @@ import styles from './../MathOperations.module.sass'
 import { useTranslation } from 'react-i18next'
 import { BlueButton } from '../../../common/components/buttons/BlueButton'
 import { MathOperationsConstants } from '../../../common/constants/MathConstants'
-import { useAppSelector } from '../../../common/hooks/useAppSelector'
-import { selectUserId } from '../../auth/auth.selectors'
+import { useAppSelector } from '../../../common/hooks/useAppSelector/useAppSelector'
+import { selectIsLoggedIn } from '../../auth/auth.selectors'
 
 export const MathOperations = () => {
-  const { t } = useTranslation()
-  const mathOperation: Array<string> = [MathOperationsConstants.SUMM, MathOperationsConstants.DIFF]
-  const userId = useAppSelector(selectUserId)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  const mathOperation: Array<string> = [MathOperationsConstants.SUM, MathOperationsConstants.DIFF]
 
+  const { t } = useTranslation()
+  
   return (
     <>
       <GoTo address={userId ? '/home' : '/'} name={t('links.back')} />
@@ -20,30 +21,30 @@ export const MathOperations = () => {
       <ul className={styles.listItems}>
         <li className={styles.item}>
           <BlueButton 
-            name={t('mathOperations.summ')} 
+            name={t('mathOperations.sum')} 
             type={'button'} 
-            path={`/math-operations/${mathOperation[0]}`} 
+            path={isLoggedIn ? `/home/math-operations/${mathOperation[0]}` : `/math-operations/${mathOperation[0]}`} 
           />
         </li>
         <li className={styles.item}>
           <BlueButton 
             name={t('mathOperations.diff')} 
             type={'button'} 
-            path={`/math-operations/${mathOperation[1]}`} 
+            path={isLoggedIn ? `/home/math-operations/${mathOperation[1]}` : `/math-operations/${mathOperation[1]}`} 
           />
         </li>
         <li className={styles.item}>
           <BlueButton 
             name={t('mathOperations.multiplication')} 
             type={'button'} 
-            path={"/math-operations/multiplication"} 
+            path={isLoggedIn ? '/home/math-operations/multiplication' : '/math-operations/multiplication'} 
           />
         </li>
         <li className={styles.item}>
           <BlueButton
             name={t('mathOperations.equations')}
             type={'button'}
-            path={'/math-operations/equations'}
+            path={isLoggedIn ? '/home/math-operations/equations' : '/math-operations/equations'}
           />
         </li>
       </ul>

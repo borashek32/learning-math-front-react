@@ -25,12 +25,19 @@ import { PreSchool } from "../../features/pre-school/ui/PreSchool"
 import { Numbers } from "../../features/pre-school/ui/numbers/Numbers"
 import { Main } from "../../features/main/ui/Main"
 import { BaseLayout } from "../components/layouts/BaseLayout"
-import { useAppSelector } from "../hooks/useAppSelector"
-import { selectUser } from "../../features/auth/auth.selectors"
-
-// const renderChangeAvatar = (): React.ReactNode => {
-//   return <AvatarLayout><ChangeAvatar /></AvatarLayout>;
-// }
+import { MathOperations } from "../../features/math-examples/ui/MathOperations"
+import { SumDifference } from "../../features/math-examples/ui/sum-difference/SumDifference"
+import { Multiplication } from "../../features/math-examples/ui/multiplication/Multiplication"
+import { MultiplicationNumber } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNumber"
+import { MultiplicationNulls } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNulls"
+import { MultiplicationCheck } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationCheck"
+import { Equations } from "../../features/math-examples/ui/equations/Equations"
+import { EquationsWithX } from "../../features/math-examples/ui/equations/withX/EquationsWithX"
+import { Docs } from "../../features/main/ui/docs/Docs"
+import { DocsLayout } from "../components/layouts/DocsLayout"
+import { useAppSelector } from "../hooks/useAppSelector/useAppSelector"
+import { selectIsLoggedIn, selectUser } from "../../features/auth/auth.selectors"
+import { useAuth } from "../hooks/useAuth/useAuth"
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -92,50 +99,59 @@ export const privateRoutes: RouteObject[] = [
   {
     path: "users",
     element: <Users />
-  }
+  },
+
+
+  {
+    path: "/home/instructions",
+    element: <Docs />
+  },
+  {
+    path: "/home/math-operations",
+    element: <MathOperations />
+  },
+  {
+    path: `/home/math-operations/:mathOperation`,
+    element: <SumDifference />
+  },
+  {
+    path: "/home/math-operations/multiplication",
+    element: <Multiplication />
+  },
+  {
+    path: "/home/math-operations/multiplication/multiplication-table/:digit",
+    element: <MultiplicationNumber />
+  },
+  {
+    path: "/home/math-operations/multiplication/multiplication-table/numbers-with-nulls",
+    element: <MultiplicationNulls />
+  },
+  {
+    path: "/home/math-operations/multiplication/check-knowledge",
+    element: <MultiplicationCheck />
+  },
+  {
+    path: "/home/math-operations/equations",
+    element: <Equations />
+  },
+  {
+    path: "/home/math-operations/equations/with-one-unknown",
+    element: <EquationsWithX />
+  },
 ]
 
 export function PrivateRoutes() {
-  const location = useLocation();
-  const { data, isLoading, error } = useMeQuery();
-  const { data: scoreData } = useGetTotalUserScoreQuery(data?._id);
-  const dispatch = useDispatch()
+  const { isLoggedIn, isLoading } = useAuth()
 
-  const user = useAppSelector(selectUser)
-
-  useEffect(() => {
-    if (data) {
-      dispatch(setUserInfo(data));
-      if (scoreData && scoreData.score !== undefined) {
-        dispatch(setTotalUserScore(scoreData.score));
-      }
-    }
-  }, [data, scoreData, dispatch]);
+  // console.log('isAuth', isLoggedIn)
 
   if (isLoading) {
-    return <AppLayout><Loader /></AppLayout>;
+    return <AppLayout><Loader /></AppLayout>
   }
 
-  if (!user) {
-    return <BaseLayout><Main /></BaseLayout>;
+  if (!isLoggedIn) {
+    return <BaseLayout><Main /></BaseLayout>
   }
 
-  if (
-    (data && location.pathname === "/") ||
-    (data && location.pathname === "/login") ||
-    (data && location.pathname === "/register")
-  ) {
-    return <AppLayout><Home /></AppLayout>;
-  }
-
-  const isChooseAvatarRoute = location.pathname === "/home/profile/choose-avatar";
-  if (isChooseAvatarRoute) {
-    return <AvatarLayout><ChangeAvatar /></AvatarLayout>;
-  }
-
-  return (
-    <AppLayout key={location.pathname}>
-      <Outlet />
-    </AppLayout>
-  );
+  return <AppLayout><Outlet /></AppLayout>
 }

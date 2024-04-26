@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { GoTo } from "../../../../common/components/goTo/GoTo"
 import { Header } from "../../../../common/components/header/Header"
 import { DefaultDigit } from "../../../../common/components/digits/DefaultDigit"
@@ -11,8 +11,8 @@ import { MathOperationsConstants, MathSignsConstants } from "../../../../common/
 import { ScoreType } from "../../../profile/profile.api.types"
 import { Resolver, SubmitHandler, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useAppSelector } from "../../../../common/hooks/useAppSelector"
-import { selectUserId } from "../../../auth/auth.selectors"
+import { useAppSelector } from "../../../../common/hooks/useAppSelector/useAppSelector"
+import { selectIsLoggedIn, selectUserId } from "../../../auth/auth.selectors"
 import { useDispatch } from "react-redux"
 import { AnswerType } from "../../MathOperations.types"
 import { generateRandomNumber } from "../../../../common/utils/math/generateRandomNumber"
@@ -25,9 +25,11 @@ import { useParams } from "react-router-dom"
 import { ButtonsLayout } from "../../../../common/components/layouts/ButtonsLayout"
 import { MathOperationButton } from "../../../../common/components/buttons/MathOperationButton"
 import { Score } from "../../../../common/components/score/Score"
+import { Error } from "../../../../common/components/error/Error"
 
-export const SummDifference = () => {
+export const SumDifference = () => {
   const userId = useAppSelector(selectUserId)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const { mathOperation } = useParams<{ mathOperation: string }>()
 
@@ -49,7 +51,7 @@ export const SummDifference = () => {
   const { t } = useTranslation('translation')
 
   const generateNewNumbers = (score: number) => {
-    if ((mathOperation === MathOperationsConstants.SUMM) 
+    if ((mathOperation === MathOperationsConstants.SUM) 
     || (mathOperation === MathOperationsConstants.DIFF)) {
       if (score <= 5) {
         setFirstNumber(generateRandomNumber(10, 100))
@@ -94,37 +96,10 @@ export const SummDifference = () => {
     mode: 'onChange',
     resolver: yupResolver(formSchema) as Resolver<ScoreType>,
   })
-  
+
   const onSubmit: SubmitHandler<ScoreType> = (data: ScoreType) => {
     setServerError('')
-
-    if (( checkMathOperation({
-      answer: Number(answer),
-      operation: MathOperationsConstants.SUMM, 
-      firstOperand: firstNumber, 
-      secondOperand: secondNumber,
-      thirdOperand: thirdNumber ? thirdNumber : 0,
-      fourthOperand: fourthNumber ? fourthNumber : 0,
-    }) === true ) ||
-    ( checkMathOperation({
-      answer: Number(answer),
-      operation: MathOperationsConstants.DIFF, 
-      firstOperand: firstNumber, 
-      secondOperand: secondNumber,
-      thirdOperand: thirdNumber ? thirdNumber : 0,
-      fourthOperand: fourthNumber ? fourthNumber : 0,
-    }) === true )) {
-
-      setScore(score + 1)
-      setRightWrong('right')
-      data = { ...data, score: 1 }
-
-    } else {
-      setScore(score - 1)
-      setRightWrong('wrong')
-      data = { ...data, score: -1 }
-    }
-    
+    // data = { ...data, score: rightWrong ? 1 : -1 }
     updateScore(data)
       .unwrap()
       .then(response => {
@@ -136,30 +111,21 @@ export const SummDifference = () => {
         if (e.status === 'FETCH_ERROR') setServerError(t('errors.serverError'))
       })
   }
-
   
   const check = () => {
     setOpen(true)
-    if (( checkMathOperation({
+    if (checkMathOperation({
       answer: Number(answer),
-      operation: MathOperationsConstants.SUMM, 
+      operation: MathOperationsConstants.SUM, 
       firstOperand: firstNumber, 
       secondOperand: secondNumber,
       thirdOperand: thirdNumber ? thirdNumber : 0,
       fourthOperand: fourthNumber ? fourthNumber : 0,
-    }) === true ) ||
-    ( checkMathOperation({
-      answer: Number(answer),
-      operation: MathOperationsConstants.DIFF, 
-      firstOperand: firstNumber, 
-      secondOperand: secondNumber,
-      thirdOperand: thirdNumber ? thirdNumber : 0,
-      fourthOperand: fourthNumber ? fourthNumber : 0,
-    }) === true )) {
-      setRightWrong('right')
+    })) {
+      setRightWrong(1)
       setScore(score + 1)
     } else {
-      setRightWrong('wrong')
+      setRightWrong(-1)
       setScore(score - 1)
     }
   }
@@ -175,27 +141,42 @@ export const SummDifference = () => {
     setAnswer('')
   }
 
+
+
+  useEffect(() => {
+    if (userId && rightWrong) {
+      onSubmit({
+        score: rightWrong,
+        userId, 
+        date: new Date()
+      })
+    }
+  }, [score, userId, rightWrong])
+
   return (
     <>
       {isLoading && <Loader />}
+      {serverError && 
+        <Error error={serverError} />
+      }
       {open && (
         <Modal
           text={
-            rightWrong === 'right' 
+            rightWrong === 1 
               ? t('modal.checkMathOperationSuccess') 
               : t('modal.checkMathOperationFail')
             }
           open={open}
           outlinedButton={false}
           buttonName={t('modal.button')}
-          buttonCallback={rightWrong === 'right' ? onPressPlayMore : onPressTryAgain}
-          color={rightWrong === 'right' ? 'blue' : 'red'}
+          buttonCallback={rightWrong === 1 ? onPressPlayMore : onPressTryAgain}
+          color={rightWrong === 1 ? 'blue' : 'red'}
         />
       )}
-      <GoTo address='/math-operations' name={t('links.back')} />
+      <GoTo address={isLoggedIn ? '/home/math-operations' : '/math-operations'} name={t('links.back')} />
       <Header title={
-        mathOperation === MathOperationsConstants.SUMM 
-          ? t('mathOperations.summ')
+        mathOperation === MathOperationsConstants.SUM
+          ? t('mathOperations.sum')
           : mathOperation === MathOperationsConstants.DIFF
           ? t('mathOperations.diff')
           : t('mathOperations.multCheck')
@@ -231,7 +212,7 @@ export const SummDifference = () => {
           name={t('mathOperations.common.generate')}
         />
         <MathOperationButton
-          onClick={userId ? handleSubmit(onSubmit) : check}
+          onClick={check}
           name={t('mathOperations.common.check')}
         />
       </ButtonsLayout>

@@ -25,7 +25,7 @@ export const Numbers = () => {
 
   const [number, setNumber] = useState((generateRandomNumber(1, 10)))
   const [answer, setAnswer] = useState<string>('')
-  const [rightWrong, setRightWrong] = useState<AnswerType>(null)
+  const [rightWrong, setRightWrong] = useState<AnswerType>(1)
   const [serverError, setServerError] = useState('')
   const [open, setOpen] = useState(false)
 
@@ -53,10 +53,10 @@ export const Numbers = () => {
   const check = () => {
     setOpen(true)
     if (number === Number(answer)) {
-      setRightWrong('right')
+      setRightWrong(1)
       setScore(score + 1)
     } else {
-      setRightWrong('wrong')
+      setRightWrong(-1)
       setScore(score - 1)
     }
   }
@@ -78,15 +78,15 @@ export const Numbers = () => {
       {open && (
         <Modal
           text={
-            rightWrong === 'right' 
+            rightWrong === 1
               ? t('modal.checkMathOperationSuccess') 
               : t('modal.checkMathOperationFail')
             }
           open={open}
           outlinedButton={false}
           buttonName={t('modal.button')}
-          buttonCallback={rightWrong === 'right' ? onPressPlayMore : onPressTryAgain}
-          color={rightWrong === 'right' ? 'blue' : 'red'}
+          buttonCallback={rightWrong === 1 ? onPressPlayMore : onPressTryAgain}
+          color={rightWrong === 1 ? 'blue' : 'red'}
         />
       )}
       {/* <GoTo address='/home' name={t('links.back')} /> */}

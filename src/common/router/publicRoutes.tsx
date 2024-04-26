@@ -9,17 +9,21 @@ import { Docs } from '../../features/main/ui/docs/Docs'
 import { MathOperations } from '../../features/math-examples/ui/MathOperations'
 import { MultiplicationNumber } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNumber"
 import { Multiplication } from "../../features/math-examples/ui/multiplication/Multiplication"
-import { SummDifference } from "../../features/math-examples/ui/summ-difference/SummDifference"
+import { SumDifference } from "../../features/math-examples/ui/sum-difference/SumDifference"
 import { MultiplicationCheck } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationCheck"
 import { MultiplicationNulls } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNulls"
 import { Equations } from "../../features/math-examples/ui/equations/Equations"
 import { EquationsWithX } from "../../features/math-examples/ui/equations/withX/EquationsWithX"
 import { AppLayout } from '../components/layouts/AppLayout'
 import { AvatarLayout } from '../components/layouts/AvatarLayout'
-import { useAppSelector } from '../hooks/useAppSelector'
-import { selectUser } from '../../features/auth/auth.selectors'
 import { BaseLayout } from '../components/layouts/BaseLayout'
-
+import { UnAuthLayout } from '../components/layouts/UnAuthLayout'
+import { DocsLayout } from '../components/layouts/DocsLayout'
+import { selectIsLoggedIn, selectUser } from '../../features/auth/auth.selectors'
+import { useAppSelector } from '../hooks/useAppSelector/useAppSelector'
+import { Home } from '../../features/home/ui/Home'
+import { Loader } from '../components/loaders/CircularLoader'
+import { useAuth } from '../hooks/useAuth/useAuth'
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -57,7 +61,7 @@ export const publicRoutes: RouteObject[] = [
   },
   {
     path: `/math-operations/:mathOperation`,
-    element: <SummDifference />
+    element: <SumDifference />
   },
   {
     path: "/math-operations/multiplication",
@@ -86,29 +90,17 @@ export const publicRoutes: RouteObject[] = [
 ]
 
 export function PublicRoutes() {
-  const location = useLocation()
-  // const user = useAppSelector(selectUser)
-  // console.log(user)
-  
-  const main = location.pathname === "/"
-  if (main) {
-    return  <BaseLayout><Main /></BaseLayout>
+  const { isLoading, isLoggedIn } = useAuth()
+
+  // console.log('isAuth', isLoggedIn)
+
+  if (isLoading) {
+    return <AppLayout><Loader /></AppLayout>
   }
 
-  // const register = location.pathname === "/register"
-  // if (register) {
-  //   return <BaseLayout><Register /></BaseLayout>
-  // }
-  
-  // const login = location.pathname === "/login"
-  // if (login) {
-  //   return <BaseLayout><Login /></BaseLayout>
-  // }
-
-  const instructions = location.pathname === "/instructions"
-  if (instructions) {
-    return <AvatarLayout><Docs /></AvatarLayout>
+  if (isLoggedIn) {
+    return <AppLayout><Home /></AppLayout>
   }
 
-  return <AppLayout><Outlet /></AppLayout>
+  return <BaseLayout><Outlet /></BaseLayout>
 }

@@ -15,7 +15,7 @@ import { useFormSchema } from '../../../../../common/utils/math/validationShemaM
 import { useUpdateScoreMutation } from '../../../../profile/profile.api'
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form'
 import { ScoreType } from '../../../../profile/profile.api.types'
-import { useAppSelector } from '../../../../../common/hooks/useAppSelector'
+import { useAppSelector } from '../../../../../common/hooks/useAppSelector/useAppSelector'
 import { selectUserId } from '../../../../auth/auth.selectors'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { ButtonsLayout } from '../../../../../common/components/layouts/ButtonsLayout'
@@ -31,7 +31,7 @@ export const MultiplicationNumber = () => {
   const [score, setScore] = useState(0)
   const [serverError, setServerError] = useState('')
   const [answer, setAnswer] = useState('')
-  const [rightWrong, setRightWrong] = useState<AnswerType>(null)
+  const [rightWrong, setRightWrong] = useState<AnswerType>(1)
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
 
@@ -98,11 +98,11 @@ export const MultiplicationNumber = () => {
     setOpen(true)
     if (Number(digit) * firstDigit === answerToNumber) {
       setScore(score + 1)
-      setRightWrong('right')
+      setRightWrong(1)
     }
     else {
       setScore(score - 1)
-      setRightWrong('wrong')
+      setRightWrong(-1)
     }
   }
 
@@ -127,15 +127,15 @@ export const MultiplicationNumber = () => {
       {open && (
         <Modal
           text={
-            rightWrong === 'right' 
+            rightWrong === 1
               ? t('modal.checkMathOperationSuccess') 
               : t('modal.checkMathOperationFail')
             }
           open={open}
           outlinedButton={false}
           buttonName={t('modal.button')}
-          buttonCallback={rightWrong === 'right' ? onPressPlayMore : onPressTryAgain}
-          color={rightWrong === 'right' ? 'blue' : 'red'}
+          buttonCallback={rightWrong === 1 ? onPressPlayMore : onPressTryAgain}
+          color={rightWrong === 1 ? 'blue' : 'red'}
         />
       )}
       

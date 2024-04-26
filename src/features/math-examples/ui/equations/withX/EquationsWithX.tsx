@@ -9,7 +9,7 @@ import { useUpdateScoreMutation } from '../../../../profile/profile.api'
 import { useFormSchema } from '../../../../../common/utils/math/validationShemaMathOperations'
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form'
 import { ScoreType } from '../../../../profile/profile.api.types'
-import { useAppSelector } from '../../../../../common/hooks/useAppSelector'
+import { useAppSelector } from '../../../../../common/hooks/useAppSelector/useAppSelector'
 import { selectUserId } from '../../../../auth/auth.selectors'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { setTotalUserScore } from '../../../../profile/profile.slice'
@@ -36,7 +36,7 @@ export const EquationsWithX = () => {
   const [score, setScore] = useState(0) 
   const [serverError, setServerError] = useState('')
   const [answer, setAnswer] = useState<string>('')
-  const [rightWrong, setRightWrong] = useState<AnswerType>(null)
+  const [rightWrong, setRightWrong] = useState<AnswerType>(1)
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
   
@@ -46,7 +46,7 @@ export const EquationsWithX = () => {
 
   useEffect(() => {
     const newOperation = getRandomMathOperation([
-      MathOperationsConstants.SUMM, 
+      MathOperationsConstants.SUM, 
       MathOperationsConstants.DIFF, 
       // MathOperationsConstants.MULTIPLY
     ])
@@ -65,7 +65,7 @@ export const EquationsWithX = () => {
     setOpen(false)
     generateNewNumbers()
     const newOperation = getRandomMathOperation([
-      MathOperationsConstants.SUMM, 
+      MathOperationsConstants.SUM, 
       MathOperationsConstants.DIFF, 
       // MathOperationsConstants.MULTIPLY
     ])
@@ -131,15 +131,15 @@ export const EquationsWithX = () => {
     setHintIsUsed(false)
     setServerError('')
     if (
-      MathOperationsConstants.SUMM && secondNumber - firstNumber === Number(answer) ||
+      MathOperationsConstants.SUM && secondNumber - firstNumber === Number(answer) ||
       MathOperationsConstants.DIFF && secondNumber + firstNumber === Number(answer) ||
       MathOperationsConstants.MULTIPLY && secondNumber * firstNumber === Number(answer) 
     ) {
       setScore(hintIsUsed ? (score + 1) : (score + 2))
-      setRightWrong('right')
+      setRightWrong(1)
     } else {
       setScore(score - 1)
-      setRightWrong('wrong')
+      setRightWrong(-1)
     }
   }
 
@@ -156,15 +156,15 @@ export const EquationsWithX = () => {
       {open && (
         <Modal
           text={
-            rightWrong === 'right' 
+            rightWrong === 1
               ? t('modal.checkMathOperationSuccess') 
               : t('modal.checkMathOperationFail')
             }
           open={open}
           outlinedButton={false}
           buttonName={t('modal.button')}
-          buttonCallback={rightWrong === 'right' ? onPressPlayMore : onPressTryAgain}
-          color={rightWrong === 'right' ? 'blue' : 'red'}
+          buttonCallback={rightWrong === 1 ? onPressPlayMore : onPressTryAgain}
+          color={rightWrong === 1 ? 'blue' : 'red'}
           buttonBack={false}
         />
       )}
