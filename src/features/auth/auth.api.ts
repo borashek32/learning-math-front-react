@@ -23,6 +23,7 @@ type RefreshDataType = {
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
   method: 'POST',
+  mode: 'no-cors',
   credentials: 'include',
   headers: {
     'Content-Type': 'application/json',
