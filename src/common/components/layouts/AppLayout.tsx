@@ -1,9 +1,9 @@
 import styles from './Layouts.module.sass'
 import { Nav } from '../nav/Nav'
-import { AppLayoutType } from './Layouts.types'
+import { Props } from './Layouts.types'
 import { SelectLang } from '../selectLang/SelectLang'
 
-export const AppLayout = ({ children, user }: AppLayoutType) => {
+export const AppLayout = ({ children }: Props) => {
 
   return (
     <div className={styles.appWrapper}>

@@ -35,6 +35,9 @@ import { Equations } from "../../features/math-examples/ui/equations/Equations"
 import { EquationsWithX } from "../../features/math-examples/ui/equations/withX/EquationsWithX"
 import { Docs } from "../../features/main/ui/docs/Docs"
 import { DocsLayout } from "../components/layouts/DocsLayout"
+import { useAppSelector } from "../hooks/useAppSelector/useAppSelector"
+import { selectIsLoggedIn, selectUser } from "../../features/auth/auth.selectors"
+import { useAuth } from "../hooks/useAuth/useAuth"
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -138,47 +141,17 @@ export const privateRoutes: RouteObject[] = [
 ]
 
 export function PrivateRoutes() {
-  const location = useLocation()
-  const { data, isLoading } = useMeQuery()
-  const { data: scoreData } = useGetTotalUserScoreQuery(data?._id)
-  const dispatch = useDispatch()
+  const { isLoggedIn, isLoading } = useAuth()
 
-  useEffect(() => {
-    if (data) {
-      dispatch(setUserInfo(data))
-      if (scoreData && scoreData.score !== undefined) {
-        dispatch(setTotalUserScore(scoreData.score))
-      }
-    }
-  }, [data, scoreData, dispatch])
+  // console.log('isAuth', isLoggedIn)
 
   if (isLoading) {
     return <AppLayout><Loader /></AppLayout>
   }
 
-  if (!data) {
+  if (!isLoggedIn) {
     return <BaseLayout><Main /></BaseLayout>
   }
 
-  if (
-    (data && location.pathname === "/") ||
-    (data && location.pathname === "/login") ||
-    (data && location.pathname === "/register")
-  ) {
-    return <AppLayout><Home /></AppLayout>
-  }
-
-  if (location.pathname === "/home/profile/choose-avatar") {
-    return <AvatarLayout><ChangeAvatar /></AvatarLayout>
-  }
-
-  if (location.pathname === '/home/instructions') {
-    return <DocsLayout><Docs /></DocsLayout>
-  }
-
-  return (
-    <AppLayout user={data} key={location.pathname}>
-      <Outlet />
-    </AppLayout>
-  )
+  return <AppLayout><Outlet /></AppLayout>
 }

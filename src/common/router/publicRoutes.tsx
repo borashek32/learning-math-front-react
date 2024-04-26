@@ -19,6 +19,11 @@ import { AvatarLayout } from '../components/layouts/AvatarLayout'
 import { BaseLayout } from '../components/layouts/BaseLayout'
 import { UnAuthLayout } from '../components/layouts/UnAuthLayout'
 import { DocsLayout } from '../components/layouts/DocsLayout'
+import { selectIsLoggedIn, selectUser } from '../../features/auth/auth.selectors'
+import { useAppSelector } from '../hooks/useAppSelector/useAppSelector'
+import { Home } from '../../features/home/ui/Home'
+import { Loader } from '../components/loaders/CircularLoader'
+import { useAuth } from '../hooks/useAuth/useAuth'
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -85,15 +90,17 @@ export const publicRoutes: RouteObject[] = [
 ]
 
 export function PublicRoutes() {
-  const location = useLocation()
+  const { isLoading, isLoggedIn } = useAuth()
 
-  if (location.pathname === '/instructions') {
-    return <DocsLayout><Docs /></DocsLayout>
+  // console.log('isAuth', isLoggedIn)
+
+  if (isLoading) {
+    return <AppLayout><Loader /></AppLayout>
   }
 
-  if (location.pathname === '/') {
-    return <BaseLayout><Main /></BaseLayout>
+  if (isLoggedIn) {
+    return <AppLayout><Home /></AppLayout>
   }
 
-  return <UnAuthLayout><Outlet /></UnAuthLayout>
+  return <BaseLayout><Outlet /></BaseLayout>
 }

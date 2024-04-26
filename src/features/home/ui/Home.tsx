@@ -3,7 +3,7 @@ import { DefaultButton } from '../../../common/components/buttons/DefaultButton'
 import { Header } from '../../../common/components/header/Header'
 import styles from './../../../common/styles/App.module.sass'
 import { Link } from 'react-router-dom'
-import { useAppSelector } from '../../../common/hooks/useAppSelector'
+import { useAppSelector } from '../../../common/hooks/useAppSelector/useAppSelector'
 import { selectUserEmail } from '../../auth/auth.selectors'
 import { DivideLine } from '../../../common/components/divideLine/DivideLine'
 

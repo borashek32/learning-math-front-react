@@ -8,6 +8,6 @@ export type Props = {
 }
 
 export type AppLayoutType = {
-  user?: UserType
+  user?: UserType | null
   children: ReactElement[] | ReactElement
 }
