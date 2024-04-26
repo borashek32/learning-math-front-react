@@ -25,7 +25,7 @@ export const Home = () => {
             {t('screens.math')}
           </Link>
         </li>
-        {/* <li className={styles.item}>
+        <li className={styles.item}>
           <Link 
             className={styles.labelClass} 
             to="/home/school-program"
@@ -40,7 +40,7 @@ export const Home = () => {
           >
               {t('screens.preSchool')}
           </Link>
-        </li> */}
+        </li>
 
         <li className={styles.item}>
           <DivideLine />

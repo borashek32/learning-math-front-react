@@ -3,7 +3,7 @@ import { Props } from './Layouts.types'
 import { LogoSmall } from '../logo/LogoSmall'
 import { SelectLang } from '../selectLang/SelectLang'
 
-export const UnAuthLayout = ({ title, children }: Props) => {
+export const DocsLayout = ({ title, children }: Props) => {
 
   return (
     <>
@@ -11,7 +11,7 @@ export const UnAuthLayout = ({ title, children }: Props) => {
         <LogoSmall />
       </div>
 
-      <div className={styles.app}>
+      <div className={styles.appUnAuth}>
         <SelectLang />
         <div className={styles.appContent}>
           { children }

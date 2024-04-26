@@ -18,6 +18,7 @@ import { AppLayout } from '../components/layouts/AppLayout'
 import { AvatarLayout } from '../components/layouts/AvatarLayout'
 import { BaseLayout } from '../components/layouts/BaseLayout'
 import { UnAuthLayout } from '../components/layouts/UnAuthLayout'
+import { DocsLayout } from '../components/layouts/DocsLayout'
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -57,37 +58,37 @@ export const publicRoutes: RouteObject[] = [
     path: `/math-operations/:mathOperation`,
     element: <SumDifference />
   },
-  // {
-  //   path: "/math-operations/multiplication",
-  //   element: <Multiplication />
-  // },
-  // {
-  //   path: "/math-operations/multiplication/multiplication-table/:digit",
-  //   element: <MultiplicationNumber />
-  // },
-  // {
-  //   path: "/math-operations/multiplication/multiplication-table/numbers-with-nulls",
-  //   element: <MultiplicationNulls />
-  // },
-  // {
-  //   path: "/math-operations/multiplication/check-knowledge",
-  //   element: <MultiplicationCheck />
-  // },
-  // {
-  //   path: "/math-operations/equations",
-  //   element: <Equations />
-  // },
-  // {
-  //   path: "/math-operations/equations/with-one-unknown",
-  //   element: <EquationsWithX />
-  // },
+  {
+    path: "/math-operations/multiplication",
+    element: <Multiplication />
+  },
+  {
+    path: "/math-operations/multiplication/multiplication-table/:digit",
+    element: <MultiplicationNumber />
+  },
+  {
+    path: "/math-operations/multiplication/multiplication-table/numbers-with-nulls",
+    element: <MultiplicationNulls />
+  },
+  {
+    path: "/math-operations/multiplication/check-knowledge",
+    element: <MultiplicationCheck />
+  },
+  {
+    path: "/math-operations/equations",
+    element: <Equations />
+  },
+  {
+    path: "/math-operations/equations/with-one-unknown",
+    element: <EquationsWithX />
+  },
 ]
 
 export function PublicRoutes() {
   const location = useLocation()
 
   if (location.pathname === '/instructions') {
-    return <AvatarLayout><Docs /></AvatarLayout>
+    return <DocsLayout><Docs /></DocsLayout>
   }
 
   if (location.pathname === '/') {
