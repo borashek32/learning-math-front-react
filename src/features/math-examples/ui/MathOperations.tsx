@@ -15,7 +15,7 @@ export const MathOperations = () => {
   
   return (
     <>
-      <GoTo address={'/home'} name={t('links.back')} />
+      <GoTo address='/home' name={t('links.back')} />
       <Header title={t('screens.math')}  />
     
       <ul className={styles.listItems}>

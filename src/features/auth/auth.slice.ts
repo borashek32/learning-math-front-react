@@ -17,7 +17,6 @@ const userInfoSlice = createSlice({
     removeUserInfo(state) {
       state.user = null
       state.isLoggedIn = false
-      console.log(state.user)
     }
   },
 })
