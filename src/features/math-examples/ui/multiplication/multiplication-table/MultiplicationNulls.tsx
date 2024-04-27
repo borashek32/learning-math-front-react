@@ -5,7 +5,7 @@ import { ButtonsLayout } from '../../../../../common/components/layouts/ButtonsL
 import { MathOperationButton } from '../../../../../common/components/buttons/MathOperationButton'
 import { MathExampleLayout } from '../../../../../common/components/layouts/MathExamlpeLayout'
 import { useUpdateScoreMutation } from '../../../../profile/profile.api'
-import { useFormSchema } from '../../../../../common/utils/math/validationShemaMathOperations'
+import { useFormSchema } from '../../../../../common/utils/math/validationSchemaMathOperations'
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form'
 import { ScoreType } from '../../../../profile/profile.api.types'
 import { useAppSelector } from '../../../../../common/hooks/useAppSelector/useAppSelector'
