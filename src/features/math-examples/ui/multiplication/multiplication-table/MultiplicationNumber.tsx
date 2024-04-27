@@ -11,7 +11,7 @@ import { MathOperationsFooter } from '../../mathOperationsFooter/MathOperationsF
 import { setTotalUserScore } from '../../../../profile/profile.slice'
 import { AnswerType } from '../../../MathOperations.types'
 import { useDispatch } from 'react-redux'
-import { useFormSchema } from '../../../../../common/utils/math/validationShemaMathOperations'
+import { useFormSchema } from '../../../../../common/utils/math/validationSchemaMathOperations'
 import { useUpdateScoreMutation } from '../../../../profile/profile.api'
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form'
 import { ScoreType } from '../../../../profile/profile.api.types'

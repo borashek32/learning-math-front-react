@@ -5,19 +5,15 @@ import { DefaultDigit } from "../../../../common/components/digits/DefaultDigit"
 import { MathOperation } from "../../../../common/components/mathOpertion/mathOperation"
 import { ResultInput } from "../../../../common/components/input/resultInput/ResultInput"
 import { useTranslation } from "react-i18next"
-import { setTotalUserScore } from "../../../profile/profile.slice"
 import { checkMathOperation } from "../../../../common/utils/math/checkMathOperation"
 import { MathOperationsConstants, MathSignsConstants } from "../../../../common/constants/MathConstants"
-import { ScoreType } from "../../../profile/profile.api.types"
-import { Resolver, SubmitHandler, useForm } from "react-hook-form"
-import { yupResolver } from "@hookform/resolvers/yup"
 import { useAppSelector } from "../../../../common/hooks/useAppSelector/useAppSelector"
 import { selectIsLoggedIn, selectUserId } from "../../../auth/auth.selectors"
 import { useDispatch } from "react-redux"
 import { AnswerType } from "../../MathOperations.types"
 import { generateRandomNumber } from "../../../../common/utils/math/generateRandomNumber"
 import { useUpdateScoreMutation } from "../../../profile/profile.api"
-import { useFormSchema } from "../../../../common/utils/math/validationShemaMathOperations"
+import { useFormSchema } from "../../../../common/utils/math/validationSchemaMathOperations"
 import { Loader } from "../../../../common/components/loaders/CircularLoader"
 import { Modal } from "../../../../common/components/modal/Modal"
 import { MathExampleLayout } from "../../../../common/components/layouts/MathExamlpeLayout"
@@ -26,10 +22,10 @@ import { ButtonsLayout } from "../../../../common/components/layouts/ButtonsLayo
 import { MathOperationButton } from "../../../../common/components/buttons/MathOperationButton"
 import { Score } from "../../../../common/components/score/Score"
 import { Error } from "../../../../common/components/error/Error"
+import { useAppForm } from "../../../../common/hooks/useAppForm/useAppForm"
 
 export const SumDifference = () => {
   const userId = useAppSelector(selectUserId)
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const { mathOperation } = useParams<{ mathOperation: string }>()
 
@@ -41,14 +37,12 @@ export const SumDifference = () => {
 
   const [answer, setAnswer] = useState<string>('')
   const [rightWrong, setRightWrong] = useState<AnswerType>(null)
-  const [serverError, setServerError] = useState('')
   const [open, setOpen] = useState(false)
 
-  const dispatch = useDispatch()
-  const [updateScore, { isLoading }] = useUpdateScoreMutation()
-  const formSchema = useFormSchema()
-
   const { t } = useTranslation('translation')
+
+  const { isLoading, serverError, onSubmit } = useAppForm(score)
+
 
   const generateNewNumbers = (score: number) => {
     if ((mathOperation === MathOperationsConstants.SUM) 
@@ -82,34 +76,6 @@ export const SumDifference = () => {
 
   const onChangeHandler = (answer: string) => {
     setAnswer(answer)
-  }
-
-  const {
-    handleSubmit,
-    reset,
-  } = useForm<ScoreType>({
-    defaultValues: {
-      score: score,
-      userId: useAppSelector(selectUserId), 
-      date: new Date()
-    },
-    mode: 'onChange',
-    resolver: yupResolver(formSchema) as Resolver<ScoreType>,
-  })
-
-  const onSubmit: SubmitHandler<ScoreType> = (data: ScoreType) => {
-    setServerError('')
-    // data = { ...data, score: rightWrong ? 1 : -1 }
-    updateScore(data)
-      .unwrap()
-      .then(response => {
-        reset()
-        setOpen(true)
-        dispatch(setTotalUserScore(response.data.score))
-      })
-      .catch((e: any) => {
-        if (e.status === 'FETCH_ERROR') setServerError(t('errors.serverError'))
-      })
   }
   
   const check = () => {
@@ -173,7 +139,7 @@ export const SumDifference = () => {
           color={rightWrong === 1 ? 'blue' : 'red'}
         />
       )}
-      <GoTo address={isLoggedIn ? '/home/math-operations' : '/math-operations'} name={t('links.back')} />
+      <GoTo address='/home/math-operations' name={t('links.back')} />
       <Header title={
         mathOperation === MathOperationsConstants.SUM
           ? t('mathOperations.sum')
