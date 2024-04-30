@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { AnswerType } from '../../../MathOperations.types'
+import { AnswerType } from '../../../MathExamples.types'
 import { useDispatch } from 'react-redux'
 import { Loader } from '../../../../../common/components/loaders/CircularLoader'
 import { Modal } from '../../../../../common/components/modal/Modal'
@@ -10,12 +10,12 @@ import { useFormSchema } from '../../../../../common/utils/math/validationSchema
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form'
 import { ScoreType } from '../../../../profile/profile.api.types'
 import { useAppSelector } from '../../../../../common/hooks/useAppSelector/useAppSelector'
-import { selectUserId } from '../../../../auth/auth.selectors'
+import { selectIsLoggedIn, selectUserId } from '../../../../auth/auth.selectors'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { setTotalUserScore } from '../../../../profile/profile.slice'
-import { MathOperationsConstants, MathSignsConstants } from '../../../../../common/constants/MathConstants'
+import { MathOperationsConstants, MathSignsConstants } from '../../../../../common/constants/math/mathConstants'
 import { generateRandomNumber } from '../../../../../common/utils/math/generateRandomNumber'
-import { MathExampleLayout } from '../../../../../common/components/layouts/MathExamlpeLayout'
+import { MathExampleLayout } from '../../../../../common/components/layouts/MathExampleLayout'
 import { DefaultDigit } from '../../../../../common/components/digits/DefaultDigit'
 import { AppText } from '../../../../../common/components/text/AppText'
 import { ResultInput } from '../../../../../common/components/input/resultInput/ResultInput'
@@ -26,8 +26,11 @@ import { GoTo } from '../../../../../common/components/goTo/GoTo'
 import { getRandomMathOperation } from '../../../../../common/utils/math/getRandomMathOperation'
 import { getCheckMathOperation } from '../../../../../common/utils/math/getCheckMathOperation'
 import { Error } from '../../../../../common/components/error/Error'
+import { PRIVATE_PATHS } from '../../../../../common/constants/paths/privatePaths'
+import { PUBLIC_PATHS } from '../../../../../common/constants/paths/publicPaths'
 
 export const EquationsWithX = () => {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const [firstNumber, setFirstNumber] = useState<number>(generateRandomNumber(1, 10))
   const [secondNumber, setSecondNumber] = useState<number>(generateRandomNumber(10, 100))
   const [randomOperation, setRandomOperation] = useState<string>('')
@@ -168,7 +171,7 @@ export const EquationsWithX = () => {
           buttonBack={false}
         />
       )}
-      <GoTo address='/math-operations/equations' name={t('links.back')} />
+      <GoTo address={isLoggedIn ? PRIVATE_PATHS.EQUATIONS : PUBLIC_PATHS.EQUATIONS} name={t('links.back')} />
       <Header title={t('mathOperations.equationsWithX')} />
       {serverError && <Error error={serverError} />}
       <MathExampleLayout>

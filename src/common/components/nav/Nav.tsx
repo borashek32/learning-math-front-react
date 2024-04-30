@@ -6,11 +6,10 @@ import { Link } from 'react-router-dom'
 import { DefaultButton } from '../buttons/DefaultButton'
 import { useAppSelector } from "../../hooks/useAppSelector/useAppSelector"
 import { selectUserEmail } from "../../../features/auth/auth.selectors"
-import { PATHS } from "../../constants/paths"
 import { selectTotalUserScore } from "../../../features/profile/profile.selectors"
 import { DivideLine } from "../divideLine/DivideLine"
-import { MathOperationsConstants } from "../../constants/MathConstants"
 import { SelectLang } from "../selectLang/SelectLang"
+import { PRIVATE_PATHS } from "../../constants/paths/privatePaths"
 
 export const Nav = () => {
   const [active, setActive] = useState(false)
@@ -32,7 +31,7 @@ export const Nav = () => {
         <LogoSmall />
         <div className={styles.headerWithUser}>
           {userEmail &&
-            <Link to="/home/profile"
+            <Link to={PRIVATE_PATHS.PROFILE}
               onClick={() => setActive(false)}
             >
               <p className={styles.userEmail}>{userEmail}</p> 
@@ -55,7 +54,7 @@ export const Nav = () => {
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
-                to="/home"
+                to={PRIVATE_PATHS.HOME}
                 onClick={() => setActive(false)}
               >
                 {t('screens.home')}
@@ -67,7 +66,7 @@ export const Nav = () => {
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
-                to="/home/math-operations"
+                to={PRIVATE_PATHS.MATH_EXAMPLES}
                 onClick={() => setActive(false)}
               >
                 {t('screens.math')}
@@ -78,7 +77,7 @@ export const Nav = () => {
                 <li className={styles.subMenuItem}>
                   <Link 
                     className={styles.subMenuItemLink}
-                    to='/home/math-operations/+'
+                    to={`${PRIVATE_PATHS.MATH_EXAMPLES}/sum`}
                     onClick={() => setActive(false)}
                   >
                     {t('mathOperations.sum')}
@@ -87,7 +86,7 @@ export const Nav = () => {
                 <li className={styles.subMenuItem}>
                   <Link 
                     className={styles.subMenuItemLink}
-                    to='/home/math-operations/-'
+                    to={`${PRIVATE_PATHS.MATH_EXAMPLES}/difference`}
                     onClick={() => setActive(false)}
                   >
                     {t('mathOperations.diff')}
@@ -96,7 +95,7 @@ export const Nav = () => {
                 <li className={styles.subMenuItem}>
                   <Link 
                     className={styles.subMenuItemLink}
-                    to="/home/math-operations/multiplication"
+                    to={PRIVATE_PATHS.MULTIPLICATION}
                     onClick={() => setActive(false)}
                   >
                     {t('mathOperations.multiplication')}
@@ -105,7 +104,7 @@ export const Nav = () => {
                 <li className={styles.subMenuItem}>
                   <Link 
                     className={styles.subMenuItemLink}
-                    to="/home/math-operations/equations"
+                    to={PRIVATE_PATHS.EQUATIONS}
                     onClick={() => setActive(false)}
                   >
                     {t('mathOperations.equations')}
@@ -119,7 +118,7 @@ export const Nav = () => {
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
-                to="/home/pre-school"
+                to={PRIVATE_PATHS.PRE_SCHOOL}
                 onClick={() => setActive(false)}
               >
                 {t('screens.preSchool')}
@@ -130,7 +129,7 @@ export const Nav = () => {
                 <li className={styles.subMenuItem}>
                   <Link 
                     className={styles.subMenuItemLink}
-                    to='/home/pre-school/numbers'
+                    to={PRIVATE_PATHS.NUMBERS}
                     onClick={() => setActive(false)}
                   >
                     {t('preSchool.numbers.title')}
@@ -144,7 +143,7 @@ export const Nav = () => {
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
-                to="/home/school-program"
+                to={PRIVATE_PATHS.SCHOOL_PROGRAM}
                 onClick={() => setActive(false)}
               >
                 {t('screens.schoolProgram')}
@@ -155,7 +154,7 @@ export const Nav = () => {
                 <li className={styles.subMenuItem}>
                   <Link 
                     className={styles.subMenuItemLink}
-                    to="/home/school-program/first-grade"
+                    to={PRIVATE_PATHS.FIRST_GRADE}
                     onClick={() => setActive(false)}
                   >
                     {t('schoolProgram.firstGrade')}
@@ -164,7 +163,7 @@ export const Nav = () => {
                 <li className={styles.subMenuItem}>
                   <Link 
                     className={styles.subMenuItemLink}
-                    to="/home/school-program/second-grade"
+                    to={PRIVATE_PATHS.SECOND_GRADE}
                     onClick={() => setActive(false)}
                   >
                     {t('schoolProgram.secondGrade')}
@@ -173,7 +172,7 @@ export const Nav = () => {
                 <li className={styles.subMenuItem}>
                   <Link 
                     className={styles.subMenuItemLink}
-                    to="/home/school-program/third-grade"
+                    to={PRIVATE_PATHS.THIRD_GRADE}
                     onClick={() => setActive(false)}
                       >
                         {t('schoolProgram.thirdGrade')}
@@ -187,7 +186,7 @@ export const Nav = () => {
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink} 
-                to="/home/profile"
+                to={PRIVATE_PATHS.PROFILE}
                 onClick={() => setActive(false)}
               >
                 {t('screens.profile')}
@@ -196,7 +195,7 @@ export const Nav = () => {
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink} 
-                to="/logout"
+                to={PRIVATE_PATHS.LOGOUT}
                 onClick={() => setActive(false)}
               >
                 <DefaultButton type='button' name={t('buttons.logout')} />
@@ -208,7 +207,7 @@ export const Nav = () => {
             <li className={styles.item}>
               <Link 
                 className={styles.itemLink}
-                to="/home/instructions"
+                to={PRIVATE_PATHS.INSTRUCTIONS}
                 onClick={() => setActive(false)}
               >
                 {t('screens.instructions')}

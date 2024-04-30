@@ -1,22 +1,13 @@
-import { useLocation, Outlet, RouteObject } from "react-router-dom"
+import { Outlet, RouteObject } from "react-router-dom"
 import { Home } from '../../features/home/ui/Home'
-import { Users } from '../../features/test/Users'
 import { Logout } from '../../features/auth/ui/Logout'
 import { Loader } from "../components/loaders/CircularLoader"
 import { ChangePassword } from "../../features/auth/ui/ChangePassword"
 import { Profile } from "../../features/profile/ui/Profile"
-import { useMeQuery } from "../../features/auth/auth.api"
 import { AppLayout } from "../components/layouts/AppLayout"
 import { YourScore } from "../../features/profile/ui/YourScore"
 import { ChangeEmail } from "../../features/auth/ui/ChangeEmail"
-import { useDispatch } from "react-redux"
-import { useEffect } from "react"
-import { removeUserInfo, setUserInfo } from "../../features/auth/auth.slice"
-import { useGetTotalUserScoreQuery } from "../../features/profile/profile.api"
-import { setTotalUserScore } from "../../features/profile/profile.slice"
 import { ChangeAvatar } from "../../features/profile/ui/ChangeAvatar"
-import { AvatarLayout } from "../components/layouts/AvatarLayout"
-import { Instructions } from "../../features/profile/ui/Instructions"
 import { SchoolProgram } from "../../features/school-program/ui/SchoolProgram"
 import { FirstGrade } from "../../features/school-program/ui/first-grade/FirstGrade"
 import { SecondGrade } from "../../features/school-program/ui/second-grade/SecondGrade"
@@ -25,125 +16,115 @@ import { PreSchool } from "../../features/pre-school/ui/PreSchool"
 import { Numbers } from "../../features/pre-school/ui/numbers/Numbers"
 import { Main } from "../../features/main/ui/Main"
 import { BaseLayout } from "../components/layouts/BaseLayout"
-import { MathOperations } from "../../features/math-examples/ui/MathOperations"
-import { SumDifference } from "../../features/math-examples/ui/sum-difference/SumDifference"
+import { MathExamples } from "../../features/math-examples/ui/MathExamples"
+import { MathExample } from "../../features/math-examples/ui/math-example/MathExample"
 import { Multiplication } from "../../features/math-examples/ui/multiplication/Multiplication"
-import { MultiplicationNumber } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNumber"
-import { MultiplicationNulls } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNulls"
-import { MultiplicationCheck } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationCheck"
 import { Equations } from "../../features/math-examples/ui/equations/Equations"
 import { EquationsWithX } from "../../features/math-examples/ui/equations/withX/EquationsWithX"
 import { Docs } from "../../features/main/ui/docs/Docs"
-import { DocsLayout } from "../components/layouts/DocsLayout"
-import { useAppSelector } from "../hooks/useAppSelector/useAppSelector"
-import { selectIsLoggedIn, selectUser } from "../../features/auth/auth.selectors"
 import { useAuth } from "../hooks/useAuth/useAuth"
+import { PRIVATE_PATHS } from "../constants/paths/privatePaths"
+import { MultiplicationTable } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationTable"
 
 export const privateRoutes: RouteObject[] = [
   {
-    path: "/logout",
+    path: PRIVATE_PATHS.LOGOUT,
     element: <Logout />
   },
   {
-    path: "/home",
+    path: PRIVATE_PATHS.HOME,
     element: <Home />
   },
   {
-    path: "/home/profile",
+    path: PRIVATE_PATHS.PROFILE,
     element: <Profile />
   },
   {
-    path: "/home/math-operations/docs",
-    element: <Instructions />
-  },
-  {
-    path: "/home/profile/your-score",
-    element: <YourScore />
-  },
-  {
-    path: "/home/profile/change-password",
-    element: <ChangePassword />
-  },
-  {
-    path: "/home/profile/change-email",
-    element: <ChangeEmail />
-  },
-  {
-    path: "/home/profile/choose-avatar",
-    element: <ChangeAvatar />
-  },
-  {
-    path: "/home/school-program",
-    element: <SchoolProgram />
-  },
-  {
-    path: "/home/school-program/first-grade",
-    element: <FirstGrade />
-  },
-  {
-    path: "/home/school-program/second-grade",
-    element: <SecondGrade />
-  },
-  {
-    path: "/home/school-program/third-grade",
-    element: <ThirdGrade />
-  },
-  {
-    path: "/home/pre-school",
-    element: <PreSchool />
-  },
-  {
-    path: "/home/pre-school/numbers",
-    element: <Numbers />
-  },
-  {
-    path: "users",
-    element: <Users />
-  },
-
-
-  {
-    path: "/home/instructions",
+    path: PRIVATE_PATHS.INSTRUCTIONS,
     element: <Docs />
   },
   {
-    path: "/home/math-operations",
-    element: <MathOperations />
+    path: PRIVATE_PATHS.YOUR_SCORE,
+    element: <YourScore />
   },
   {
-    path: `/home/math-operations/:mathOperation`,
-    element: <SumDifference />
+    path: PRIVATE_PATHS.CHANGE_PASSWORD,
+    element: <ChangePassword />
   },
   {
-    path: "/home/math-operations/multiplication",
+    path: PRIVATE_PATHS.CHANGE_EMAIL,
+    element: <ChangeEmail />
+  },
+  {
+    path: PRIVATE_PATHS.CHANGE_AVATAR,
+    element: <ChangeAvatar />
+  },
+
+  {
+    path: PRIVATE_PATHS.MATH_EXAMPLES,
+    element: <MathExamples />
+  },
+  {
+    path: `${PRIVATE_PATHS.MATH_EXAMPLES}/:mathOperation`,
+    element: <MathExample />
+  },
+  {
+    path: PRIVATE_PATHS.MULTIPLICATION,
     element: <Multiplication />
   },
-  {
-    path: "/home/math-operations/multiplication/multiplication-table/:digit",
-    element: <MultiplicationNumber />
+  { // navigation to multiplication table
+    path: PRIVATE_PATHS.MULTIPLICATION_TABLE,
+    element: <MultiplicationTable />
+  },
+  { // multiply by number
+    path: `${PRIVATE_PATHS.MULTIPLICATION_TABLE}/:mathOperation/:digit`,
+    element: <MathExample />
+  },
+  { // multiplication numbers with nulls
+    path: `${PRIVATE_PATHS.MULTIPLICATION}/:mathOperation/:digit`,
+    element: <MathExample />
+  },
+  { // check multiplication knowledge
+    path: `${PRIVATE_PATHS.MULTIPLICATION_TABLE}/:mathOperation`,
+    element: <MathExample />
   },
   {
-    path: "/home/math-operations/multiplication/multiplication-table/numbers-with-nulls",
-    element: <MultiplicationNulls />
-  },
-  {
-    path: "/home/math-operations/multiplication/check-knowledge",
-    element: <MultiplicationCheck />
-  },
-  {
-    path: "/home/math-operations/equations",
+    path: PRIVATE_PATHS.EQUATIONS,
     element: <Equations />
   },
   {
-    path: "/home/math-operations/equations/with-one-unknown",
+    path: PRIVATE_PATHS.EQUATIONS_WITH_X,
     element: <EquationsWithX />
+  },
+
+  {
+    path: PRIVATE_PATHS.SCHOOL_PROGRAM,
+    element: <SchoolProgram />
+  },
+  {
+    path: PRIVATE_PATHS.FIRST_GRADE,
+    element: <FirstGrade />
+  },
+  {
+    path: PRIVATE_PATHS.SECOND_GRADE,
+    element: <SecondGrade />
+  },
+  {
+    path: PRIVATE_PATHS.THIRD_GRADE,
+    element: <ThirdGrade />
+  },
+  {
+    path: PRIVATE_PATHS.PRE_SCHOOL,
+    element: <PreSchool />
+  },
+  {
+    path: PRIVATE_PATHS.NUMBERS,
+    element: <Numbers />
   },
 ]
 
 export function PrivateRoutes() {
   const { isLoggedIn, isLoading } = useAuth()
-
-  // console.log('isAuth', isLoggedIn)
 
   if (isLoading) {
     return <AppLayout><Loader /></AppLayout>

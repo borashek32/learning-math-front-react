@@ -1,41 +1,40 @@
-import { PATHS } from '../../../../common/constants/paths'
 import { useTranslation } from 'react-i18next'
 import { ButtonsLayout } from '../../../../common/components/layouts/ButtonsLayout'
 import { BlueButton } from '../../../../common/components/buttons/BlueButton'
 import { Header } from '../../../../common/components/header/Header'
-import { MathExampleLayout } from '../../../../common/components/layouts/MathExamlpeLayout'
+import { MathExampleLayout } from '../../../../common/components/layouts/MathExampleLayout'
 import { GoTo } from '../../../../common/components/goTo/GoTo'
 import { AppText } from '../../../../common/components/text/AppText'
+import { PUBLIC_PATHS } from '../../../../common/constants/paths/publicPaths'
+import { useAppSelector } from '../../../../common/hooks/useAppSelector/useAppSelector'
+import { selectIsLoggedIn } from '../../../auth/auth.selectors'
+import { PRIVATE_PATHS } from '../../../../common/constants/paths/privatePaths'
 
 export const Multiplication = () => {
-  const { t } = useTranslation('translation')
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
-  const digits: Array<number> = [2, 3, 4, 5, 6, 7, 8, 9]
+  const { t } = useTranslation('translation')
 
   return (
     <>
       <GoTo address='/math-operations' name={t('links.back')} />
-      <Header title={t('mathOperations.multTable')} />
+      <Header title={t('mathOperations.multiplication')} />
 
       <ButtonsLayout>
         <BlueButton
-          name={t('mathOperations.multCheck')}
-          path={'/math-operations/multiplication/check-knowledge'}
+          name={t('mathOperations.multTable')}
+          path={isLoggedIn 
+            ? PRIVATE_PATHS.MULTIPLICATION_TABLE 
+            : PUBLIC_PATHS.MULTIPLICATION_TABLE
+          }
         />
         <BlueButton
           name={t('mathOperations.multNulls')}
-          path={'/math-operations/multiplication/multiplication-table/numbers-with-nulls'}
+          path={isLoggedIn 
+            ? `${PRIVATE_PATHS.MULTIPLICATION}/multiply/numbers-with-nulls`
+            : `${PUBLIC_PATHS.MULTIPLICATION}/multiply/numbers-with-nulls`
+          }
         />
-        <AppText desc={t('mathOperations.common.choose')} link={false} />
-        <MathExampleLayout>
-          {digits.map(digit => (
-            <BlueButton 
-              key={digit}
-              name={digit.toString()}
-              path={`/math-operations/multiplication/multiplication-table/${digit}`}
-            />
-          ))}
-        </MathExampleLayout>
       </ButtonsLayout>
     </>
   )

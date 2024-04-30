@@ -4,42 +4,36 @@ import { Login } from '../../features/auth/ui/Login'
 import { Verify } from '../../features/auth/ui/Verify'
 import { ForgotPassword } from '../../features/auth/ui/ForgotPassword'
 import { CreateNewPassword } from '../../features/auth/ui/CreateNewPassword'
-import { Outlet, RouteObject, useLocation } from 'react-router-dom'
+import { Outlet, RouteObject } from 'react-router-dom'
 import { Docs } from '../../features/main/ui/docs/Docs'
-import { MathOperations } from '../../features/math-examples/ui/MathOperations'
-import { MultiplicationNumber } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNumber"
+import { MathExamples } from '../../features/math-examples/ui/MathExamples'
 import { Multiplication } from "../../features/math-examples/ui/multiplication/Multiplication"
-import { SumDifference } from "../../features/math-examples/ui/sum-difference/SumDifference"
-import { MultiplicationCheck } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationCheck"
-import { MultiplicationNulls } from "../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationNulls"
+import { MathExample } from "../../features/math-examples/ui/math-example/MathExample"
 import { Equations } from "../../features/math-examples/ui/equations/Equations"
 import { EquationsWithX } from "../../features/math-examples/ui/equations/withX/EquationsWithX"
 import { AppLayout } from '../components/layouts/AppLayout'
-import { AvatarLayout } from '../components/layouts/AvatarLayout'
 import { BaseLayout } from '../components/layouts/BaseLayout'
-import { UnAuthLayout } from '../components/layouts/UnAuthLayout'
-import { DocsLayout } from '../components/layouts/DocsLayout'
-import { selectIsLoggedIn, selectUser } from '../../features/auth/auth.selectors'
-import { useAppSelector } from '../hooks/useAppSelector/useAppSelector'
 import { Home } from '../../features/home/ui/Home'
 import { Loader } from '../components/loaders/CircularLoader'
 import { useAuth } from '../hooks/useAuth/useAuth'
+import { PUBLIC_PATHS } from '../constants/paths/publicPaths'
+import { MultiplicationTable } from '../../features/math-examples/ui/multiplication/multiplication-table/MultiplicationTable'
 
 export const publicRoutes: RouteObject[] = [
   {
-    path: "/",
+    path: PUBLIC_PATHS.MAIN,
     element: <Main />,
   },
   {
-    path: "/instructions",
+    path: PUBLIC_PATHS.INSTRUCTIONS,
     element: <Docs />
   },
   {
-    path: "/register",
+    path: PUBLIC_PATHS.REGISTER,
     element: <Register />,
   },
   {
-    path: "/login",
+    path: PUBLIC_PATHS.LOGIN,
     element: <Login />,
   },
   // {
@@ -56,43 +50,45 @@ export const publicRoutes: RouteObject[] = [
   // },
 
   {
-    path: "/math-operations",
-    element: <MathOperations />
+    path: PUBLIC_PATHS.MATH_EXAMPLES,
+    element: <MathExamples />
   },
   {
-    path: `/math-operations/:mathOperation`,
-    element: <SumDifference />
+    path: `${PUBLIC_PATHS.MATH_EXAMPLES}/:mathOperation`,
+    element: <MathExample />
   },
   {
-    path: "/math-operations/multiplication",
+    path: PUBLIC_PATHS.MULTIPLICATION,
     element: <Multiplication />
   },
-  {
-    path: "/math-operations/multiplication/multiplication-table/:digit",
-    element: <MultiplicationNumber />
+  { // navigation to multiplication table
+    path: PUBLIC_PATHS.MULTIPLICATION_TABLE,
+    element: <MultiplicationTable />
+  },
+  { // multiply by number
+    path: `${PUBLIC_PATHS.MULTIPLICATION_TABLE}/:mathOperation/:digit`,
+    element: <MathExample />
+  },
+  { // multiplication numbers with nulls
+    path: `${PUBLIC_PATHS.MULTIPLICATION}/:mathOperation/:digit`,
+    element: <MathExample />
+  },
+  { // check multiplication knowledge
+    path: `${PUBLIC_PATHS.MULTIPLICATION_TABLE}/:mathOperation`,
+    element: <MathExample />
   },
   {
-    path: "/math-operations/multiplication/multiplication-table/numbers-with-nulls",
-    element: <MultiplicationNulls />
-  },
-  {
-    path: "/math-operations/multiplication/check-knowledge",
-    element: <MultiplicationCheck />
-  },
-  {
-    path: "/math-operations/equations",
+    path: PUBLIC_PATHS.EQUATIONS,
     element: <Equations />
   },
   {
-    path: "/math-operations/equations/with-one-unknown",
+    path: PUBLIC_PATHS.EQUATIONS_WITH_X,
     element: <EquationsWithX />
   },
 ]
 
 export function PublicRoutes() {
   const { isLoading, isLoggedIn } = useAuth()
-
-  // console.log('isAuth', isLoggedIn)
 
   if (isLoading) {
     return <AppLayout><Loader /></AppLayout>

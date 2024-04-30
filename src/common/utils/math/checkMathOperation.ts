@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { MathOperationsConstants } from "../../constants/MathConstants"
+import { MathOperationsConstants } from "../../constants/math/mathConstants"
 
 type Props = {
   answer: number
@@ -48,8 +48,20 @@ export const checkMathOperation = ({
         return false
       }
 
-    // case  MathOperationsConstants.MULTIPLY:
-    //   return firstOperand * secondOperand
+    case MathOperationsConstants.MULTIPLY:
+      if (
+        ((firstOperand && secondOperand) && 
+        (firstOperand * secondOperand === answer)) ||
+        ((firstOperand && secondOperand && thirdOperand) && 
+        (firstOperand * secondOperand * thirdOperand === answer)) ||
+        ((firstOperand && secondOperand && thirdOperand && fourthOperand) && 
+        (firstOperand * secondOperand * thirdOperand * fourthOperand === answer))
+      ) {
+        return true
+      } else {
+        return false
+      }
+
     case MathOperationsConstants.DIVIDE:
       if (firstOperand === answer) {
         return true
