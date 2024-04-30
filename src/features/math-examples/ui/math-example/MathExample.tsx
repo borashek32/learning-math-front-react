@@ -2,62 +2,61 @@ import { useEffect, useState } from "react"
 import { GoTo } from "../../../../common/components/goTo/GoTo"
 import { Header } from "../../../../common/components/header/Header"
 import { DefaultDigit } from "../../../../common/components/digits/DefaultDigit"
-import { MathOperation } from "../../../../common/components/mathOpertion/mathOperation"
+import { MathOperation } from "../../../../common/components/mathOperation/mathOperation"
 import { ResultInput } from "../../../../common/components/input/resultInput/ResultInput"
 import { useTranslation } from "react-i18next"
 import { checkMathOperation } from "../../../../common/utils/math/checkMathOperation"
-import { MathOperationsConstants, MathSignsConstants } from "../../../../common/constants/MathConstants"
+import { MathOperationsConstants, MathSignsConstants } from "../../../../common/constants/math/mathConstants"
 import { useAppSelector } from "../../../../common/hooks/useAppSelector/useAppSelector"
-import { selectIsLoggedIn, selectUserId } from "../../../auth/auth.selectors"
-import { useDispatch } from "react-redux"
-import { AnswerType } from "../../MathOperations.types"
-import { generateRandomNumber } from "../../../../common/utils/math/generateRandomNumber"
-import { useUpdateScoreMutation } from "../../../profile/profile.api"
-import { useFormSchema } from "../../../../common/utils/math/validationSchemaMathOperations"
+import { AnswerType } from "../../MathExamples.types"
 import { Loader } from "../../../../common/components/loaders/CircularLoader"
 import { Modal } from "../../../../common/components/modal/Modal"
-import { MathExampleLayout } from "../../../../common/components/layouts/MathExamlpeLayout"
+import { MathExampleLayout } from "../../../../common/components/layouts/MathExampleLayout"
 import { useParams } from "react-router-dom"
 import { ButtonsLayout } from "../../../../common/components/layouts/ButtonsLayout"
 import { MathOperationButton } from "../../../../common/components/buttons/MathOperationButton"
 import { Score } from "../../../../common/components/score/Score"
 import { Error } from "../../../../common/components/error/Error"
 import { useAppForm } from "../../../../common/hooks/useAppForm/useAppForm"
+import { convertStringToMathOperation } from "../../../../common/utils/string/convertStringToMathOperation"
+import { PRIVATE_PATHS } from "../../../../common/constants/paths/privatePaths"
+import { selectUserId } from "../../../auth/auth.selectors"
+import { PUBLIC_PATHS } from "../../../../common/constants/paths/publicPaths"
+import { generateRandomNumber } from "../../../../common/utils/math/generateRandomNumber"
+import { generateRandomNumberWithNulls } from "../../../../common/utils/math/generateRandomNumberWithNulls"
 
-export const SumDifference = () => {
+export const MathExample = () => {
   const userId = useAppSelector(selectUserId)
 
-  const { mathOperation } = useParams<{ mathOperation: string }>()
+  const { mathOperation, digit } = useParams<{ mathOperation: string, digit: string | undefined }>()
+  const mathSign = convertStringToMathOperation(mathOperation)
 
   const [firstNumber, setFirstNumber] = useState<number>(generateRandomNumber(10, 20))
   const [secondNumber, setSecondNumber] = useState<number>(generateRandomNumber(1, 10))
   const [thirdNumber, setThirdNumber] = useState<number | null>(null)
   const [fourthNumber, setFourthNumber] = useState<number | null>(null)
-  const [score, setScore] = useState(0)
 
   const [answer, setAnswer] = useState<string>('')
   const [rightWrong, setRightWrong] = useState<AnswerType>(null)
   const [open, setOpen] = useState(false)
 
+  const [score, setScore] = useState(0)
+
   const { t } = useTranslation('translation')
 
   const { isLoading, serverError, onSubmit } = useAppForm(score)
 
-
   const generateNewNumbers = (score: number) => {
-    if ((mathOperation === MathOperationsConstants.SUM) 
-    || (mathOperation === MathOperationsConstants.DIFF)) {
+    if ((mathSign === MathOperationsConstants.SUM) 
+    || (mathSign === MathOperationsConstants.DIFF)) {
       if (score <= 5) {
         setFirstNumber(generateRandomNumber(10, 100))
         setSecondNumber(generateRandomNumber(1, 10))
-        setThirdNumber(null)
-        setFourthNumber(null)
       }
       if (score > 5) {
         setFirstNumber(generateRandomNumber(30, 60))
         setSecondNumber(generateRandomNumber(1, 10))
         setThirdNumber(generateRandomNumber(1, 10))
-        setFourthNumber(null)
       }
       if (score > 10) {
         setFirstNumber(generateRandomNumber(30, 80))
@@ -65,6 +64,26 @@ export const SumDifference = () => {
         setThirdNumber(generateRandomNumber(1, 10))
         setFourthNumber(generateRandomNumber(1, 10))
       }
+    }
+    if (mathSign === MathOperationsConstants.MULTIPLY) {
+      setFirstNumber(generateRandomNumber(1, 10))
+      setSecondNumber(Number(digit))
+    }
+    if ((mathSign === MathOperationsConstants.MULTIPLY)
+    && (digit === 'numbers-with-nulls')) {
+      if (score <= 10) {
+        setFirstNumber(generateRandomNumberWithNulls(1, 10))
+        setSecondNumber(generateRandomNumberWithNulls(1, 10))
+      }
+      if (score > 10) {
+        setFirstNumber(generateRandomNumberWithNulls(1, 10))
+        setSecondNumber(generateRandomNumberWithNulls(1, 10))
+        setThirdNumber(generateRandomNumberWithNulls(1, 10))
+      }
+    }
+    if (mathSign === MathOperationsConstants.DIVIDE) {
+      setFirstNumber(generateRandomNumber(1, 10))
+      setSecondNumber(generateRandomNumber(1, 10))
     }
   }
   
@@ -82,7 +101,7 @@ export const SumDifference = () => {
     setOpen(true)
     if (checkMathOperation({
       answer: Number(answer),
-      operation: MathOperationsConstants.SUM, 
+      operation: mathSign, 
       firstOperand: firstNumber, 
       secondOperand: secondNumber,
       thirdOperand: thirdNumber ? thirdNumber : 0,
@@ -107,8 +126,6 @@ export const SumDifference = () => {
     setAnswer('')
   }
 
-
-
   useEffect(() => {
     if (userId && rightWrong) {
       onSubmit({
@@ -118,6 +135,10 @@ export const SumDifference = () => {
       })
     }
   }, [score, userId, rightWrong])
+
+  useEffect(() => {
+    generateNewNumbers(score)
+  }, [])
 
   return (
     <>
@@ -139,28 +160,40 @@ export const SumDifference = () => {
           color={rightWrong === 1 ? 'blue' : 'red'}
         />
       )}
-      <GoTo address='/home/math-operations' name={t('links.back')} />
+
+      <GoTo address={userId ? PRIVATE_PATHS.MATH_EXAMPLES : PUBLIC_PATHS.MATH_EXAMPLES} name={t('links.back')} />
+      
       <Header title={
-        mathOperation === MathOperationsConstants.SUM
+        mathSign === MathOperationsConstants.SUM
           ? t('mathOperations.sum')
-          : mathOperation === MathOperationsConstants.DIFF
+          : mathSign === MathOperationsConstants.DIFF
           ? t('mathOperations.diff')
-          : t('mathOperations.multCheck')
+          : mathSign === MathOperationsConstants.MULTIPLY && digit === 'numbers-with-nulls'
+          ? t('mathOperations.multNulls')
+          : mathSign === MathOperationsConstants.MULTIPLY
+          ? t('mathOperations.multBy') + ' ' + digit
+          : mathSign === MathOperationsConstants.DIVIDE
+          ? t('mathOperations.multCheck')
+          : ''
         } />
 
       <MathExampleLayout>
-        <DefaultDigit title={firstNumber} />
-        <DefaultDigit title={mathOperation} />
+        <DefaultDigit title={
+          mathSign === MathOperationsConstants.DIVIDE
+            ? firstNumber * secondNumber
+            : firstNumber
+        } />
+        <DefaultDigit title={mathSign} />
         <DefaultDigit title={secondNumber} />
         {thirdNumber ?
           <>
-            <DefaultDigit title={mathOperation} />
+            <DefaultDigit title={mathSign} />
             <DefaultDigit title={thirdNumber} />
           </> : <></>
         }
         {fourthNumber ? 
           <>
-            <DefaultDigit title={mathOperation} />
+            <DefaultDigit title={mathSign} />
             <DefaultDigit title={fourthNumber} />
           </> : <></>
         }

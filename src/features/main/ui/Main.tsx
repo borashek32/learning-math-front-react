@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import styles from '../../../common/styles/App.module.sass'
 import { useTranslation } from 'react-i18next'
 import { AppText } from '../../../common/components/text/AppText'
+import { PUBLIC_PATHS } from '../../../common/constants/paths/publicPaths'
 
 export const Main = () => {
   const { t } = useTranslation('translation')
@@ -10,13 +11,13 @@ export const Main = () => {
     <>
       <AppText desc={t('main.desc')}/>
       <br/>
-      <Link to="/register" className={styles.labelClass}>{t('screens.register')}</Link>
+      <Link to={PUBLIC_PATHS.REGISTER} className={styles.labelClass}>{t('screens.register')}</Link>
       <br />
-      <Link to="/login" className={styles.labelClass}>{t('screens.login')}</Link>
+      <Link to={PUBLIC_PATHS.LOGIN} className={styles.labelClass}>{t('screens.login')}</Link>
       <br />
-      <Link className={styles.labelClass} to="/math-operations">{t('screens.math')}</Link>
+      <Link to={PUBLIC_PATHS.MATH_EXAMPLES} className={styles.labelClass}>{t('screens.math')}</Link>
       <br />
-      <Link to="/instructions" className={styles.labelClass}>{t('screens.instructions')}</Link>
+      <Link to={PUBLIC_PATHS.INSTRUCTIONS} className={styles.labelClass}>{t('screens.instructions')}</Link>
     </>
   )
 }  
