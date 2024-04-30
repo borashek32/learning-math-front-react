@@ -1,5 +1,4 @@
 import { Action, ThunkAction, combineReducers, configureStore } from '@reduxjs/toolkit'
-import { usersApi } from '../../../features/test/users.api'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { profileApi } from '../../../features/profile/profile.api'
 import { rickMortyApi } from '../../../features/profile/rickMorty/rickMorty.api'

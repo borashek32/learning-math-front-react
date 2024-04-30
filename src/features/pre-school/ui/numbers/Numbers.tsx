@@ -7,18 +7,19 @@ import { useUpdateScoreMutation } from "../../../profile/profile.api"
 import { useFormSchema } from "../../../../common/utils/math/validationSchemaMathOperations"
 import { Modal } from "../../../../common/components/modal/Modal"
 import { useState } from "react"
-import { AnswerType } from "../../../math-examples/MathOperations.types"
-import { MathExampleLayout } from "../../../../common/components/layouts/MathExamlpeLayout"
+import { AnswerType } from "../../../math-examples/MathExamples.types"
+import { MathExampleLayout } from "../../../../common/components/layouts/MathExampleLayout"
 import { ResultInput } from "../../../../common/components/input/resultInput/ResultInput"
 import { ButtonsLayout } from "../../../../common/components/layouts/ButtonsLayout"
 import { MathOperationButton } from "../../../../common/components/buttons/MathOperationButton"
 import { Score } from "../../../../common/components/score/Score"
 import { generateRandomNumber } from "../../../../common/utils/math/generateRandomNumber"
 import cat from './../../../../common/assets/icons/cat.svg'
-import { MathOperation } from "../../../../common/components/mathOpertion/mathOperation"
-import { MathSignsConstants } from "../../../../common/constants/MathConstants"
+import { MathOperation } from "../../../../common/components/mathOperation/mathOperation"
+import { MathSignsConstants } from "../../../../common/constants/math/mathConstants"
 import { ImgLayout } from "../../../../common/components/layouts/ImgLayout"
 import { AppText } from "../../../../common/components/text/AppText"
+import { PRIVATE_PATHS } from "../../../../common/constants/paths/privatePaths"
 
 export const Numbers = () => {
   const [score, setScore] = useState(0)
@@ -89,8 +90,7 @@ export const Numbers = () => {
           color={rightWrong === 1 ? 'blue' : 'red'}
         />
       )}
-      {/* <GoTo address='/home' name={t('links.back')} /> */}
-      <GoTo address='/home/pre-school' name={t('links.back')} />
+      <GoTo address={PRIVATE_PATHS.PRE_SCHOOL} name={t('links.back')} />
       <Header title={t('preSchool.numbers.title')}  />
 
       <AppText desc={t('preSchool.numbers.desc')} />

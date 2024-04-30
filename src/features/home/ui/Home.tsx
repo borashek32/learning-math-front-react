@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { useAppSelector } from '../../../common/hooks/useAppSelector/useAppSelector'
 import { selectUserEmail } from '../../auth/auth.selectors'
 import { DivideLine } from '../../../common/components/divideLine/DivideLine'
+import { PRIVATE_PATHS } from '../../../common/constants/paths/privatePaths'
 
 export const Home = () => {
   const userEmail = useAppSelector(selectUserEmail)
@@ -20,7 +21,7 @@ export const Home = () => {
         <li className={styles.item}>
           <Link 
             className={styles.itemLink} 
-            to="/home/math-operations"
+            to={PRIVATE_PATHS.MATH_EXAMPLES}
           >
             {t('screens.math')}
           </Link>
@@ -28,7 +29,7 @@ export const Home = () => {
         <li className={styles.item}>
           <Link 
             className={styles.labelClass} 
-            to="/home/school-program"
+            to={PRIVATE_PATHS.SCHOOL_PROGRAM}
           >
               {t('screens.schoolProgram')}
           </Link>
@@ -36,7 +37,7 @@ export const Home = () => {
         <li className={styles.item}>
           <Link 
             className={styles.labelClass} 
-            to="/home/pre-school"
+            to={PRIVATE_PATHS.PRE_SCHOOL}
           >
               {t('screens.preSchool')}
           </Link>
@@ -49,7 +50,7 @@ export const Home = () => {
         <li className={styles.item}>
           <Link 
             className={styles.itemLink} 
-            to="/home/profile"
+            to={PRIVATE_PATHS.PROFILE}
           >
             {t('screens.profile')}
           </Link>
@@ -57,7 +58,7 @@ export const Home = () => {
         <li className={styles.item}>
           <Link 
             className={styles.itemLink} 
-            to="/logout"
+            to={PRIVATE_PATHS.LOGOUT}
           >
             <DefaultButton type='button' name={t('buttons.logout')} />
           </Link>
