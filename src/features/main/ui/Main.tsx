@@ -18,6 +18,9 @@ export const Main = () => {
       <Link to={PUBLIC_PATHS.MATH_EXAMPLES} className={styles.labelClass}>{t('screens.math')}</Link>
       <br />
       <Link to={PUBLIC_PATHS.INSTRUCTIONS} className={styles.labelClass}>{t('screens.instructions')}</Link>
+      <br />
+      <p className={styles.small}>Test user email: test-user@gmail.com</p>
+      <p className={styles.small}>Test user password: test</p>
     </>
   )
 }  

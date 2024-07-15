@@ -140,6 +140,8 @@ export const MathExample = () => {
     generateNewNumbers(score)
   }, [])
 
+  console.log(answer)
+
   return (
     <>
       {isLoading && <Loader />}
@@ -213,6 +215,7 @@ export const MathExample = () => {
         <MathOperationButton
           onClick={check}
           name={t('mathOperations.common.check')}
+          disabled={answer === '' ? true : false}
         />
       </ButtonsLayout>
 

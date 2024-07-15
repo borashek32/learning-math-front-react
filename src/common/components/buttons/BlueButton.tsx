@@ -12,6 +12,7 @@ export const BlueButton: React.FC<Props> = ({
   avatarName, 
   onPress, 
   onPressWithValue,
+  disabled,
 }: Props) => {
   
   const handlePress = () => {
@@ -29,7 +30,7 @@ export const BlueButton: React.FC<Props> = ({
           <Link
             type={type}
             to={path as never}
-            className={styles.blueButton} 
+            className={styles.blueButton + ' ' + (disabled ? styles.disabled : '')} 
           >
             <p className={styles.blueButtonText}>{name}</p>
           </Link>

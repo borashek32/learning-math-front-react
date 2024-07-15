@@ -11,4 +11,5 @@ export type Props = {
   avatarName?: string
   onPress?: () => void
   onPressWithValue?: (source: string | undefined, avatarName: string | undefined) => void
+  disabled?: boolean
 }
